@@ -1,9 +1,13 @@
 {
   "name": "@aakashiic/design-lint",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "ESLint and Stylelint rules that keep raw colours and arbitrary sizes out of new code",
   "type": "module",
-  "files": ["eslint", "stylelint", "CHANGELOG.md"],
+  "files": [
+    "eslint",
+    "stylelint",
+    "CHANGELOG.md"
+  ],
   "exports": {
     "./eslint": "./eslint/index.js",
     "./stylelint": "./stylelint/index.js",
@@ -18,9 +22,15 @@
     "postcss-scss": ">=4.0.0"
   },
   "peerDependenciesMeta": {
-    "eslint": { "optional": true },
-    "stylelint": { "optional": true },
-    "postcss-scss": { "optional": true }
+    "eslint": {
+      "optional": true
+    },
+    "stylelint": {
+      "optional": true
+    },
+    "postcss-scss": {
+      "optional": true
+    }
   },
   "repository": {
     "type": "git",

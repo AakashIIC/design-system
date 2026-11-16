@@ -1,9 +1,12 @@
 {
   "name": "@aakashiic/tokens",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shared design tokens for Data Vault, VRetail and V-Estate",
   "type": "module",
-  "files": ["dist", "CHANGELOG.md"],
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
   "exports": {
     "./tokens.css": "./dist/css/tokens.css",
     "./tailwind.css": "./dist/tailwind/theme.css",
