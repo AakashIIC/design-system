@@ -24,8 +24,11 @@ jobs:
       - name: Build tokens (fails if a theme is missing a token)
         run: npm run build
 
+      - name: Test lint rules (ESLint 9 + 10, Stylelint)
+        run: npm test --workspaces --if-present
+
       - name: Check the package contents
-        run: npm pack --dry-run --workspace packages/tokens
+        run: npm pack --dry-run --workspaces
 
       - name: Require a changeset for package changes
         if: github.head_ref != 'changeset-release/main'
