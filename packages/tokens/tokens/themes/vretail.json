@@ -1,0 +1,21 @@
+{
+  "color": {
+    "primary":       { "$type": "color", "$value": "#4434DD", "$description": "= --vr-color-primary" },
+    "primary-hover": { "$type": "color", "$value": "#3A2BC4", "$description": "= --vr-color-primary-hover" },
+    "primary-soft":  { "$type": "color", "$value": "#F0EEFF", "$description": "= --vr-color-primary-soft" },
+    "on-primary":    { "$type": "color", "$value": "#FFFFFF" },
+    "text":          { "$type": "color", "$value": "#2B3674", "$description": "= --vr-color-text" },
+    "text-muted":    { "$type": "color", "$value": "#616E97", "$description": "Was --vr-color-text-muted #707EAE; darkened to meet AA on all backgrounds" },
+    "text-subtle":   { "$type": "color", "$value": "#8B94B1", "$description": "Was --vr-color-text-subtle #A3AED0; darkened to 3:1" },
+    "background":    { "$type": "color", "$value": "#F4F7FE", "$description": "= --vr-color-bg" },
+    "surface":       { "$type": "color", "$value": "#FFFFFF" },
+    "surface-muted": { "$type": "color", "$value": "#EFF3FC", "$description": "= --vr-color-tertiary" },
+    "border":        { "$type": "color", "$value": "#E9EDF7", "$description": "= --vr-color-border" },
+    "input":         { "$type": "color", "$value": "#E0E4F2", "$description": "VRetail had #E0E5F2; aligned to Data Vault" },
+    "ring":          { "$type": "color", "$value": "#4434DD" },
+    "success":       { "$type": "color", "$value": "#22C55E", "$description": "Was #3DAA2B" },
+    "warning":       { "$type": "color", "$value": "#F59E0B", "$description": "= --vr-color-warning" },
+    "danger":        { "$type": "color", "$value": "#EF4444", "$description": "Was #F74A4A" },
+    "info":          { "$type": "color", "$value": "#3B82F6", "$description": "Was #317ED7" }
+  }
+}

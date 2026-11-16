@@ -1,0 +1,25 @@
+{
+  "shadow": {
+    "sm": {
+      "$type": "shadow",
+      "$description": "Default card/control shadow (Data Vault shadow-sm, 222 uses)",
+      "$value": [
+        { "color": "#0000001A", "offsetX": "0px", "offsetY": "1px", "blur": "3px", "spread": "0px" },
+        { "color": "#0000001A", "offsetX": "0px", "offsetY": "1px", "blur": "2px", "spread": "-1px" }
+      ]
+    },
+    "md": {
+      "$type": "shadow",
+      "$description": "Dropdowns, popovers",
+      "$value": [
+        { "color": "#0000001A", "offsetX": "0px", "offsetY": "4px", "blur": "6px", "spread": "-1px" },
+        { "color": "#0000001A", "offsetX": "0px", "offsetY": "2px", "blur": "4px", "spread": "-2px" }
+      ]
+    },
+    "lg": {
+      "$type": "shadow",
+      "$description": "Raised panels, modals (Data Vault shadow-primary)",
+      "$value": { "color": "#7090B01F", "offsetX": "0px", "offsetY": "20px", "blur": "48px", "spread": "0px" }
+    }
+  }
+}

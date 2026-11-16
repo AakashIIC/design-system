@@ -1,0 +1,21 @@
+{
+  "color": {
+    "primary":       { "$type": "color", "$value": "#4434DD", "$description": "DV --color-blue-prime-1" },
+    "primary-hover": { "$type": "color", "$value": "#3A2BC4", "$description": "VRetail Figma --vr-color-primary-hover (DV used off-palette indigo-600)" },
+    "primary-soft":  { "$type": "color", "$value": "#F0EEFF", "$description": "Selected/tinted backgrounds (VRetail Figma)" },
+    "on-primary":    { "$type": "color", "$value": "#FFFFFF" },
+    "text":          { "$type": "color", "$value": "#2B3674", "$description": "DV --color-blue-dark-prime-1" },
+    "text-muted":    { "$type": "color", "$value": "#616E97", "$description": "DV #707EAE darkened 13% to meet AA on surface, background and surface-muted" },
+    "text-subtle":   { "$type": "color", "$value": "#8B94B1", "$description": "Placeholders only. #A3AED0 darkened to 3:1 on white" },
+    "background":    { "$type": "color", "$value": "#F4F7FE", "$description": "DV --color-body-background" },
+    "surface":       { "$type": "color", "$value": "#FFFFFF" },
+    "surface-muted": { "$type": "color", "$value": "#EFF3FC", "$description": "Hover rows, secondary fills" },
+    "border":        { "$type": "color", "$value": "#E9EDF7" },
+    "input":         { "$type": "color", "$value": "#E0E4F2", "$description": "DV --color-white-base-prime-2" },
+    "ring":          { "$type": "color", "$value": "#4434DD" },
+    "success":       { "$type": "color", "$value": "#22C55E" },
+    "warning":       { "$type": "color", "$value": "#F59E0B" },
+    "danger":        { "$type": "color", "$value": "#EF4444" },
+    "info":          { "$type": "color", "$value": "#3B82F6" }
+  }
+}

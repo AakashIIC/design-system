@@ -1,0 +1,21 @@
+{
+  "color": {
+    "primary":       { "$type": "color", "$value": "#D2B589", "$description": "V-Estate .dark --primary" },
+    "primary-hover": { "$type": "color", "$value": "#C0A67E", "$description": "Rendered value of hover:bg-primary/90 on dark background" },
+    "primary-soft":  { "$type": "color", "$value": "#2D2B28", "$description": "Rendered value of bg-primary/10 on dark background" },
+    "on-primary":    { "$type": "color", "$value": "#1B1C1D", "$description": "V-Estate .dark --primary-foreground" },
+    "text":          { "$type": "color", "$value": "#F9FBFC", "$description": "V-Estate .dark --foreground" },
+    "text-muted":    { "$type": "color", "$value": "#A0A0A0", "$description": "V-Estate .dark --muted-foreground" },
+    "text-subtle":   { "$type": "color", "$value": "#A0A0A0" },
+    "background":    { "$type": "color", "$value": "#1B1C1D", "$description": "V-Estate .dark --background" },
+    "surface":       { "$type": "color", "$value": "#222324", "$description": "V-Estate .dark --card" },
+    "surface-muted": { "$type": "color", "$value": "#2A2B2C", "$description": "V-Estate .dark --muted" },
+    "border":        { "$type": "color", "$value": "#333333", "$description": "V-Estate .dark --border" },
+    "input":         { "$type": "color", "$value": "#333333", "$description": "V-Estate .dark --input" },
+    "ring":          { "$type": "color", "$value": "#D2B589" },
+    "success":       { "$type": "color", "$value": "#22C55E" },
+    "warning":       { "$type": "color", "$value": "#F59E0B" },
+    "danger":        { "$type": "color", "$value": "#EF4444" },
+    "info":          { "$type": "color", "$value": "#3B82F6" }
+  }
+}

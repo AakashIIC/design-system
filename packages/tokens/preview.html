@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" data-app="datavault">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>@aakashiic/tokens preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dist/css/tokens.css">
+  <style>
+    /* This page only uses var(--ds-...) — no raw values — to prove the tokens work */
+    body { margin: 0; padding: var(--ds-spacing-8); font-family: var(--ds-font-family-sans);
+           background: var(--ds-color-background); color: var(--ds-color-text); }
+    .card { background: var(--ds-color-surface); border: 1px solid var(--ds-color-border);
+            border-radius: var(--ds-radius-2xl); box-shadow: var(--ds-shadow-lg);
+            padding: var(--ds-spacing-6); max-width: 560px; }
+    h1 { font-size: var(--ds-font-size-2xl); font-weight: var(--ds-font-weight-semibold); margin: 0 0 var(--ds-spacing-2); }
+    p  { font-size: var(--ds-font-size-sm); color: var(--ds-color-text-muted); margin: 0 0 var(--ds-spacing-6); }
+    .row { display: flex; gap: var(--ds-spacing-2); flex-wrap: wrap; margin-bottom: var(--ds-spacing-4); }
+    button { height: var(--ds-control-height-md); padding: 0 var(--ds-spacing-4); border: 0; cursor: pointer;
+             border-radius: var(--ds-radius-lg); font: inherit; font-size: var(--ds-font-size-sm);
+             font-weight: var(--ds-font-weight-medium); background: var(--ds-color-primary); color: var(--ds-color-on-primary);
+             transition: background var(--ds-motion-duration-fast) var(--ds-motion-ease-standard); }
+    button:hover { background: var(--ds-color-primary-hover); }
+    button:focus-visible { outline: 2px solid var(--ds-color-ring); outline-offset: 2px; }
+    button.ghost { background: transparent; color: var(--ds-color-text); border: 1px solid var(--ds-color-border); }
+    button.ghost:hover { background: var(--ds-color-surface-muted); }
+    button.ghost[aria-pressed="true"] { border-color: var(--ds-color-primary); color: var(--ds-color-primary); background: var(--ds-color-primary-soft); }
+    input { height: var(--ds-control-height-md); padding: 0 var(--ds-spacing-3); border: 1px solid var(--ds-color-input);
+            border-radius: var(--ds-radius-lg); font: inherit; font-size: var(--ds-font-size-sm);
+            background: var(--ds-color-surface); color: var(--ds-color-text); }
+    input::placeholder { color: var(--ds-color-text-subtle); }
+    .chip { font-size: var(--ds-font-size-xs); font-weight: var(--ds-font-weight-medium); padding: var(--ds-spacing-1) var(--ds-spacing-2);
+            border-radius: var(--ds-radius-full); color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Design tokens preview</h1>
+    <p>Switch the app below. Only the colours should change; font, sizes, corners and shadows stay the same.</p>
+    <div class="row" id="switcher">
+      <button class="ghost" data-set="datavault">Data Vault</button>
+      <button class="ghost" data-set="vretail">VRetail</button>
+      <button class="ghost" data-set="vestate">V-Estate</button>
+      <button class="ghost" id="dark" aria-pressed="false" hidden>Dark</button>
+    </div>
+    <div class="row"><button>Primary button</button><input placeholder="Placeholder text" aria-label="Example input"></div>
+    <div class="row">
+      <span class="chip" style="background: var(--ds-color-success)">Success</span>
+      <span class="chip" style="background: var(--ds-color-warning)">Warning</span>
+      <span class="chip" style="background: var(--ds-color-danger)">Danger</span>
+      <span class="chip" style="background: var(--ds-color-info)">Info</span>
+    </div>
+  </div>
+  <script>
+    const html = document.documentElement;
+    const dark = document.getElementById('dark');
+    const sync = () => {
+      document.querySelectorAll('[data-set]').forEach(b => b.setAttribute('aria-pressed', b.dataset.set === html.dataset.app));
+      dark.hidden = html.dataset.app !== 'vestate'; // only V-Estate has a dark theme
+      if (dark.hidden) html.classList.remove('dark');
+      dark.setAttribute('aria-pressed', html.classList.contains('dark'));
+    };
+    document.getElementById('switcher').addEventListener('click', e => {
+      if (e.target === dark) { html.classList.toggle('dark'); return sync(); }
+      const app = e.target.dataset.set; if (!app) return;
+      html.dataset.app = app; sync();
+    });
+    sync();
+  </script>
+</body>
+</html>

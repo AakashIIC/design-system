@@ -1,0 +1,29 @@
+{
+  "name": "@aakashiic/tokens",
+  "version": "0.1.0",
+  "description": "Shared design tokens for Data Vault, VRetail and V-Estate",
+  "type": "module",
+  "files": ["dist", "CHANGELOG.md"],
+  "exports": {
+    "./tokens.css": "./dist/css/tokens.css",
+    "./tailwind.css": "./dist/tailwind/theme.css",
+    "./scss": "./dist/scss/_tokens.scss",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "node build.js",
+    "prepack": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AakashIIC/design-system.git",
+    "directory": "packages/tokens"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "devDependencies": {
+    "style-dictionary": "^4.4.0"
+  }
+}

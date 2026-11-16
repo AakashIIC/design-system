@@ -1,0 +1,11 @@
+{
+  "motion": {
+    "duration": {
+      "fast": { "$type": "duration", "$value": "150ms" },
+      "base": { "$type": "duration", "$value": "200ms" }
+    },
+    "ease": {
+      "standard": { "$type": "cubicBezier", "$value": [0.2, 0, 0, 1], "$description": "From VRetail --vr-ease" }
+    }
+  }
+}

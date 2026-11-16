@@ -1,0 +1,43 @@
+# On every push to main:
+#  - if there are pending changesets, open/update a "Version packages" PR (bumps versions + CHANGELOG.md)
+#  - if there are none (i.e. that PR was just merged), publish any unpublished versions to GitHub Packages
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write       # push the version commit/branch and tags
+  pull-requests: write  # open the "Version packages" PR
+  packages: write       # publish to GitHub Packages
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://npm.pkg.github.com
+          scope: '@aakashiic'
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - name: Version PR or publish
+        uses: changesets/action@v1
+        with:
+          version: npm run version-packages
+          publish: npm run release
+          title: 'Version packages'
+          commit: 'chore: version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

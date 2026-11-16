@@ -1,0 +1,21 @@
+{
+  "color": {
+    "primary":       { "$type": "color", "$value": "#A88A5A", "$description": "V-Estate --primary" },
+    "primary-hover": { "$type": "color", "$value": "#B1966A", "$description": "Rendered value of V-Estate hover:bg-primary/90 on white" },
+    "primary-soft":  { "$type": "color", "$value": "#F6F3EE", "$description": "Rendered value of V-Estate bg-primary/10 on white" },
+    "on-primary":    { "$type": "color", "$value": "#1B1C1D", "$description": "Dark text on gold: 5.24:1 (white was 3.26:1)" },
+    "text":          { "$type": "color", "$value": "#2B2B2B", "$description": "V-Estate --foreground" },
+    "text-muted":    { "$type": "color", "$value": "#6E6E6E", "$description": "V-Estate --muted-foreground #757575 darkened 6% to meet AA on surface-muted" },
+    "text-subtle":   { "$type": "color", "$value": "#757575", "$description": "V-Estate uses muted-foreground for placeholders" },
+    "background":    { "$type": "color", "$value": "#FFFFFF", "$description": "V-Estate --background" },
+    "surface":       { "$type": "color", "$value": "#FFFFFF", "$description": "V-Estate --card" },
+    "surface-muted": { "$type": "color", "$value": "#F2F2F2", "$description": "V-Estate --muted / --secondary" },
+    "border":        { "$type": "color", "$value": "#E4E6E7", "$description": "V-Estate --border" },
+    "input":         { "$type": "color", "$value": "#E4E6E7", "$description": "V-Estate --input" },
+    "ring":          { "$type": "color", "$value": "#A88A5A", "$description": "V-Estate --ring" },
+    "success":       { "$type": "color", "$value": "#22C55E", "$description": "Was #49BE7B" },
+    "warning":       { "$type": "color", "$value": "#F59E0B", "$description": "Was #FA862E" },
+    "danger":        { "$type": "color", "$value": "#EF4444", "$description": "Was #FF5A5A" },
+    "info":          { "$type": "color", "$value": "#3B82F6", "$description": "Was #4077FD" }
+  }
+}
