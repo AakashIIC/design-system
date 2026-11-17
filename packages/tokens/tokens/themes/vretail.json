@@ -3,6 +3,7 @@
     "primary":       { "$type": "color", "$value": "#4434DD", "$description": "= --vr-color-primary" },
     "primary-hover": { "$type": "color", "$value": "#3A2BC4", "$description": "= --vr-color-primary-hover" },
     "primary-soft":  { "$type": "color", "$value": "#F0EEFF", "$description": "= --vr-color-primary-soft" },
+    "accent":        { "$type": "color", "$value": "#8076EE", "$description": "Same as Data Vault: brand gradient end. Decorative only, not for text" },
     "on-primary":    { "$type": "color", "$value": "#FFFFFF" },
     "text":          { "$type": "color", "$value": "#2B3674", "$description": "= --vr-color-text" },
     "text-muted":    { "$type": "color", "$value": "#616E97", "$description": "Was --vr-color-text-muted #707EAE; darkened to meet AA on all backgrounds" },

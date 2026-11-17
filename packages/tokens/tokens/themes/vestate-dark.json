@@ -3,6 +3,7 @@
     "primary":       { "$type": "color", "$value": "#D2B589", "$description": "V-Estate .dark --primary" },
     "primary-hover": { "$type": "color", "$value": "#C0A67E", "$description": "Rendered value of hover:bg-primary/90 on dark background" },
     "primary-soft":  { "$type": "color", "$value": "#2D2B28", "$description": "Rendered value of bg-primary/10 on dark background" },
+    "accent":        { "$type": "color", "$value": "#D2B589", "$description": "Equals dark primary (no second brand colour)" },
     "on-primary":    { "$type": "color", "$value": "#1B1C1D", "$description": "V-Estate .dark --primary-foreground" },
     "text":          { "$type": "color", "$value": "#F9FBFC", "$description": "V-Estate .dark --foreground" },
     "text-muted":    { "$type": "color", "$value": "#A0A0A0", "$description": "V-Estate .dark --muted-foreground" },

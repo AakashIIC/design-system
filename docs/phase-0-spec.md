@@ -8,7 +8,7 @@ Implements Phase 0 of *Design System Unification — Plan* (11 Nov 2026). The va
 
 | Question | Decision |
 |---|---|
-| Source of truth | **Data Vault's code**: no Figma file. Values come from what Data Vault actually uses (counted in `dv/src`), not only what its `globals.css` declares. VRetail's Figma-derived `--vr-*` set fills gaps where Data Vault has nothing on-palette. |
+| Source of truth | **Data Vault's code**: no Figma file. Values come from what Data Vault actually uses (counted in `vretail-data-vault-frontend`, branch `dev` @ `e2a778c7`, 16 Nov 2026; the first draft counted an older copy in `dv/src`), not only what its `globals.css` declares. VRetail's Figma-derived `--vr-*` set fills gaps where Data Vault has nothing on-palette. |
 | Shared font | **Geist** for all apps, in the shared layer. VRetail and V-Estate switch from DM Sans. |
 | Border colour | **`#E9EDF7`** (Data Vault + VRetail). V-Estate keeps its own `#E4E6E7`. |
 | Status colours | **Tailwind defaults** for every app: success `#22C55E`, warning `#F59E0B`, danger `#EF4444`, info `#3B82F6`. |
@@ -20,17 +20,17 @@ Names match Tailwind's default scale where the value matches, so most existing T
 
 | Group | Tokens | Evidence from Data Vault |
 |---|---|---|
-| Type size | xs 12 · sm 14 · base 16 · lg 18 · xl 20 · 2xl 24 · 3xl 30 (px) | `text-sm` 632 uses, `text-xs` 234, `text-base` 106, `text-xl` 101, `text-lg` 90. 13px and 32px were removed; 12px is the minimum (replaces ~100 uses of 8–11px). |
-| Weight | regular 400 · medium 500 · semibold 600 · bold 700 | semibold 465, bold 321, medium 320. |
-| Radius | md 6 · lg 8 · xl 12 · 2xl 16 · full (px) | `rounded-lg` 369, `rounded-xl` 340, `rounded-2xl` 129, `rounded-md` 119. Nothing used 10px. |
-| Control height | sm 32 · md 40 · lg 48 (px) | `h-8` 116, `h-10` 57, `h-12` 21. VRetail moves 38 → 40. |
+| Type size | 2xs 11 (dense data UI only) · xs 12 · sm 14 · base 16 · lg 18 · xl 20 · 2xl 24 · 3xl 30 (px) | `text-sm` 864 uses, `text-xs` 821, `text-base` 225, `text-xl` 156, `text-lg` 148, `text-2xl` 97, `text-3xl` 66. 13px (43 uses) and 32px (1) were removed. 8–11px is used **478** times (`text-[10px]` 225, `[11px]` 186, `[9px]` 43, `[8px]` 21), mostly in charts, badges and table meta, so `2xs` 11px was added for that UI only (decided 17 Nov 2026); 11px is the minimum, 12px for running text. |
+| Weight | regular 400 · medium 500 · semibold 600 · bold 700 | semibold 686, bold 450, medium 410, normal 39. |
+| Radius | sm 4 · md 6 · lg 8 · xl 12 · 2xl 16 · full (px) | `rounded-full` 500, `rounded-xl` 492, `rounded-lg` 427, `rounded`/4px 202 (so `sm` was added, 17 Nov 2026), `rounded-2xl` 192, `rounded-md` 185. 10px used 4 times. |
+| Control height | sm 32 · md 40 · lg 48 (px) | `h-8` 154, `h-10` 87, `h-12` 41 (also `h-9` 56, `h-11` 23). VRetail moves 38 → 40. |
 | Spacing | 4px grid: 1, 2, 3, 4, 5, 6, 8, 10, 12 | Matches Data Vault and `--vr-space-*`. |
-| Shadow | sm (cards, controls) · md (dropdowns) · lg (raised panels) | `shadow-sm` 222 uses; lg is Data Vault's own `shadow-primary`. Replaces the one-off `shadow-[…]` values. |
+| Shadow | sm (cards, controls) · md (dropdowns) · lg (raised panels) | `shadow-sm` 188 uses, `shadow-md` 51, `shadow-lg` 37, plain `shadow` 47; lg is Data Vault's own `shadow-primary` (6 uses). Replaces the 56 one-off `shadow-[…]` values. |
 | Motion | duration fast 150ms · base 200ms · ease standard | From VRetail (Data Vault defines none). |
 
 ## Colour themes
 
-The same 17 semantic names exist in every theme (the build fails if one is missing). Components use only these names.
+The same 18 semantic names exist in every theme (the build fails if one is missing). Components use only these names.
 
 | Token | Data Vault / VRetail | V-Estate light | V-Estate dark |
 |---|---|---|---|
@@ -47,6 +47,7 @@ The same 17 semantic names exist in every theme (the build fails if one is missi
 | border | `#E9EDF7` | `#E4E6E7` | `#333333` |
 | input | `#E0E4F2` | `#E4E6E7` | `#333333` |
 | ring | `#4434DD` | `#A88A5A` | `#D2B589` |
+| accent (decorative, not text) | `#8076EE` | `#A88A5A` (= primary) | `#D2B589` (= primary) |
 | success / warning / danger / info | Tailwind defaults (all themes) | | |
 
 Theme selection: `data-app="datavault|vretail|vestate"` on `<html>` (Data Vault when absent); V-Estate dark mode via the `dark` class it already sets, or `data-theme="dark"`.
@@ -73,7 +74,11 @@ Every theme now passes WCAG 2.2 AA for its text pairs (4.5:1 for text, 3:1 for p
 - Is the central portal built on `@iic/ui` from the start? (Recommended in the plan.)
 - Is iiclab.com in scope, and can the repo be shared for an audit?
 - How much time can each team give this alongside other work?
-- Re-measure usage counts with the final token list (plan risk table).
+- ~~Re-measure usage counts with the final token list.~~ Done 17 Nov 2026 against `vretail-data-vault-frontend` `dev`. It raised these decisions:
+  1. ~~12px minimum hits 478 uses, not ~100.~~ Decided 17 Nov 2026: add `2xs` 11px for dense data UI; 8–11px map to it.
+  2. ~~No 4px radius.~~ Decided 17 Nov 2026: add `radius.sm` 4px.
+  3. ~~Off-palette purples are bigger than `#5F50F0`.~~ Decided 17 Nov 2026: `#5F50F0` (104 uses) maps to `primary`. New `accent` token `#8076EE` (130 uses) for the brand gradient end (`from-primary to-accent`) and secondary purple, decorative only; V-Estate's `accent` equals its primary. `#958CF0` and the JS chart colours stay raw until a chart-palette step. The `#4776E6`→`#8E54E9` gradient is still open.
+  4. **Some chosen colours are not in the code.** `primary-hover` `#3A2BC4` has 0 uses, `primary-soft` `#F0EEFF` 1, `input` `#E0E4F2` 3. They are new values, not measured ones; `#9AA8D1` (45 uses) is an unlisted muted grey.
 
 ## Sign-off
 

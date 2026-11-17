@@ -3,6 +3,7 @@
     "primary":       { "$type": "color", "$value": "#A88A5A", "$description": "V-Estate --primary" },
     "primary-hover": { "$type": "color", "$value": "#B1966A", "$description": "Rendered value of V-Estate hover:bg-primary/90 on white" },
     "primary-soft":  { "$type": "color", "$value": "#F6F3EE", "$description": "Rendered value of V-Estate bg-primary/10 on white" },
+    "accent":        { "$type": "color", "$value": "#A88A5A", "$description": "V-Estate has no second brand colour; equals primary so gradients stay flat gold" },
     "on-primary":    { "$type": "color", "$value": "#1B1C1D", "$description": "Dark text on gold: 5.24:1 (white was 3.26:1)" },
     "text":          { "$type": "color", "$value": "#2B2B2B", "$description": "V-Estate --foreground" },
     "text-muted":    { "$type": "color", "$value": "#6E6E6E", "$description": "V-Estate --muted-foreground #757575 darkened 6% to meet AA on surface-muted" },

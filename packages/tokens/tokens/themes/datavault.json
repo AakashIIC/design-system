@@ -3,6 +3,7 @@
     "primary":       { "$type": "color", "$value": "#4434DD", "$description": "DV --color-blue-prime-1" },
     "primary-hover": { "$type": "color", "$value": "#3A2BC4", "$description": "VRetail Figma --vr-color-primary-hover (DV used off-palette indigo-600)" },
     "primary-soft":  { "$type": "color", "$value": "#F0EEFF", "$description": "Selected/tinted backgrounds (VRetail Figma)" },
+    "accent":        { "$type": "color", "$value": "#8076EE", "$description": "DV --color-blue-secondary-1: brand gradient end (from-primary to-accent) and secondary purple. Decorative only, not for text" },
     "on-primary":    { "$type": "color", "$value": "#FFFFFF" },
     "text":          { "$type": "color", "$value": "#2B3674", "$description": "DV --color-blue-dark-prime-1" },
     "text-muted":    { "$type": "color", "$value": "#616E97", "$description": "DV #707EAE darkened 13% to meet AA on surface, background and surface-muted" },

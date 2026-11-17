@@ -2,8 +2,8 @@
 // Pure functions, no ESLint dependency, so they are easy to test and reuse in a codemod.
 
 // Token scales from @aakashiic/tokens (px). Only exact matches get a fix.
-export const FONT_SIZE = { 12: 'xs', 14: 'sm', 16: 'base', 18: 'lg', 20: 'xl', 24: '2xl', 30: '3xl' };
-export const RADIUS = { 6: 'md', 8: 'lg', 12: 'xl', 16: '2xl', 9999: 'full' };
+export const FONT_SIZE = { 11: '2xs', 12: 'xs', 14: 'sm', 16: 'base', 18: 'lg', 20: 'xl', 24: '2xl', 30: '3xl' };
+export const RADIUS = { 4: 'sm', 6: 'md', 8: 'lg', 12: 'xl', 16: '2xl', 9999: 'full' };
 export const SPACING = { 0: '0', 4: '1', 8: '2', 12: '3', 16: '4', 20: '5', 24: '6', 32: '8', 40: '10', 48: '12' };
 
 const COLOR_VALUE = /#[0-9a-f]{3,8}\b|\b(?:rgba?|hsla?|oklch|oklab|lab|lch|hwb|color-mix)\(/i;
