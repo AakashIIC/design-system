@@ -186,9 +186,23 @@ Use the semantic names, never raw values, so the same component renders correctl
 | Dividers | `border-border` | `--ds-color-border` |
 | Input borders | `border-input` | `--ds-color-input` |
 | Focus ring | `ring-ring`, `outline-ring` | `--ds-color-ring` |
-| Status | `text-success`, `bg-warning`, `border-danger`, `text-info` | `--ds-color-success` … `-info` |
+| Status (bright: dots, borders, decoration) | `bg-success`, `border-danger`, `bg-warning`, `text-info` | `--ds-color-success` … `-info` |
+| Status tinted background | `bg-success-soft`, `bg-warning-soft`, `bg-danger-soft`, `bg-info-soft` | `--ds-color-*-soft` |
+| Status text and meaningful icons | `text-success-strong`, `text-warning-strong`, `text-danger-strong`, `text-info-strong` | `--ds-color-*-strong` |
+| Chart series | `bg-chart-1` … `bg-chart-6`, `fill-chart-1`, `stroke-chart-2` | `--ds-color-chart-1` … `-6` |
 
-Status colours are for icons, borders and tints; don't put white text on them (it fails contrast).
+Use the **strong** shade for status text and for icons that carry meaning: it passes AA on white and on its own soft background. The bright shades (`success`, `warning`) are only about 2.2:1 on white, so keep them for decoration, and never put white text on them. `chart-6` is the "no data / remainder" colour. The lighter chart colours are below 3:1 on white, so charts must also have labels or a legend.
+
+**Colours in JavaScript.** Chart.js draws on a canvas and Recharts takes colours as props, so neither can read CSS variables. Import the literal values per theme:
+
+```ts
+import { chartColors, colors } from '@aakashiic/tokens';
+
+const series = chartColors.datavault; // ['#4434DD', '#8076EE', '#C2B3FC', '#2B3674', '#958CF0', '#D8DADB']
+const error = colors.datavault['danger-strong']; // '#B91C1C'
+```
+
+Prefer the CSS variables wherever CSS works. These values don't follow a runtime theme switch, so pass the app's theme name.
 
 ### Everything else
 

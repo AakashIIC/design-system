@@ -30,7 +30,9 @@
             background: var(--ds-color-surface); color: var(--ds-color-text); }
     input::placeholder { color: var(--ds-color-text-subtle); }
     .chip { font-size: var(--ds-font-size-xs); font-weight: var(--ds-font-weight-medium); padding: var(--ds-spacing-1) var(--ds-spacing-2);
-            border-radius: var(--ds-radius-full); color: #fff; }
+            border-radius: var(--ds-radius-full); }
+    .swatch { width: var(--ds-spacing-8); height: var(--ds-spacing-8); border-radius: var(--ds-radius-md); }
+    .label { font-size: var(--ds-font-size-2xs); color: var(--ds-color-text-muted); margin: 0 0 var(--ds-spacing-1); }
   </style>
 </head>
 <body>
@@ -44,11 +46,21 @@
       <button class="ghost" id="dark" aria-pressed="false" hidden>Dark</button>
     </div>
     <div class="row"><button>Primary button</button><input placeholder="Placeholder text" aria-label="Example input"></div>
+    <p class="label">Status: soft background, strong text</p>
     <div class="row">
-      <span class="chip" style="background: var(--ds-color-success)">Success</span>
-      <span class="chip" style="background: var(--ds-color-warning)">Warning</span>
-      <span class="chip" style="background: var(--ds-color-danger)">Danger</span>
-      <span class="chip" style="background: var(--ds-color-info)">Info</span>
+      <span class="chip" style="background: var(--ds-color-success-soft); color: var(--ds-color-success-strong)">Success</span>
+      <span class="chip" style="background: var(--ds-color-warning-soft); color: var(--ds-color-warning-strong)">Warning</span>
+      <span class="chip" style="background: var(--ds-color-danger-soft); color: var(--ds-color-danger-strong)">Danger</span>
+      <span class="chip" style="background: var(--ds-color-info-soft); color: var(--ds-color-info-strong)">Info</span>
+    </div>
+    <p class="label">Chart series 1–6 (6 = no data)</p>
+    <div class="row">
+      <span class="swatch" style="background: var(--ds-color-chart-1)" title="chart-1"></span>
+      <span class="swatch" style="background: var(--ds-color-chart-2)" title="chart-2"></span>
+      <span class="swatch" style="background: var(--ds-color-chart-3)" title="chart-3"></span>
+      <span class="swatch" style="background: var(--ds-color-chart-4)" title="chart-4"></span>
+      <span class="swatch" style="background: var(--ds-color-chart-5)" title="chart-5"></span>
+      <span class="swatch" style="background: var(--ds-color-chart-6)" title="chart-6"></span>
     </div>
   </div>
   <script>
