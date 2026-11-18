@@ -3,10 +3,18 @@
 Shared React components for **Data Vault**, **V-Estate** and the central portal: Radix primitives styled with
 Tailwind CSS v4. VRetail is Angular and uses only [`@aakashiic/tokens`](../tokens).
 
-> **Status: Phase 3 in progress.** These are V-Estate's 29 generic shadcn components. They still use shadcn
-> colour names (`bg-background`, `text-muted-foreground`, `bg-destructive`, …) and are restyled to the tokens
-> group by group in DS-3.3 (see the [Phase 3 plan](../../docs/phase-3-plan.md)). Until then, read
-> [section 3](#3-colours-until-ds-33) before using them in an app.
+> **Status: Phase 3 in progress.** These are V-Estate's 29 generic shadcn components, restyled to the tokens
+> group by group in DS-3.3 (see the [Phase 3 plan](../../docs/phase-3-plan.md)):
+>
+> | Group | Components | Status |
+> |---|---|---|
+> | DS-3.3a overlays | dialog, alert-dialog, sheet, popover, tooltip | **Tokens only** (alert-dialog's buttons follow in 3.3b) |
+> | DS-3.3b buttons | button | shadcn names |
+> | DS-3.3c form controls | input, textarea, select, checkbox, radio-group, switch, slider, label, form | shadcn names |
+> | DS-3.3d navigation | tabs, dropdown-menu, command | shadcn names |
+> | DS-3.3e data display | table, badge, card, progress, skeleton, separator, scroll-area | shadcn names |
+>
+> Components still on shadcn names need the app to define them: read [section 3](#3-colours-until-ds-33).
 
 - [1. Install](#1-install)
 - [2. Set up your app](#2-set-up-your-app)
@@ -35,6 +43,7 @@ This installs the latest version and pins it exactly (`npm view @aakashiic/ui ve
 |---|---|---|
 | `react`, `react-dom` | 19 | everything |
 | `tailwindcss` | 4.1 or later | everything |
+| `@aakashiic/tokens` | 0.5.0 or later (adds `overlay`) | every restyled component (see the status table) |
 | `lucide-react` | 0.400 or later | icons inside the components |
 | `react-day-picker` | 9 | `@aakashiic/ui/calendar` only |
 | `recharts` | 2.15 | `@aakashiic/ui/chart` only |
@@ -76,7 +85,12 @@ JavaScript with `'use client'` already on the components that need it.
 
 ## 3. Colours until DS-3.3
 
-The components still use **shadcn's colour names**, which the tokens don't define:
+**Restyled components** (the status table at the top) use only token names (`bg-surface`, `text-text-muted`,
+`bg-overlay`, …), so they need `@aakashiic/tokens` set up as in [section 2](#2-set-up-your-app) and nothing
+else. That includes V-Estate: import the tokens with `data-app="vestate"` before upgrading to a release with
+restyled components, or those components lose their colours.
+
+The **other components** still use **shadcn's colour names**, which the tokens don't define:
 
 `background`, `foreground`, `card`, `card-foreground`, `popover`, `popover-foreground`, `primary-foreground`,
 `secondary`, `secondary-foreground`, `muted`, `muted-foreground`, `accent`, `accent-foreground`, `destructive`,
@@ -165,6 +179,24 @@ app that upgrades, so check the screens that use them.
 
 ```bash
 npm run build      # tsc → dist/ (one file per component, 'use client' kept)
-npm run typecheck
-npm test           # against dist/, so build first: exports, and a real Tailwind v4 compile of styles.css
+npm run typecheck  # src, tests and the preview
+npm test           # build first (and build the tokens): see below
+npm run preview    # http://localhost:5180: restyled components in every app theme
 ```
+
+`npm test` runs two suites:
+
+- **`node --test`** (`test/*.test.js`): package checks against `dist/`: exports, a real Tailwind v4 compile of
+  `styles.css`, and **tokens-only**: every restyled file may use only token colours, radii, shadows and
+  motion, and no `dark:`. Add a component to `RESTYLED` in `test/tokens-only.test.js` when its group lands.
+- **Vitest** (`test/components/*.test.tsx`, jsdom): accessibility and behaviour per component: roles and
+  accessible names, focus moving in and back out, Escape, focus trapping, and an axe-core scan
+  (colour contrast excluded: jsdom has no CSS; the token pairs are contrast-checked in the tokens package).
+
+### Restyling a group (DS-3.3)
+
+1. Replace shadcn names with token names; check the [tokens README](../tokens/README.md#4-use-the-tokens) for
+   which one fits. Shared overlay classes live in `src/lib/overlay.ts`.
+2. Add the files to `RESTYLED`, write the Vitest file for the group, and add a section to `preview/main.tsx`.
+3. Check every theme in the preview, at desktop and phone width.
+4. Changeset: **minor** (it changes how the components look in every app that upgrades), listing what changed.

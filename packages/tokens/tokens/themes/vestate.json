@@ -14,6 +14,7 @@
     "border":          { "$type": "color", "$value": "#E4E6E7", "$description": "V-Estate --border" },
     "input":           { "$type": "color", "$value": "#E4E6E7", "$description": "V-Estate --input" },
     "ring":            { "$type": "color", "$value": "#A88A5A", "$description": "V-Estate --ring" },
+    "overlay":         { "$type": "color", "$value": "#0000004D", "$description": "Backdrop behind modals and sheets: black 30% (DV modal bg-black/30), used with backdrop-blur-sm" },
     "success":         { "$type": "color", "$value": "#22C55E", "$description": "Was #49BE7B" },
     "warning":         { "$type": "color", "$value": "#F59E0B", "$description": "Was #FA862E" },
     "danger":          { "$type": "color", "$value": "#EF4444", "$description": "Was #FF5A5A" },
