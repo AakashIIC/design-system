@@ -1,0 +1,11 @@
+/*
+ * @aakashiic/ui: import once in the app's global CSS, after `@import "tailwindcss"`.
+ *
+ * - @source: Tailwind v4 never scans node_modules, so without this line the classes the
+ *   components use are never generated. The path is relative to this file, so it works
+ *   however the package is installed (hoisted, pnpm, workspace link).
+ * - tw-animate-css: the enter/exit animations the overlays use (animate-in, fade-in-0,
+ *   zoom-in-95, slide-in-from-*).
+ */
+@import "tw-animate-css";
+@source "./dist";

@@ -1,0 +1,4 @@
+/* What an app's globals.css does. source(none) turns off scanning the app itself,
+   so every class in the output comes from the package's own @source. */
+@import "tailwindcss" source(none);
+@import "@aakashiic/ui/styles.css";
