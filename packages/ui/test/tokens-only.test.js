@@ -15,6 +15,8 @@ const RESTYLED = [
   'components/sheet.tsx',
   'components/popover.tsx',
   'components/tooltip.tsx',
+  // DS-3.3b buttons
+  'components/button.tsx',
 ];
 
 const COLOURS = new Set([...Object.keys(colors.datavault), 'transparent', 'current', 'inherit']);
@@ -28,13 +30,16 @@ const NOT_COLOUR = {
   border: /^(\d+|solid|dashed|dotted|double|none|hidden|collapse|separate)$/,
   ring: /^(\d+|inset)$/,
   'ring-offset': /^\d+$/,
+  decoration: /^(\d+|solid|dashed|dotted|double|wavy|auto|from-font|clone|slice)$/,
   outline: /^(\d+|none|hidden|solid|dashed|dotted|double|offset-\d+)$/,
 };
 const COLOUR_PREFIX = /^(bg|text|border(?:-[trblxyse])?|ring-offset|ring|outline|fill|stroke|from|via|to|divide|placeholder|decoration|caret|accent)-(.+)$/;
 
 /** Every Tailwind class in string literals of the file, with variants (`hover:`, `data-[x]:`) removed. */
 function classesIn(source) {
-  const literals = source.match(/(['"`])(?:(?!\1)[^\\]|\\.)*\1/g) ?? [];
+  // Drop comments first: an apostrophe in a comment ("Data Vault's") would otherwise open a fake string.
+  const code = source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1');
+  const literals = code.match(/(['"`])(?:(?!\1)[^\\]|\\.)*\1/g) ?? [];
   const out = [];
   for (const literal of literals) {
     for (const token of literal.slice(1, -1).split(/\s+/)) {

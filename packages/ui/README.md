@@ -8,8 +8,8 @@ Tailwind CSS v4. VRetail is Angular and uses only [`@aakashiic/tokens`](../token
 >
 > | Group | Components | Status |
 > |---|---|---|
-> | DS-3.3a overlays | dialog, alert-dialog, sheet, popover, tooltip | **Tokens only** (alert-dialog's buttons follow in 3.3b) |
-> | DS-3.3b buttons | button | shadcn names |
+> | DS-3.3a overlays | dialog, alert-dialog, sheet, popover, tooltip | **Tokens only** |
+> | DS-3.3b buttons | button | **Tokens only** |
 > | DS-3.3c form controls | input, textarea, select, checkbox, radio-group, switch, slider, label, form | shadcn names |
 > | DS-3.3d navigation | tabs, dropdown-menu, command | shadcn names |
 > | DS-3.3e data display | table, badge, card, progress, skeleton, separator, scroll-area | shadcn names |
@@ -131,6 +131,35 @@ import { Form, FormField } from '@aakashiic/ui/form';
 
 Every component also has its own path (`@aakashiic/ui/button`), and `cn` is at `@aakashiic/ui/utils`.
 
+### Button
+
+```tsx
+<Button>Save</Button>                                     {/* primary, 40px */}
+<Button variant="outline" size="sm">Cancel</Button>
+<Button variant="destructive" loading={isDeleting}>Delete</Button>
+<Button size="icon" variant="ghost" aria-label="Edit"><Pencil /></Button>
+<Button asChild variant="link"><Link href="/reports">Reports</Link></Button>
+```
+
+| Variant | Use for | Looks like |
+|---|---|---|
+| `default` | The main action | Brand fill: indigo (Data Vault, VRetail), gold with dark text (V-Estate) |
+| `secondary` | A strong action that isn't the brand one | Navy in Data Vault, charcoal in V-Estate |
+| `outline` | Secondary actions; the unselected half of a toggle group | Neutral border on the surface |
+| `ghost` | Toolbars, icon buttons | No background until hovered |
+| `muted` | A quiet filled button | Neutral tint |
+| `link` | An action that should read as a link | Body text with a brand-coloured underline |
+| `destructive`, `success`, `warning` | Delete / approve / block | Tinted background with the strong status colour as text |
+
+Sizes: `default` 40px, `sm` 32px, `lg` 48px, `icon` 40px square, `icon-sm` 32px square (icon buttons need an
+`aria-label`). `loading` shows a spinner, disables the button and sets `aria-busy`.
+
+Like HTML, a `Button` without `type` inside a `<form>` submits it. Pass `type="button"` for buttons that
+shouldn't. (Data Vault's own button defaults to `type="button"`, so its form buttons already say `submit`.)
+
+To make an alert dialog's action destructive, pass the variant's classes:
+`<AlertDialogAction className={buttonVariants({ variant: 'destructive' })}>`.
+
 ### Differences from V-Estate's own copies
 
 Moving V-Estate from `@/components/ui/*` to this package (Phase 4) is a find-and-replace on the import path,
@@ -150,6 +179,21 @@ except for:
   const { resolvedTheme } = useTheme();
   <Toaster theme={resolvedTheme as 'light' | 'dark'} />
   ```
+- **`Button`** has a different variant set and **defaults to `default` (primary)**; V-Estate's copy defaulted
+  to `grey`. Measured on `staging` (18 Nov 2026, 330 buttons):
+
+  | V-Estate today | Uses | Change to |
+  |---|---|---|
+  | no `variant` (was `grey`) | 56 | `variant="secondary"` (same charcoal look), or nothing to make it primary |
+  | `grey` | 4 | `secondary` |
+  | `secondary` (light grey), `edit` | 5, 9 | `muted` |
+  | `delete` | 6 | `destructive` (now the tinted style; was solid red for `destructive`) |
+  | `destructive` | 8 | `destructive` |
+  | `green`, `block` | 1, 1 | `success`, `warning` |
+  | `default`, `outline`, `ghost`, `link` | ~28, ~150, 91, 2 | unchanged |
+
+  Sizes: `lg` is now 48px (was 44px), and `sm` no longer forces `w-fit`. Add `w-fit` where a small button
+  sits in a column and shouldn't stretch.
 
 ---
 

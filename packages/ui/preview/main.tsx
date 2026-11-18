@@ -1,8 +1,9 @@
 import { StrictMode, useEffect, useState, type ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Info } from 'lucide-react';
+import { Info, Plus, Trash2 } from 'lucide-react';
 
 import './preview.css';
+import { Button } from '../src/components/button.tsx';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -43,20 +44,7 @@ const THEMES = [
 ] as const;
 type ThemeId = (typeof THEMES)[number]['id'];
 
-// Triggers only. Button itself is restyled in DS-3.3b, so the preview uses its own token-styled buttons.
-function PreviewButton({ variant = 'primary', ...props }: React.ComponentProps<'button'> & { variant?: 'primary' | 'outline' }) {
-  const look =
-    variant === 'primary'
-      ? 'bg-primary text-on-primary hover:bg-primary-hover'
-      : 'border border-input bg-surface text-text hover:bg-surface-muted';
-  return (
-    <button
-      type="button"
-      className={`inline-flex h-control-md items-center gap-2 rounded-lg px-4 text-sm font-medium transition-colors duration-(--ds-motion-duration-fast) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${look}`}
-      {...props}
-    />
-  );
-}
+const BUTTON_VARIANTS = ['default', 'secondary', 'outline', 'ghost', 'muted', 'link', 'destructive', 'success', 'warning'] as const;
 
 function Section({ title, status, children }: { title: string; status: string; children: ReactNode }) {
   return (
@@ -105,10 +93,40 @@ function Preview() {
           </div>
         </header>
 
+        <Section title="Button" status="DS-3.3b">
+          <div className="flex w-full flex-col gap-4">
+            {(['default', 'sm', 'lg'] as const).map((size) => (
+              <div key={size} className="flex flex-wrap items-center gap-3">
+                {BUTTON_VARIANTS.map((variant) => (
+                  <Button key={variant} variant={variant} size={size}>
+                    {variant}
+                  </Button>
+                ))}
+              </div>
+            ))}
+            <div className="flex flex-wrap items-center gap-3">
+              <Button>
+                <Plus aria-hidden="true" /> New project
+              </Button>
+              <Button size="icon" variant="outline" aria-label="Add">
+                <Plus />
+              </Button>
+              <Button size="icon-sm" variant="ghost" aria-label="Delete">
+                <Trash2 />
+              </Button>
+              <Button loading>Saving</Button>
+              <Button disabled>Disabled</Button>
+              <Button asChild variant="link">
+                <a href="#button">A link styled as a button</a>
+              </Button>
+            </div>
+          </div>
+        </Section>
+
         <Section title="Dialog" status="DS-3.3a">
           <Dialog>
             <DialogTrigger asChild>
-              <PreviewButton>Open dialog</PreviewButton>
+              <Button>Open dialog</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
@@ -124,20 +142,20 @@ function Preview() {
               </label>
               <DialogFooter>
                 <DialogClose asChild>
-                  <PreviewButton variant="outline">Cancel</PreviewButton>
+                  <Button variant="outline">Cancel</Button>
                 </DialogClose>
                 <DialogClose asChild>
-                  <PreviewButton>Save</PreviewButton>
+                  <Button>Save</Button>
                 </DialogClose>
               </DialogFooter>
             </DialogContent>
           </Dialog>
         </Section>
 
-        <Section title="Alert dialog" status="DS-3.3a · buttons in DS-3.3b">
+        <Section title="Alert dialog" status="DS-3.3a">
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <PreviewButton variant="outline">Delete project</PreviewButton>
+              <Button variant="outline">Delete project</Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
@@ -158,7 +176,7 @@ function Preview() {
           {(['right', 'left', 'top', 'bottom'] as const).map((side) => (
             <Sheet key={side}>
               <SheetTrigger asChild>
-                <PreviewButton variant="outline">Sheet: {side}</PreviewButton>
+                <Button variant="outline">Sheet: {side}</Button>
               </SheetTrigger>
               <SheetContent side={side}>
                 <SheetHeader>
@@ -173,7 +191,7 @@ function Preview() {
         <Section title="Popover and tooltip" status="DS-3.3a">
           <Popover>
             <PopoverTrigger asChild>
-              <PreviewButton variant="outline">Open popover</PreviewButton>
+              <Button variant="outline">Open popover</Button>
             </PopoverTrigger>
             <PopoverContent aria-label="Share">
               <div className="flex flex-col gap-2">
@@ -184,9 +202,9 @@ function Preview() {
           </Popover>
           <Tooltip>
             <TooltipTrigger asChild>
-              <PreviewButton variant="outline">
+              <Button variant="outline">
                 <Info className="size-4" aria-hidden="true" /> Hover or focus me
-              </PreviewButton>
+              </Button>
             </TooltipTrigger>
             <TooltipContent>Calls longer than 30 seconds</TooltipContent>
           </Tooltip>
