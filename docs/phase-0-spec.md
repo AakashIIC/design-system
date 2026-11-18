@@ -20,7 +20,7 @@ Names match Tailwind's default scale where the value matches, so most existing T
 
 | Group | Tokens | Evidence from Data Vault |
 |---|---|---|
-| Type size | 2xs 11 (dense data UI only) · xs 12 · sm 14 · base 16 · lg 18 · xl 20 · 2xl 24 · 3xl 30 (px) | `text-sm` 864 uses, `text-xs` 821, `text-base` 225, `text-xl` 156, `text-lg` 148, `text-2xl` 97, `text-3xl` 66. 13px (43 uses) and 32px (1) were removed. 8–11px is used **478** times (`text-[10px]` 225, `[11px]` 186, `[9px]` 43, `[8px]` 21), mostly in charts, badges and table meta, so `2xs` 11px was added for that UI only (decided 17 Nov 2026); 11px is the minimum, 12px for running text. |
+| Type size | 2xs 11 (dense data UI only) · xs 12 · sm 14 · base 16 · lg 18 · xl 20 · 2xl 24 · 3xl 30; display 4xl 36 · 5xl 48 · 6xl 60 (px) | `text-sm` 864 uses, `text-xs` 821, `text-base` 225, `text-xl` 156, `text-lg` 148, `text-2xl` 97, `text-3xl` 66. 13px (43 uses) and 32px (1) were removed. 8–11px is used **478** times (`text-[10px]` 225, `[11px]` 186, `[9px]` 43, `[8px]` 21), mostly in charts, badges and table meta, so `2xs` 11px was added for that UI only (decided 17 Nov 2026); 11px is the minimum, 12px for running text. |
 | Weight | regular 400 · medium 500 · semibold 600 · bold 700 | semibold 686, bold 450, medium 410, normal 39. |
 | Radius | sm 4 · md 6 · lg 8 · xl 12 · 2xl 16 · full (px) | `rounded-full` 500, `rounded-xl` 492, `rounded-lg` 427, `rounded`/4px 202 (so `sm` was added, 17 Nov 2026), `rounded-2xl` 192, `rounded-md` 185. 10px used 4 times. |
 | Control height | sm 32 · md 40 · lg 48 (px) | `h-8` 154, `h-10` 87, `h-12` 41 (also `h-9` 56, `h-11` 23). VRetail moves 38 → 40. |
