@@ -1,0 +1,13 @@
+/* Set up exactly like an app (see the README), except @source points at src/ instead of dist/. */
+@import "tailwindcss" source(none);
+@import "@aakashiic/tokens/tokens.css";
+@import "@aakashiic/tokens/tailwind.css";
+@import "tw-animate-css";
+@source "../src";
+@source "./";
+
+body {
+  background: var(--ds-color-background);
+  color: var(--ds-color-text);
+  font-family: var(--ds-font-family-sans);
+}

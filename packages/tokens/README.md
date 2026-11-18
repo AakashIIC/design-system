@@ -186,6 +186,7 @@ Use the semantic names, never raw values, so the same component renders correctl
 | Dividers | `border-border` | `--ds-color-border` |
 | Input borders | `border-input` | `--ds-color-input` |
 | Focus ring | `ring-ring`, `outline-ring` | `--ds-color-ring` |
+| Backdrop behind modals and sheets (already translucent; add `backdrop-blur-sm`) | `bg-overlay` | `--ds-color-overlay` |
 | Status (bright: dots, borders, decoration) | `bg-success`, `border-danger`, `bg-warning`, `text-info` | `--ds-color-success` … `-info` |
 | Status tinted background | `bg-success-soft`, `bg-warning-soft`, `bg-danger-soft`, `bg-info-soft` | `--ds-color-*-soft` |
 | Status text and meaningful icons | `text-success-strong`, `text-warning-strong`, `text-danger-strong`, `text-info-strong` | `--ds-color-*-strong` |

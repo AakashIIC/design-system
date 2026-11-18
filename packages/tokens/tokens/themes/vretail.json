@@ -14,6 +14,7 @@
     "border":          { "$type": "color", "$value": "#E9EDF7", "$description": "= --vr-color-border" },
     "input":           { "$type": "color", "$value": "#E0E4F2", "$description": "VRetail had #E0E5F2; aligned to Data Vault" },
     "ring":            { "$type": "color", "$value": "#4434DD" },
+    "overlay":         { "$type": "color", "$value": "#0000004D", "$description": "Backdrop behind modals and sheets: black 30% (DV modal bg-black/30), used with backdrop-blur-sm" },
     "success":         { "$type": "color", "$value": "#22C55E", "$description": "Was #3DAA2B" },
     "warning":         { "$type": "color", "$value": "#F59E0B", "$description": "= --vr-color-warning" },
     "danger":          { "$type": "color", "$value": "#EF4444", "$description": "Was #F74A4A" },
