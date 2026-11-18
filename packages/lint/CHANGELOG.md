@@ -1,5 +1,11 @@
 # @aakashiic/design-lint
 
+## 0.2.0
+
+### Minor Changes
+
+- 0979377: `ds/no-arbitrary-values` now suggests `text-2xs` for `text-[11px]` and auto-fixes `rounded-[4px]` to `rounded-sm`, matching the new tokens.
+
 ## 0.1.0
 
 ### Minor Changes
