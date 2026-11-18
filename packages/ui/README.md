@@ -16,8 +16,8 @@ Tailwind CSS v4. VRetail is Angular and uses only [`@aakashiic/tokens`](../token
 > | DS-3.3e data display | table, badge, card, progress, skeleton, separator, scroll-area |
 > | DS-3.3f the rest | calendar, chart, drawer, sonner (`Toaster`) |
 >
-> The shared app shell is in progress: the sidebar (DS-3.4) is done; the header, project switcher and app
-> switcher (DS-3.5 to DS-3.7) are next.
+> The shared app shell is in progress: the sidebar (DS-3.4) and header (DS-3.5) are done; the project
+> switcher and app switcher (DS-3.6, DS-3.7) are next.
 
 - [1. Install](#1-install)
 - [2. Set up your app](#2-set-up-your-app)
@@ -110,7 +110,7 @@ Most components come from the package root:
 import { Button, Dialog, DialogContent, DialogTrigger, Toaster, cn } from '@aakashiic/ui';
 ```
 
-alert-dialog, badge, button, card, checkbox, dialog, dropdown-menu, input, label, popover, progress,
+alert-dialog, app-header, badge, button, card, checkbox, dialog, dropdown-menu, input, label, popover, progress,
 radio-group, scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner (`Toaster`), switch,
 table, tabs, textarea, tooltip, and `cn`.
 
@@ -318,6 +318,46 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   `SidebarLabel` hides any other text (the app name, the user's name) the same way.
 - **`badge`** puts a count at the end of an item, read as part of its name ("Manage leads 12").
 - The package doesn't know routes, roles or feature flags. Filter the items in the app, as both apps do today.
+
+### App shell header
+
+```tsx
+<SidebarProvider>
+  <SkipToContent href="#main" />
+  <Sidebar>…</Sidebar>
+  <SidebarInset>
+    <AppHeader>
+      <SidebarTrigger />
+      <AppHeaderBack onClick={() => router.back()} />
+      <AppHeaderTitle>Performance report</AppHeaderTitle>
+      <AppHeaderActions mobileToggleLabel="Filters" role="group" aria-label="Report filters">
+        <ProjectPicker />
+        <DateRangePicker />
+        <Button>Export</Button>
+      </AppHeaderActions>
+      <AppHeaderEnd>
+        <NotificationBell />
+        <ThemeToggle />
+      </AppHeaderEnd>
+    </AppHeader>
+    <main id="main" tabIndex={-1}>{children}</main>
+  </SidebarInset>
+</SidebarProvider>
+```
+
+- **`AppHeader`** is `sticky` at the top of `SidebarInset`. It needs no spacer, unlike Data Vault's `fixed`
+  header with a measured spacer. Once the page scrolls it gains the `surface` background, a border and
+  `shadow-sm` (V-Estate's "bg-card when scrolled").
+- **`AppHeaderTitle`** is the page's `<h1>` (`asChild` for another level). V-Estate's title is a `<div>` today.
+- **`AppHeaderBack`** is a real button named "Go back", or your router's link with `asChild`. V-Estate's is a
+  `<div onClick>` today, which a keyboard can't reach and a screen reader can't name.
+- **`AppHeaderActions`** holds page filters and actions: inline on desktop, a full-width row under the title
+  on phones. With `mobileToggleLabel` the row hides behind a toggle button (`aria-expanded`), like Data
+  Vault's "Show filters". Give it `role="group"` and an `aria-label` when it holds filters. V-Estate's
+  `HeaderActionPortal` can portal into it.
+- **`AppHeaderEnd`** keeps notifications, the theme toggle and the like in the top row on every screen.
+- **`SkipToContent`** is a "Skip to content" link that shows only when focused. Put it first and point it at
+  `<main id="main" tabIndex={-1}>`, so keyboard users can skip the sidebar on every page.
 
 ### Differences from V-Estate's own copies
 

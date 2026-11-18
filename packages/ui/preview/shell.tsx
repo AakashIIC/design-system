@@ -1,6 +1,6 @@
 import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BarChart3, Database, Home, LogOut, MessageSquare, Settings, Sparkles, Users } from 'lucide-react';
+import { BarChart3, Bell, Calendar, Database, Download, Home, LogOut, MessageSquare, Settings, Sparkles, Users } from 'lucide-react';
 
 import './preview.css';
 import {
@@ -17,6 +17,15 @@ import {
   SidebarTrigger,
 } from '../src/components/sidebar.tsx';
 import { Badge } from '../src/components/badge.tsx';
+import { Button } from '../src/components/button.tsx';
+import {
+  AppHeader,
+  AppHeaderActions,
+  AppHeaderBack,
+  AppHeaderEnd,
+  AppHeaderTitle,
+  SkipToContent,
+} from '../src/components/app-header.tsx';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../src/components/card.tsx';
 import {
   DropdownMenu,
@@ -66,6 +75,7 @@ function Shell() {
       defaultCollapsed={mode !== 'full'}
       expandOnHover={mode === 'hover'}
     >
+      <SkipToContent href="#main" />
       <Sidebar label="Data Vault">
         <SidebarHeader>
           <span aria-hidden="true" className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-bold text-on-primary">
@@ -117,11 +127,31 @@ function Shell() {
       </Sidebar>
 
       <SidebarInset>
-        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-surface px-4">
+        <AppHeader>
           <SidebarTrigger />
-          <h1 className="text-lg font-semibold">{MAIN.find((i) => i.href === active)?.label ?? 'Settings'}</h1>
-        </header>
-        <main className="flex flex-col gap-6 p-6">
+          <AppHeaderBack onClick={() => setActive('#overview')} />
+          <AppHeaderTitle>{MAIN.find((i) => i.href === active)?.label ?? 'Settings'}</AppHeaderTitle>
+          <AppHeaderActions mobileToggleLabel="Filters" role="group" aria-label="Page filters">
+            <Button variant="outline">
+              <Calendar aria-hidden="true" /> This week
+            </Button>
+            <Button variant="outline">All projects</Button>
+            <Button>
+              <Download aria-hidden="true" /> Export
+            </Button>
+          </AppHeaderActions>
+          <AppHeaderEnd>
+            <Button variant="ghost" size="icon" aria-label="Notifications, 3 unread">
+              <Bell aria-hidden="true" />
+            </Button>
+          </AppHeaderEnd>
+        </AppHeader>
+        <main id="main" tabIndex={-1} className="flex flex-col gap-6 p-6 outline-none">
+          {Array.from({ length: 6 }, (_, i) => (
+            <Card key={i} className={i === 0 ? 'hidden' : undefined}>
+              <CardContent className="p-6 text-sm text-text-muted">Report section {i}: scroll to see the header pick up its border.</CardContent>
+            </Card>
+          ))}
           <Card>
             <CardHeader>
               <CardTitle>App shell sidebar (DS-3.4)</CardTitle>

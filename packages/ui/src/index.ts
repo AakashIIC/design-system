@@ -4,6 +4,7 @@
 // from their own path instead, e.g. `@aakashiic/ui/calendar`. Keeping them out of
 // this file means an app without those libraries can still import from here.
 export * from './components/alert-dialog.tsx';
+export * from './components/app-header.tsx';
 export * from './components/badge.tsx';
 export * from './components/button.tsx';
 export * from './components/card.tsx';

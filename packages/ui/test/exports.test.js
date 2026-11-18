@@ -9,14 +9,14 @@ const builtComponents = readdirSync(componentsDir)
   .filter((file) => file.endsWith('.js'))
   .map((file) => file.slice(0, -3));
 
-test('ships the 29 DS-3.1 components plus the app shell sidebar (DS-3.4)', () => {
-  assert.equal(builtComponents.length, 30, builtComponents.join(', '));
-  assert.ok(builtComponents.includes('sidebar'));
+test('ships the 29 DS-3.1 components plus the app shell (sidebar DS-3.4, header DS-3.5)', () => {
+  assert.equal(builtComponents.length, 31, builtComponents.join(', '));
+  assert.ok(builtComponents.includes('sidebar') && builtComponents.includes('app-header'));
 });
 
 test('the root entry exports the core components and cn', async () => {
   const ui = await import('@aakashiic/ui');
-  for (const name of ['Button', 'buttonVariants', 'Dialog', 'Select', 'Tabs', 'Tooltip', 'Toaster', 'Table', 'SidebarProvider', 'SidebarNavItem', 'useSidebar', 'cn']) {
+  for (const name of ['Button', 'buttonVariants', 'Dialog', 'Select', 'Tabs', 'Tooltip', 'Toaster', 'Table', 'SidebarProvider', 'SidebarNavItem', 'useSidebar', 'AppHeader', 'SkipToContent', 'cn']) {
     assert.ok(ui[name], `missing export ${name}`);
   }
 });
