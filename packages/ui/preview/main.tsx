@@ -35,6 +35,18 @@ import {
   SheetTrigger,
 } from '../src/components/sheet.tsx';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../src/components/tooltip.tsx';
+import { Input } from '../src/components/input.tsx';
+import { Textarea } from '../src/components/textarea.tsx';
+import { Label } from '../src/components/label.tsx';
+import { Checkbox } from '../src/components/checkbox.tsx';
+import { RadioGroup, RadioGroupItem } from '../src/components/radio-group.tsx';
+import { Switch } from '../src/components/switch.tsx';
+import { Slider } from '../src/components/slider.tsx';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../src/components/select.tsx';
+
+function Field({ children }: { children: ReactNode }) {
+  return <div className="flex flex-col gap-2">{children}</div>;
+}
 
 const THEMES = [
   { id: 'datavault', label: 'Data Vault' },
@@ -120,6 +132,93 @@ function Preview() {
                 <a href="#button">A link styled as a button</a>
               </Button>
             </div>
+          </div>
+        </Section>
+
+        <Section title="Form controls" status="DS-3.3c">
+          <div className="grid w-full gap-6 md:grid-cols-2">
+            <Field>
+              <Label htmlFor="pv-name" required>
+                Project name
+              </Label>
+              <Input id="pv-name" required placeholder="e.g. Q4 retail rollout" />
+              <p className="text-sm text-text-muted">Everyone on the project sees this.</p>
+            </Field>
+            <Field>
+              <Label htmlFor="pv-email">Email</Label>
+              <Input id="pv-email" type="email" defaultValue="asha@" aria-invalid="true" aria-describedby="pv-email-error" />
+              <p id="pv-email-error" className="text-sm font-medium text-danger-strong">
+                Enter a full email address.
+              </p>
+            </Field>
+            <Field>
+              <Label htmlFor="pv-agent">Agent</Label>
+              <Select>
+                <SelectTrigger id="pv-agent">
+                  <SelectValue placeholder="Choose an agent" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="asha">Asha Verma</SelectItem>
+                  <SelectItem value="ravi">Ravi Kumar</SelectItem>
+                  <SelectItem value="meera" disabled>
+                    Meera Iyer (on leave)
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </Field>
+            <Field>
+              <Label htmlFor="pv-disabled">Workspace ID</Label>
+              <Input id="pv-disabled" disabled defaultValue="ws_48213" />
+            </Field>
+            <Field>
+              <Label htmlFor="pv-notes">Notes</Label>
+              <Textarea id="pv-notes" placeholder="Anything the team should know" />
+            </Field>
+            <Field>
+              <span className="text-sm font-medium">Budget range</span>
+              <Slider defaultValue={[25, 75]} thumbLabels={['Minimum budget', 'Maximum budget']} className="py-2" />
+              <span className="text-sm font-medium">Volume</span>
+              <Slider defaultValue={[40]} aria-label="Volume" className="py-2" />
+            </Field>
+            <Field>
+              <div className="flex items-center gap-2">
+                <Checkbox id="pv-c1" defaultChecked />
+                <Label htmlFor="pv-c1">Email me a weekly summary</Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <Checkbox id="pv-c2" />
+                <Label htmlFor="pv-c2">Include archived calls</Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <Checkbox id="pv-c3" checked="indeterminate" />
+                <Label htmlFor="pv-c3">Select all agents</Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <Switch id="pv-s1" defaultChecked />
+                <Label htmlFor="pv-s1">Live transcription</Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <Switch id="pv-s2" />
+                <Label htmlFor="pv-s2">Auto-assign leads</Label>
+              </div>
+            </Field>
+            <Field>
+              <span className="text-sm font-medium" id="pv-plan">
+                Billing
+              </span>
+              <RadioGroup defaultValue="monthly" aria-labelledby="pv-plan">
+                {[
+                  ['monthly', 'Monthly'],
+                  ['yearly', 'Yearly (save 20%)'],
+                  ['custom', 'Custom contract'],
+                ].map(([value, label]) => (
+                  <div key={value} className="flex items-center gap-2">
+                    <RadioGroupItem value={value} id={`pv-r-${value}`} />
+                    <Label htmlFor={`pv-r-${value}`}>{label}</Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            </Field>
           </div>
         </Section>
 

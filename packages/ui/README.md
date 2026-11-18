@@ -10,7 +10,7 @@ Tailwind CSS v4. VRetail is Angular and uses only [`@aakashiic/tokens`](../token
 > |---|---|---|
 > | DS-3.3a overlays | dialog, alert-dialog, sheet, popover, tooltip | **Tokens only** |
 > | DS-3.3b buttons | button | **Tokens only** |
-> | DS-3.3c form controls | input, textarea, select, checkbox, radio-group, switch, slider, label, form | shadcn names |
+> | DS-3.3c form controls | input, textarea, select, checkbox, radio-group, switch, slider, label, form | **Tokens only** |
 > | DS-3.3d navigation | tabs, dropdown-menu, command | shadcn names |
 > | DS-3.3e data display | table, badge, card, progress, skeleton, separator, scroll-area | shadcn names |
 >
@@ -160,6 +160,28 @@ shouldn't. (Data Vault's own button defaults to `type="button"`, so its form but
 To make an alert dialog's action destructive, pass the variant's classes:
 `<AlertDialogAction className={buttonVariants({ variant: 'destructive' })}>`.
 
+### Form controls
+
+```tsx
+<Label htmlFor="name" required>Project name</Label>
+<Input id="name" required aria-invalid={!!error} aria-describedby="name-error" />
+<p id="name-error">…</p>
+
+<Checkbox checked="indeterminate" aria-label="Select all" />
+<Slider defaultValue={[20, 80]} thumbLabels={['Minimum price', 'Maximum price']} />
+```
+
+- **Fields** (input, textarea, select trigger) are 40px (`h-control-md`) with an 8px radius and the `input`
+  border. Focus turns the border to `ring` with a soft halo; `aria-invalid` turns it red. `FormControl`
+  sets `aria-invalid` and `aria-describedby` for you.
+- **`Label required`** adds a red asterisk that screen readers skip. Also put `required` on the field: that's
+  what gets announced.
+- **Checkbox, radio and switch** borders and the unchecked switch track meet 3:1 against the surface
+  (WCAG 1.4.11), so they use `text-muted` / `text-subtle` rather than the lighter `input` colour.
+  `Checkbox` shows a dash for `checked="indeterminate"`.
+- **`Slider`** renders one thumb per value, so `defaultValue={[20, 80]}` is a range. The thumbs are what
+  screen readers focus, so name them: `thumbLabels`, or `aria-label` (numbered "Price 1 of 2" for ranges).
+
 ### Differences from V-Estate's own copies
 
 Moving V-Estate from `@/components/ui/*` to this package (Phase 4) is a find-and-replace on the import path,
@@ -194,6 +216,9 @@ except for:
 
   Sizes: `lg` is now 48px (was 44px), and `sm` no longer forces `w-fit`. Add `w-fit` where a small button
   sits in a column and shouldn't stretch.
+- **Form controls** keep their props; only the look changes. Two things to check:
+  - **Focus** on text fields is now a `ring`-coloured border with a soft halo, not an offset ring.
+  - **`Switch`** is 44px wide (was 48px), with a 20px thumb.
 
 ---
 

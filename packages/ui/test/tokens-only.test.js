@@ -17,6 +17,17 @@ const RESTYLED = [
   'components/tooltip.tsx',
   // DS-3.3b buttons
   'components/button.tsx',
+  // DS-3.3c form controls
+  'lib/field.ts',
+  'components/input.tsx',
+  'components/textarea.tsx',
+  'components/select.tsx',
+  'components/checkbox.tsx',
+  'components/radio-group.tsx',
+  'components/switch.tsx',
+  'components/slider.tsx',
+  'components/label.tsx',
+  'components/form.tsx',
 ];
 
 const COLOURS = new Set([...Object.keys(colors.datavault), 'transparent', 'current', 'inherit']);
