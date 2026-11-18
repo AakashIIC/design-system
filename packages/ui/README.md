@@ -16,7 +16,8 @@ Tailwind CSS v4. VRetail is Angular and uses only [`@aakashiic/tokens`](../token
 > | DS-3.3e data display | table, badge, card, progress, skeleton, separator, scroll-area |
 > | DS-3.3f the rest | calendar, chart, drawer, sonner (`Toaster`) |
 >
-> Next: the shared app shell (DS-3.4 to DS-3.7).
+> The shared app shell is in progress: the sidebar (DS-3.4) is done; the header, project switcher and app
+> switcher (DS-3.5 to DS-3.7) are next.
 
 - [1. Install](#1-install)
 - [2. Set up your app](#2-set-up-your-app)
@@ -110,8 +111,8 @@ import { Button, Dialog, DialogContent, DialogTrigger, Toaster, cn } from '@aaka
 ```
 
 alert-dialog, badge, button, card, checkbox, dialog, dropdown-menu, input, label, popover, progress,
-radio-group, scroll-area, select, separator, sheet, skeleton, slider, sonner (`Toaster`), switch, table, tabs,
-textarea, tooltip, and `cn`.
+radio-group, scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner (`Toaster`), switch,
+table, tabs, textarea, tooltip, and `cn`.
 
 The five that need an optional peer dependency are only on their own path, so an app without that library can
 still import the root:
@@ -260,6 +261,64 @@ const config = {
 - **`Toaster`** sets sonner's colour variables to the tokens, so plain and `richColors` toasts follow the
   theme. Your own `style` and `toastOptions.classNames` are merged in, not replaced.
 
+### App shell sidebar
+
+```tsx
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import {
+  Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarInset, SidebarLabel,
+  SidebarNav, SidebarNavItem, SidebarProvider, SidebarTrigger, SidebarCollapseButton,
+} from '@aakashiic/ui';
+
+export function AppShell({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  return (
+    <SidebarProvider defaultCollapsed expandOnHover>
+      <Sidebar label="Data Vault">
+        <SidebarHeader>
+          <Logo aria-hidden="true" />
+          <SidebarLabel>Data Vault</SidebarLabel>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarNav label="Main">
+            {items.map((item) => (
+              <SidebarNavItem key={item.href} asChild icon={<item.Icon />} label={item.label}
+                active={pathname === item.href}>
+                <Link href={item.href} />
+              </SidebarNavItem>
+            ))}
+          </SidebarNav>
+        </SidebarContent>
+        <SidebarFooter>{/* account menu, then <SidebarCollapseButton /> */}</SidebarFooter>
+      </Sidebar>
+      <SidebarInset>
+        <header><SidebarTrigger />…</header>
+        <main>{children}</main>
+      </SidebarInset>
+    </SidebarProvider>
+  );
+}
+```
+
+- **Desktop (md and up):** a fixed sidebar, 256px wide or collapsed to an 80px icon rail
+  (`defaultCollapsed`, or control it with `collapsed` / `onCollapsedChange`, e.g. to keep it in a cookie).
+  `SidebarCollapseButton` toggles it. `SidebarInset` pads the page to match.
+  - **V-Estate** today: full width, no rail. Use the defaults.
+  - **Data Vault** today: `defaultCollapsed expandOnHover`. The rail widens over the page on hover **and on
+    keyboard focus** (Data Vault's only widened on hover, so keyboard users never saw the labels).
+  - A plain rail (`defaultCollapsed` without `expandOnHover`) shows each label as a tooltip on hover or focus.
+- **Phones:** the same children render in a left sheet that `SidebarTrigger` (the hamburger, hidden from md up)
+  opens. It traps focus, closes on Escape or the scrim, and closes when an item is followed.
+- **Items are links.** Pass your router's link with `asChild` (`<Link href="/" />`), or give `href` for a plain
+  `<a>`. Data Vault uses `<button>` + `router.push` today: switching to links gives middle-click, "open in new
+  tab" and the link role for screen readers. `active` sets `aria-current="page"`; the active item is
+  `primary-soft` and semibold, so it doesn't rely on colour alone.
+- **Labels** stay in the accessibility tree on the rail (`sr-only` or faded), so every item keeps its name.
+  `SidebarLabel` hides any other text (the app name, the user's name) the same way.
+- **`badge`** puts a count at the end of an item, read as part of its name ("Manage leads 12").
+- The package doesn't know routes, roles or feature flags. Filter the items in the app, as both apps do today.
+
 ### Differences from V-Estate's own copies
 
 Moving V-Estate from `@/components/ui/*` to this package (Phase 4) is a find-and-replace on the import path,
@@ -353,7 +412,7 @@ app that upgrades, so check the screens that use them.
 npm run build      # tsc → dist/ (one file per component, 'use client' kept)
 npm run typecheck  # src, tests and the preview
 npm test           # build first (and build the tokens): see below
-npm run preview    # http://localhost:5180: restyled components in every app theme
+npm run preview    # http://localhost:5180: every component in every app theme; /shell.html: the app shell
 ```
 
 `npm test` runs two suites:

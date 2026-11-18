@@ -450,7 +450,13 @@ function Preview() {
         <header className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-semibold">@aakashiic/ui</h1>
-            <p className="text-sm text-text-muted">Components restyled to the tokens so far. Pick an app theme.</p>
+            <p className="text-sm text-text-muted">
+              Every component on the tokens. Pick an app theme, or open the{' '}
+              <a href="./shell.html" className="font-medium text-text underline decoration-primary underline-offset-4">
+                app shell preview
+              </a>
+              .
+            </p>
           </div>
           <div role="radiogroup" aria-label="App theme" className="flex flex-wrap gap-1 rounded-lg bg-surface-muted p-1">
             {THEMES.map((t) => (

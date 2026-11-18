@@ -46,6 +46,8 @@ const RESTYLED = [
   'components/chart.tsx',
   'components/drawer.tsx',
   'components/sonner.tsx',
+  // DS-3.4 app shell
+  'components/sidebar.tsx',
 ];
 
 const COLOURS = new Set([...Object.keys(colors.datavault), 'transparent', 'current', 'inherit']);
