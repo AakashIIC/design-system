@@ -28,6 +28,11 @@ const RESTYLED = [
   'components/slider.tsx',
   'components/label.tsx',
   'components/form.tsx',
+  // DS-3.3d navigation
+  'lib/menu.ts',
+  'components/tabs.tsx',
+  'components/dropdown-menu.tsx',
+  'components/command.tsx',
 ];
 
 const COLOURS = new Set([...Object.keys(colors.datavault), 'transparent', 'current', 'inherit']);

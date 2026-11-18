@@ -11,7 +11,7 @@ Tailwind CSS v4. VRetail is Angular and uses only [`@aakashiic/tokens`](../token
 > | DS-3.3a overlays | dialog, alert-dialog, sheet, popover, tooltip | **Tokens only** |
 > | DS-3.3b buttons | button | **Tokens only** |
 > | DS-3.3c form controls | input, textarea, select, checkbox, radio-group, switch, slider, label, form | **Tokens only** |
-> | DS-3.3d navigation | tabs, dropdown-menu, command | shadcn names |
+> | DS-3.3d navigation | tabs, dropdown-menu, command | **Tokens only** |
 > | DS-3.3e data display | table, badge, card, progress, skeleton, separator, scroll-area | shadcn names |
 >
 > Components still on shadcn names need the app to define them: read [section 3](#3-colours-until-ds-33).
@@ -182,6 +182,36 @@ To make an alert dialog's action destructive, pass the variant's classes:
 - **`Slider`** renders one thumb per value, so `defaultValue={[20, 80]}` is a range. The thumbs are what
   screen readers focus, so name them: `thumbLabels`, or `aria-label` (numbered "Price 1 of 2" for ranges).
 
+### Navigation
+
+```tsx
+<Tabs defaultValue="calls">
+  <TabsList aria-label="Report">
+    <TabsTrigger value="calls">Calls</TabsTrigger>
+    <TabsTrigger value="leads">Leads</TabsTrigger>
+  </TabsList>
+  <TabsContent value="calls">…</TabsContent>
+</Tabs>
+
+<DropdownMenuItem variant="destructive" onSelect={remove}>Delete</DropdownMenuItem>
+
+<CommandDialog open={open} onOpenChange={setOpen} title="Search projects">…</CommandDialog>
+```
+
+- **`Tabs`** is Data Vault's segmented control: a `surface-muted` track with the active tab raised on
+  `surface`. Arrow keys move between tabs; disabled tabs are skipped.
+- **Menus** (dropdown-menu, command) share the select menu's panel: `rounded-xl`, `bg-surface`, `shadow-md`,
+  with the highlighted row on `surface-muted`. Checked items use a `text-primary` check.
+- **`DropdownMenuItem variant="destructive"`** colours a delete-style row (`danger-strong`, on `danger-soft`
+  when highlighted). Disabled items are now visibly dimmed.
+- **`CommandDialog`** takes `title` and `description` (visually hidden, default "Command palette"). The title
+  also names the search box.
+- **`CommandInput`** keeps `aria-activedescendant` on the highlighted option. cmdk 1.1.1 sets it one step
+  late (empty at first, then pointing at an option the filter removed), so screen readers announced the
+  wrong option or none.
+- Radix menu checkbox items and radio groups are controlled: pass `checked` / `onCheckedChange` and
+  `value` / `onValueChange` (there is no `defaultChecked`).
+
 ### Differences from V-Estate's own copies
 
 Moving V-Estate from `@/components/ui/*` to this package (Phase 4) is a find-and-replace on the import path,
@@ -219,6 +249,14 @@ except for:
 - **Form controls** keep their props; only the look changes. Two things to check:
   - **Focus** on text fields is now a `ring`-coloured border with a soft halo, not an offset ring.
   - **`Switch`** is 44px wide (was 48px), with a 20px thumb.
+- **Navigation** keeps its props. To check:
+  - **Tabs:** the active tab is white on a grey track (was `primary-foreground`). Layout overrides on
+    `TabsList` such as `grid w-full grid-cols-2` still work.
+  - **Dropdown items:** disabled items now look disabled. Swap `text-red-*` classes on delete items for
+    `variant="destructive"`, and a `bg-accent` "selected" override for a `DropdownMenuCheckboxItem` or
+    `DropdownMenuRadioItem`.
+  - **Command:** the separator is hidden from screen readers (cmdk's `role="separator"` isn't allowed inside
+    the listbox), and `CommandDialog` now has a hidden title.
 
 ---
 

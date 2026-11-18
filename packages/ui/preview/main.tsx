@@ -1,6 +1,6 @@
 import { StrictMode, useEffect, useState, type ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Info, Plus, Trash2 } from 'lucide-react';
+import { BarChart3, Info, Pencil, Plus, Search, Trash2, Users } from 'lucide-react';
 
 import './preview.css';
 import { Button } from '../src/components/button.tsx';
@@ -43,6 +43,33 @@ import { RadioGroup, RadioGroupItem } from '../src/components/radio-group.tsx';
 import { Switch } from '../src/components/switch.tsx';
 import { Slider } from '../src/components/slider.tsx';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../src/components/select.tsx';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../src/components/tabs.tsx';
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from '../src/components/dropdown-menu.tsx';
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from '../src/components/command.tsx';
 
 function Field({ children }: { children: ReactNode }) {
   return <div className="flex flex-col gap-2">{children}</div>;
@@ -67,6 +94,117 @@ function Section({ title, status, children }: { title: string; status: string; c
       </div>
       <div className="flex flex-wrap items-center gap-3">{children}</div>
     </section>
+  );
+}
+
+function NavigationDemo() {
+  const [archived, setArchived] = useState(true);
+  const [range, setRange] = useState('week');
+  const [paletteOpen, setPaletteOpen] = useState(false);
+
+  return (
+    <div className="flex w-full flex-col gap-6">
+      <Tabs defaultValue="calls">
+        <TabsList aria-label="Report">
+          <TabsTrigger value="calls">
+            <BarChart3 aria-hidden="true" /> Calls
+          </TabsTrigger>
+          <TabsTrigger value="leads">Leads</TabsTrigger>
+          <TabsTrigger value="agents">
+            <Users aria-hidden="true" /> Agents
+          </TabsTrigger>
+          <TabsTrigger value="archive" disabled>
+            Archive
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="calls" className="text-sm text-text-muted">
+          1,284 calls this week.
+        </TabsContent>
+        <TabsContent value="leads" className="text-sm text-text-muted">
+          312 new leads.
+        </TabsContent>
+        <TabsContent value="agents" className="text-sm text-text-muted">
+          18 agents online.
+        </TabsContent>
+      </Tabs>
+
+      <div className="flex flex-wrap items-center gap-3">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">Project actions</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-56">
+            <DropdownMenuLabel>Q4 retail rollout</DropdownMenuLabel>
+            <DropdownMenuItem>
+              <Pencil aria-hidden="true" /> Rename <DropdownMenuShortcut>⌘R</DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem disabled>Duplicate</DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>Move to</DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem>Retail</DropdownMenuItem>
+                <DropdownMenuItem>Real estate</DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem variant="destructive">
+              <Trash2 aria-hidden="true" /> Delete project
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">View options</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-52">
+            <DropdownMenuCheckboxItem checked={archived} onCheckedChange={setArchived}>
+              Show archived calls
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuLabel>Range</DropdownMenuLabel>
+            <DropdownMenuRadioGroup value={range} onValueChange={setRange}>
+              <DropdownMenuRadioItem value="day">Today</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="week">This week</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="month">This month</DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <Button variant="outline" onClick={() => setPaletteOpen(true)}>
+          <Search aria-hidden="true" /> Open command palette
+        </Button>
+        <CommandDialog open={paletteOpen} onOpenChange={setPaletteOpen}>
+          <CommandInput placeholder="Type a command or search" />
+          <CommandList>
+            <CommandEmpty>No results.</CommandEmpty>
+            <CommandGroup heading="Go to">
+              <CommandItem onSelect={() => setPaletteOpen(false)}>Daily snapshot</CommandItem>
+              <CommandItem onSelect={() => setPaletteOpen(false)}>Lead management</CommandItem>
+              <CommandItem onSelect={() => setPaletteOpen(false)}>Bookmarks</CommandItem>
+            </CommandGroup>
+            <CommandSeparator />
+            <CommandGroup heading="Actions">
+              <CommandItem onSelect={() => setPaletteOpen(false)}>
+                <Plus aria-hidden="true" /> New project <CommandShortcut>⌘N</CommandShortcut>
+              </CommandItem>
+            </CommandGroup>
+          </CommandList>
+        </CommandDialog>
+      </div>
+
+      <Command label="Find an agent" className="max-w-sm border border-border shadow-sm">
+        <CommandInput placeholder="Search agents" />
+        <CommandList>
+          <CommandEmpty>No agents found.</CommandEmpty>
+          <CommandGroup heading="Agents">
+            <CommandItem>Asha Verma</CommandItem>
+            <CommandItem>Ravi Kumar</CommandItem>
+            <CommandItem disabled>Meera Iyer (on leave)</CommandItem>
+          </CommandGroup>
+        </CommandList>
+      </Command>
+    </div>
   );
 }
 
@@ -220,6 +358,10 @@ function Preview() {
               </RadioGroup>
             </Field>
           </div>
+        </Section>
+
+        <Section title="Navigation" status="DS-3.3d">
+          <NavigationDemo />
         </Section>
 
         <Section title="Dialog" status="DS-3.3a">
