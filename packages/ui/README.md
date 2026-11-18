@@ -16,8 +16,8 @@ Tailwind CSS v4. VRetail is Angular and uses only [`@aakashiic/tokens`](../token
 > | DS-3.3e data display | table, badge, card, progress, skeleton, separator, scroll-area |
 > | DS-3.3f the rest | calendar, chart, drawer, sonner (`Toaster`) |
 >
-> The shared app shell is in progress: the sidebar (DS-3.4) and header (DS-3.5) are done; the project
-> switcher and app switcher (DS-3.6, DS-3.7) are next.
+> The shared app shell is in progress: the sidebar (DS-3.4), header (DS-3.5) and project switcher (DS-3.6)
+> are done; the app switcher (DS-3.7) is next.
 
 - [1. Install](#1-install)
 - [2. Set up your app](#2-set-up-your-app)
@@ -50,7 +50,7 @@ This installs the latest version and pins it exactly (`npm view @aakashiic/ui ve
 | `lucide-react` | 0.400 or later | icons inside the components |
 | `react-day-picker` | 9 | `@aakashiic/ui/calendar` only |
 | `recharts` | 2.15 | `@aakashiic/ui/chart` only |
-| `cmdk` | 1 | `@aakashiic/ui/command` only |
+| `cmdk` | 1 | `@aakashiic/ui/command` and `@aakashiic/ui/project-switcher` only |
 | `vaul` | 1 | `@aakashiic/ui/drawer` only |
 | `react-hook-form` | 7 | `@aakashiic/ui/form` only |
 
@@ -114,7 +114,7 @@ alert-dialog, app-header, badge, button, card, checkbox, dialog, dropdown-menu, 
 radio-group, scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner (`Toaster`), switch,
 table, tabs, textarea, tooltip, and `cn`.
 
-The five that need an optional peer dependency are only on their own path, so an app without that library can
+The six that need an optional peer dependency are only on their own path, so an app without that library can
 still import the root:
 
 ```tsx
@@ -123,6 +123,7 @@ import { ChartContainer } from '@aakashiic/ui/chart';
 import { Command } from '@aakashiic/ui/command';
 import { Drawer } from '@aakashiic/ui/drawer';
 import { Form, FormField } from '@aakashiic/ui/form';
+import { ProjectSwitcher } from '@aakashiic/ui/project-switcher';
 ```
 
 Every component also has its own path (`@aakashiic/ui/button`), and `cn` is at `@aakashiic/ui/utils`.
@@ -358,6 +359,41 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 - **`AppHeaderEnd`** keeps notifications, the theme toggle and the like in the top row on every screen.
 - **`SkipToContent`** is a "Skip to content" link that shows only when focused. Put it first and point it at
   `<main id="main" tabIndex={-1}>`, so keyboard users can skip the sidebar on every page.
+
+### Project switcher
+
+```tsx
+import { ProjectSwitcher, formatProjectName } from '@aakashiic/ui/project-switcher';
+
+<AppHeaderActions>
+  <ProjectSwitcher
+    projects={projects.map((p) => ({ id: p.productId, name: p.productName, meta: p.score?.toFixed(0) }))}
+    value={selectedProduct?.productId ?? null}
+    onValueChange={(id) => dispatch(setSelectedProduct(projects.find((p) => p.productId === id) ?? null))}
+    formatName={formatProjectName}
+    pinnedIds={pinnedIds}
+    onTogglePin={togglePin}
+  />
+</AppHeaderActions>
+```
+
+A searchable project picker in a popover, built on `Command`, so it needs `cmdk` and is only on its own path.
+
+- **`value`** is the selected project id. `null` means "all projects", and the top row (`allLabel`, default
+  "All projects") selects it. `allLabel={null}` removes that row when a project must be chosen, as in
+  V-Estate; the trigger then shows `placeholder`.
+- **Search** matches any part of the name, like Data Vault's dropdown (cmdk's own matching is fuzzy).
+  The search is cleared every time it opens.
+- **`showCount`** adds V-Estate's "N projects" line above the selected name. **`meta`** puts a detail at the
+  end of a row, like Data Vault's score. **`formatName`** changes how names show; `formatProjectName` is Data
+  Vault's title-casing, which also turns "L&t" into "L&T".
+- **Pins:** `pinnedIds` lists pinned projects in a "Pinned" group at the top. With `onTogglePin`, **Alt+P**
+  pins or unpins the highlighted row, and the popover says so. The pin icon is a mouse shortcut. Data Vault
+  put a `role="button"` inside each option, which isn't allowed and which screen readers can't reach.
+- **Screen readers:** the trigger reads "Project: Acme" (`label`), the popover and search are named, the
+  highlighted row is announced as you arrow through, and the current project is `aria-checked`. Rows aren't
+  Tab stops: arrows move, Enter picks, and Escape closes and returns focus to the trigger.
+- With no projects it renders nothing, like Data Vault's.
 
 ### Differences from V-Estate's own copies
 

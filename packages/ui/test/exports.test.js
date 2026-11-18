@@ -9,9 +9,9 @@ const builtComponents = readdirSync(componentsDir)
   .filter((file) => file.endsWith('.js'))
   .map((file) => file.slice(0, -3));
 
-test('ships the 29 DS-3.1 components plus the app shell (sidebar DS-3.4, header DS-3.5)', () => {
-  assert.equal(builtComponents.length, 31, builtComponents.join(', '));
-  assert.ok(builtComponents.includes('sidebar') && builtComponents.includes('app-header'));
+test('ships the 29 DS-3.1 components plus the app shell (sidebar, header, project switcher)', () => {
+  assert.equal(builtComponents.length, 32, builtComponents.join(', '));
+  for (const name of ['sidebar', 'app-header', 'project-switcher']) assert.ok(builtComponents.includes(name), name);
 });
 
 test('the root entry exports the core components and cn', async () => {
@@ -23,7 +23,7 @@ test('the root entry exports the core components and cn', async () => {
 
 test('optional-peer components stay out of the root entry', async () => {
   const ui = await import('@aakashiic/ui');
-  for (const name of ['Calendar', 'ChartContainer', 'Command', 'Drawer', 'Form']) {
+  for (const name of ['Calendar', 'ChartContainer', 'Command', 'Drawer', 'Form', 'ProjectSwitcher']) {
     assert.equal(ui[name], undefined, `${name} should only be importable from its own path`);
   }
 });

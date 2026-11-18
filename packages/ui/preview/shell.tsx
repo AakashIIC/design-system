@@ -18,6 +18,7 @@ import {
 } from '../src/components/sidebar.tsx';
 import { Badge } from '../src/components/badge.tsx';
 import { Button } from '../src/components/button.tsx';
+import { ProjectSwitcher, formatProjectName, type Project } from '../src/components/project-switcher.tsx';
 import {
   AppHeader,
   AppHeaderActions,
@@ -44,6 +45,13 @@ const THEMES = [
 ] as const;
 type ThemeId = (typeof THEMES)[number]['id'];
 
+const PROJECTS: Project[] = [
+  { id: 'p1', name: 'retail rollout q4', meta: 92 },
+  { id: 'p2', name: 'l&t towers', meta: 71 },
+  { id: 'p3', name: 'harbour view residences', meta: 64 },
+  { id: 'p4', name: 'green valley', meta: 58 },
+];
+
 const MAIN = [
   { href: '#overview', label: 'Overview', icon: <Home /> },
   { href: '#calls', label: 'Top calls analysis', icon: <BarChart3 /> },
@@ -57,6 +65,8 @@ function Shell() {
   const [theme, setTheme] = useState<ThemeId>('datavault');
   const [mode, setMode] = useState<'full' | 'rail' | 'hover'>('full');
   const [active, setActive] = useState('#overview');
+  const [project, setProject] = useState<string | null>(null);
+  const [pins, setPins] = useState<string[]>(['p2']);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -135,7 +145,15 @@ function Shell() {
             <Button variant="outline">
               <Calendar aria-hidden="true" /> This week
             </Button>
-            <Button variant="outline">All projects</Button>
+            <ProjectSwitcher
+              projects={PROJECTS}
+              value={project}
+              onValueChange={setProject}
+              showCount
+              formatName={formatProjectName}
+              pinnedIds={pins}
+              onTogglePin={(id) => setPins((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]))}
+            />
             <Button>
               <Download aria-hidden="true" /> Export
             </Button>

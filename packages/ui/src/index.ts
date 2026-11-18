@@ -1,5 +1,5 @@
 // Components that need only the package's own dependencies.
-// calendar, chart, command, drawer and form need an optional peer dependency
+// calendar, chart, command, drawer, form and project-switcher need an optional peer dependency
 // (react-day-picker, recharts, cmdk, vaul, react-hook-form), so they are imported
 // from their own path instead, e.g. `@aakashiic/ui/calendar`. Keeping them out of
 // this file means an app without those libraries can still import from here.

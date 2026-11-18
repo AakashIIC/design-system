@@ -49,6 +49,7 @@ const RESTYLED = [
   // DS-3.4 app shell
   'components/sidebar.tsx',
   'components/app-header.tsx',
+  'components/project-switcher.tsx',
 ];
 
 const COLOURS = new Set([...Object.keys(colors.datavault), 'transparent', 'current', 'inherit']);
