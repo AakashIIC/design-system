@@ -16,7 +16,7 @@ Revised from the original Phase 3 list after checking V-Estate's shadcn componen
 | # | Ticket | Notes |
 |---|---|---|
 | DS-3.0 | Status tints and a chart palette in the tokens | Unblocks the 238 colours deferred in Data Vault Phase 2 |
-| DS-3.1 | Scaffold `@aakashiic/ui` from V-Estate's ~30 generic shadcn components | Source: `admin.vestate.io-staging/src/components/ui`. Leave out the app-specific ones (`AnimateIn`, `AnimatedNumber`, `LoadingScreen`, `dark-mode`, `export-data`, `color-picker`, `icon-picker`, `icons-data`, `tag-input`, `datetime-picker`, `loading-btn`, `tooltip-wrapper`) and the Radix `toast`/`toaster`/`use-toast` (sonner replaces them) |
+| DS-3.1 | Scaffold `@aakashiic/ui` from V-Estate's ~30 generic shadcn components | Source: `inkincaps/admin.vestate.io` branch `staging`, `src/components/ui`. Leave out the app-specific ones (`AnimateIn`, `AnimatedNumber`, `LoadingScreen`, `dark-mode`, `export-data`, `color-picker`, `icon-picker`, `icons-data`, `tag-input`, `datetime-picker`, `loading-btn`, `tooltip-wrapper`) and the Radix `toast`/`toaster`/`use-toast` (sonner replaces them) |
 | DS-3.2 | Publishing and versioning like the tokens | Includes consumer setup: Tailwind v4 needs `@source` pointing at the package, or the classes are never generated |
 | DS-3.3a | Restyle: overlays | dialog, alert-dialog, sheet, popover, tooltip |
 | DS-3.3b | Restyle: buttons | button and its variants |

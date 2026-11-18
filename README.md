@@ -7,6 +7,7 @@ motion (the Data Vault look), with each app keeping its own colours.
 |---|---|---|
 | [`@aakashiic/tokens`](packages/tokens) | Design tokens as CSS variables, a Tailwind v4 theme and SCSS | [How to use it in an app](packages/tokens/README.md) |
 | [`@aakashiic/design-lint`](packages/lint) | ESLint + Stylelint rules that flag raw colours and arbitrary sizes in new code | [Set-up](packages/lint/README.md) |
+| [`@aakashiic/ui`](packages/ui) | Shared React components (Radix + Tailwind v4). In progress: Phase 3 | [Package README](packages/ui/README.md) |
 
 - **Using the packages in an app?** Start with the [tokens README](packages/tokens/README.md).
 - **Why these values?** See the [Phase 0 spec](docs/phase-0-spec.md).
@@ -58,7 +59,8 @@ Manage access → add the people (or, for a GitHub Actions build in another repo
 packages/
   tokens/          DTCG token JSON, Style Dictionary build (build.js), preview.html
   lint/            ESLint rule + Stylelint config, with tests
-docs/              Phase 0 spec
+  ui/              React components (src/components), tsc build, smoke tests
+docs/              Phase 0 spec, Phase 3 plan
 .changeset/        pending release notes
 .github/workflows/ ci.yml (PRs), release.yml (main)
 ```
