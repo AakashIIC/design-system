@@ -41,6 +41,11 @@ const RESTYLED = [
   'components/skeleton.tsx',
   'components/separator.tsx',
   'components/scroll-area.tsx',
+  // DS-3.3f: the four components outside the DS-3.3 groups
+  'components/calendar.tsx',
+  'components/chart.tsx',
+  'components/drawer.tsx',
+  'components/sonner.tsx',
 ];
 
 const COLOURS = new Set([...Object.keys(colors.datavault), 'transparent', 'current', 'inherit']);
@@ -52,7 +57,7 @@ const FONT_SIZES = new Set(['2xs', 'xs', 'sm', 'base', 'lg', 'xl', '2xl', '3xl',
 // Values that follow a colour prefix but aren't colours.
 const NOT_COLOUR = {
   text: new Set([...FONT_SIZES, 'left', 'center', 'right', 'justify', 'start', 'end', 'wrap', 'nowrap', 'balance', 'pretty', 'ellipsis', 'clip']),
-  border: /^(\d+|solid|dashed|dotted|double|none|hidden|collapse|separate)$/,
+  border: /^(\d+|\[[\d.]+px\]|solid|dashed|dotted|double|none|hidden|collapse|separate)$/,
   ring: /^(\d+|inset)$/,
   'ring-offset': /^\d+$/,
   decoration: /^(\d+|solid|dashed|dotted|double|wavy|auto|from-font|clone|slice)$/,
@@ -97,6 +102,8 @@ function problemWith({ variants, utility }) {
     if (notColour && (notColour instanceof Set ? notColour.has(value) : notColour.test(value))) return null;
     if (prefix.startsWith('border') && /^[trblxyse]$/.test(value)) return null; // border-l, border-t
     if (/^\(--ds-/.test(value) || /^\[var\(--ds-/.test(value)) return null;
+    // Chart series colours: ChartContainer sets --color-<key> at runtime from the app's chart config.
+    if (/^\(--color-/.test(value)) return null;
     if (!COLOURS.has(value)) return `"${value}" is not a token colour`;
     return null;
   }
@@ -133,7 +140,7 @@ test('the checker catches what it should', () => {
     const [c] = classesIn(`'${cls}'`);
     assert.ok(problemWith(c), `${cls} should be flagged`);
   }
-  const good = ['bg-overlay', 'text-text-muted', 'data-[state=open]:bg-surface', 'text-xl', 'border-l', 'border-border', 'rounded-2xl', 'shadow-lg', 'duration-(--ds-motion-duration-base)', 'ring-2', 'hover:bg-surface-muted'];
+  const good = ['bg-overlay', 'text-text-muted', 'data-[state=open]:bg-surface', 'text-xl', 'border-l', 'border-border', 'rounded-2xl', 'shadow-lg', 'duration-(--ds-motion-duration-base)', 'ring-2', 'hover:bg-surface-muted', 'border-[1.5px]', 'bg-(--color-bg)'];
   for (const cls of good) {
     const [c] = classesIn(`'${cls}'`);
     assert.equal(problemWith(c), null, `${cls} should pass`);

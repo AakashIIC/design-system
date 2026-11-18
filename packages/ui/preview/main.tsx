@@ -59,6 +59,29 @@ import { Progress } from '../src/components/progress.tsx';
 import { Skeleton } from '../src/components/skeleton.tsx';
 import { Separator } from '../src/components/separator.tsx';
 import { ScrollArea } from '../src/components/scroll-area.tsx';
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+import { toast } from 'sonner';
+import type { DateRange } from 'react-day-picker';
+import { Calendar } from '../src/components/calendar.tsx';
+import {
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from '../src/components/chart.tsx';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '../src/components/drawer.tsx';
+import { Toaster } from '../src/components/sonner.tsx';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -331,6 +354,87 @@ function DataDisplayDemo() {
   );
 }
 
+const CHART_DATA = [
+  { day: 'Mon', calls: 186, leads: 80 },
+  { day: 'Tue', calls: 305, leads: 120 },
+  { day: 'Wed', calls: 237, leads: 0 },
+  { day: 'Thu', calls: 273, leads: 190 },
+  { day: 'Fri', calls: 209, leads: 130 },
+];
+const CHART_CONFIG = {
+  calls: { label: 'Calls', color: 'var(--color-chart-1)' },
+  leads: { label: 'Leads', color: 'var(--color-chart-2)' },
+} satisfies ChartConfig;
+
+function RestDemo() {
+  const [range, setRange] = useState<DateRange | undefined>({ from: new Date(2026, 10, 9), to: new Date(2026, 10, 13) });
+
+  return (
+    <div className="flex w-full flex-col gap-6">
+      <div className="flex flex-wrap items-start gap-6">
+        <Card className="w-fit">
+          <Calendar mode="range" selected={range} onSelect={setRange} defaultMonth={new Date(2026, 10, 1)} />
+        </Card>
+        <Card className="min-w-0 flex-1 p-4">
+          <p className="mb-2 text-sm font-semibold">Calls and leads this week</p>
+          <ChartContainer config={CHART_CONFIG} className="h-56 w-full">
+            <BarChart data={CHART_DATA} accessibilityLayer>
+              <CartesianGrid vertical={false} />
+              <XAxis dataKey="day" tickLine={false} axisLine={false} />
+              <ChartTooltip content={<ChartTooltipContent />} />
+              <ChartLegend content={<ChartLegendContent />} />
+              <Bar dataKey="calls" fill="var(--color-calls)" radius={4} />
+              <Bar dataKey="leads" fill="var(--color-leads)" radius={4} />
+            </BarChart>
+          </ChartContainer>
+        </Card>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-3">
+        <Drawer>
+          <DrawerTrigger asChild>
+            <Button variant="outline">Open drawer</Button>
+          </DrawerTrigger>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Call filters</DrawerTitle>
+              <DrawerDescription>Narrow the list by agent, date and outcome.</DrawerDescription>
+            </DrawerHeader>
+            <DrawerFooter>
+              <DrawerClose asChild>
+                <Button>Apply</Button>
+              </DrawerClose>
+              <DrawerClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+        <Button
+          variant="outline"
+          onClick={() =>
+            toast('Report saved', {
+              description: 'Shared with everyone on the project.',
+              action: { label: 'Undo', onClick: () => {} },
+            })
+          }
+        >
+          Toast
+        </Button>
+        <Button variant="outline" onClick={() => toast.success('Lead assigned to Asha Verma')}>
+          Success toast
+        </Button>
+        <Button variant="outline" onClick={() => toast.error('Could not reach the dialler', { description: 'Retrying in 30 seconds.' })}>
+          Error toast
+        </Button>
+        <Button variant="outline" onClick={() => toast.warning('Storage is 90% full')}>
+          Warning toast
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 function Preview() {
   const [theme, setTheme] = useState<ThemeId>('datavault');
 
@@ -491,6 +595,10 @@ function Preview() {
           <DataDisplayDemo />
         </Section>
 
+        <Section title="Calendar, chart, drawer and toasts" status="DS-3.3f">
+          <RestDemo />
+        </Section>
+
         <Section title="Dialog" status="DS-3.3a">
           <Dialog>
             <DialogTrigger asChild>
@@ -578,6 +686,8 @@ function Preview() {
           </Tooltip>
         </Section>
       </main>
+      {/* Same setup as V-Estate's layout. */}
+      <Toaster richColors closeButton position="bottom-center" theme={theme === 'vestate-dark' ? 'dark' : 'light'} />
     </TooltipProvider>
   );
 }

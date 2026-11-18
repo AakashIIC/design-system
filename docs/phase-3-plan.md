@@ -23,6 +23,7 @@ Revised from the original Phase 3 list after checking V-Estate's shadcn componen
 | DS-3.3c | Restyle: form controls | input, textarea, select, checkbox, radio-group, switch, slider, label, form |
 | DS-3.3d | Restyle: navigation | tabs, dropdown-menu, command |
 | DS-3.3e | Restyle: data display | table, badge, card, progress, skeleton, separator, scroll-area |
+| DS-3.3f | Restyle: the rest | calendar, chart, drawer, sonner. Added after DS-3.3e: these four were in no group, so they still used shadcn colour names |
 | DS-3.4 | App shell sidebar | Start from Data Vault's `AppNavigation` |
 | DS-3.5 | App shell header | Start from Data Vault's header |
 | DS-3.6 | Project switcher | Start from Data Vault's `ProjectListDropdown` |

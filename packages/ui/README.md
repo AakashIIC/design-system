@@ -4,22 +4,23 @@ Shared React components for **Data Vault**, **V-Estate** and the central portal:
 Tailwind CSS v4. VRetail is Angular and uses only [`@aakashiic/tokens`](../tokens).
 
 > **Status: Phase 3 in progress.** These are V-Estate's 29 generic shadcn components, restyled to the tokens
-> group by group in DS-3.3 (see the [Phase 3 plan](../../docs/phase-3-plan.md)):
+> group by group in DS-3.3 (see the [Phase 3 plan](../../docs/phase-3-plan.md)). All 29 now use **only token
+> names**:
 >
-> | Group | Components | Status |
-> |---|---|---|
-> | DS-3.3a overlays | dialog, alert-dialog, sheet, popover, tooltip | **Tokens only** |
-> | DS-3.3b buttons | button | **Tokens only** |
-> | DS-3.3c form controls | input, textarea, select, checkbox, radio-group, switch, slider, label, form | **Tokens only** |
-> | DS-3.3d navigation | tabs, dropdown-menu, command | **Tokens only** |
-> | DS-3.3e data display | table, badge, card, progress, skeleton, separator, scroll-area | **Tokens only** |
-> | Not in a DS-3.3 group | calendar, chart, drawer, sonner (`Toaster`) | shadcn names |
+> | Group | Components |
+> |---|---|
+> | DS-3.3a overlays | dialog, alert-dialog, sheet, popover, tooltip |
+> | DS-3.3b buttons | button |
+> | DS-3.3c form controls | input, textarea, select, checkbox, radio-group, switch, slider, label, form |
+> | DS-3.3d navigation | tabs, dropdown-menu, command |
+> | DS-3.3e data display | table, badge, card, progress, skeleton, separator, scroll-area |
+> | DS-3.3f the rest | calendar, chart, drawer, sonner (`Toaster`) |
 >
-> Components still on shadcn names need the app to define them: read [section 3](#3-colours-until-ds-33).
+> Next: the shared app shell (DS-3.4 to DS-3.7).
 
 - [1. Install](#1-install)
 - [2. Set up your app](#2-set-up-your-app)
-- [3. Colours until DS-3.3](#3-colours-until-ds-33)
+- [3. Colours](#3-colours)
 - [4. Use the components](#4-use-the-components)
 - [5. Pin and upgrade versions](#5-pin-and-upgrade-versions)
 - [Troubleshooting](#troubleshooting)
@@ -44,7 +45,7 @@ This installs the latest version and pins it exactly (`npm view @aakashiic/ui ve
 |---|---|---|
 | `react`, `react-dom` | 19 | everything |
 | `tailwindcss` | 4.1 or later | everything |
-| `@aakashiic/tokens` | 0.5.0 or later (adds `overlay`) | every restyled component (see the status table) |
+| `@aakashiic/tokens` | 0.5.0 or later (adds `overlay`) | every component |
 | `lucide-react` | 0.400 or later | icons inside the components |
 | `react-day-picker` | 9 | `@aakashiic/ui/calendar` only |
 | `recharts` | 2.15 | `@aakashiic/ui/chart` only |
@@ -84,27 +85,19 @@ JavaScript with `'use client'` already on the components that need it.
 
 ---
 
-## 3. Colours until DS-3.3
+## 3. Colours
 
-**Restyled components** (the status table at the top) use only token names (`bg-surface`, `text-text-muted`,
-`bg-overlay`, …), so they need `@aakashiic/tokens` set up as in [section 2](#2-set-up-your-app) and nothing
-else. That includes V-Estate: import the tokens with `data-app="vestate"` before upgrading to a release with
-restyled components, or those components lose their colours.
+Every component uses only token names (`bg-surface`, `text-text-muted`, `bg-overlay`, …), so it needs
+`@aakashiic/tokens` set up as in [section 2](#2-set-up-your-app), with `data-app` on `<html>`, and nothing
+else. None of them reads shadcn's colour names (`background`, `muted-foreground`, `popover`, …), so an app
+doesn't need to define those for the package.
 
-The **other four** (calendar, chart, drawer, sonner) still use **shadcn's colour names**, which the tokens don't
-define:
+That includes V-Estate: import the tokens with `data-app="vestate"` before upgrading, or the components lose
+their colours.
 
-`background`, `foreground`, `card`, `card-foreground`, `popover`, `popover-foreground`, `primary-foreground`,
-`secondary`, `secondary-foreground`, `muted`, `muted-foreground`, `accent`, `accent-foreground`, `destructive`,
-`destructive-foreground`.
-
-- **V-Estate** already defines all of these in its `@theme`, so the components look the same as its own copies.
-- **Data Vault and the central portal** don't, so those classes produce no colour. Don't adopt these four
-  there until they're restyled; none of them is in a DS-3.3 group yet.
-
-Careful with `accent`: in shadcn it's a hover background; in the tokens it's the brand purple. An app that
-imports the tokens' `tailwind.css` after its own `@theme` gets the purple on hovers. The restyled components
-don't use `accent` that way; the calendar still does.
+Careful with `accent` in **your own** code: in shadcn it's a hover background; in the tokens it's the brand
+purple. If an app imports the tokens' `tailwind.css` after its own `@theme`, its own `bg-accent` hovers turn
+purple. The package's components don't use `accent`.
 
 ---
 
@@ -245,6 +238,28 @@ To make an alert dialog's action destructive, pass the variant's classes:
 - **`ScrollArea`**'s thumb is `text-subtle` (3:1 against the surface), and the viewport shows a focus ring
   when a keyboard user scrolls it.
 
+### Calendar, chart, drawer and toasts
+
+```tsx
+<Calendar mode="range" selected={range} onSelect={setRange} />
+
+const config = {
+  calls: { label: 'Calls', color: 'var(--color-chart-1)' },
+  leads: { label: 'Leads', color: 'var(--color-chart-2)' },
+} satisfies ChartConfig;
+
+<Toaster richColors theme={resolvedTheme} />
+```
+
+- **`Calendar`**: the selected day and range ends are `bg-primary`, the middle of a range is `primary-soft`,
+  and today is bold on `surface-muted`. Arrow keys move between days.
+- **`ChartContainer`**: give series the tokens' chart palette (`var(--color-chart-1)` to `-6`) so charts
+  follow the app theme. A `theme: { light, dark }` colour switches on `.dark` or `data-theme="dark"`, like the
+  tokens. Tooltips use the token surface.
+- **`Drawer`** uses the dialogs' `overlay` scrim and a `rounded-t-2xl` surface. Give it a `DrawerTitle`.
+- **`Toaster`** sets sonner's colour variables to the tokens, so plain and `richColors` toasts follow the
+  theme. Your own `style` and `toastOptions.classNames` are merged in, not replaced.
+
 ### Differences from V-Estate's own copies
 
 Moving V-Estate from `@/components/ui/*` to this package (Phase 4) is a find-and-replace on the import path,
@@ -300,6 +315,13 @@ except for:
     their names; use `success` / `warning` / `danger` / `info` instead of colour classes for statuses.
   - **`Progress`** is 8px tall and `bg-primary` (was a 16px gold gradient). Most V-Estate uses pass `h-2`
     already. It now respects `max`.
+- **Calendar, chart and toasts** keep their props. To check:
+  - **Calendar ranges** use `primary-soft` between the ends (was `accent`). Today is bold on `surface-muted`.
+  - **Chart tooltips** now show their colour swatches and zero values; both were missing.
+  - **Toasts** (`<Toaster richColors …>`) take their colours from the tokens. Status toasts are soft
+    background + strong text, the description is `text-muted`, and the action button is primary. Before,
+    sonner's own grey beat the shadcn classes, so descriptions and actions ignored the theme.
+  - **`Drawer`** isn't used on `staging` today.
 
 ---
 
@@ -319,9 +341,9 @@ app that upgrades, so check the screens that use them.
 | Problem | Fix |
 |---|---|
 | Components render unstyled (no padding, borders or layout) | `@import "@aakashiic/ui/styles.css";` is missing from the global CSS. |
-| Layout is right but colours are missing | The app doesn't define shadcn's colour names; see [section 3](#3-colours-until-ds-33). |
+| Layout is right but colours are missing | The tokens aren't imported, or `<html>` has no `data-app`; see [section 3](#3-colours). |
 | Dialogs and menus appear without animation | `styles.css` isn't imported (it brings `tw-animate-css`). |
-| Hover backgrounds turn purple | The tokens' `accent` overrides shadcn's; see [section 3](#3-colours-until-ds-33). |
+| Your own hover backgrounds turn purple | The tokens' `accent` overrides shadcn's; see [section 3](#3-colours). |
 | `Module not found: Can't resolve 'recharts'` (or `cmdk`, `vaul`, …) | Install the optional peer dependency for that component. |
 | `401` / `404` on install | See the [tokens troubleshooting](../tokens/README.md#troubleshooting). |
 
