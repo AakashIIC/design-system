@@ -11,7 +11,10 @@
       "lg":   { "$type": "dimension", "$value": "18px" },
       "xl":   { "$type": "dimension", "$value": "20px" },
       "2xl":  { "$type": "dimension", "$value": "24px" },
-      "3xl":  { "$type": "dimension", "$value": "30px" }
+      "3xl":  { "$type": "dimension", "$value": "30px" },
+      "4xl":  { "$type": "dimension", "$value": "36px", "$description": "Display: hero numbers and KPI values" },
+      "5xl":  { "$type": "dimension", "$value": "48px", "$description": "Display: large hero numbers" },
+      "6xl":  { "$type": "dimension", "$value": "60px", "$description": "Display: largest hero numbers" }
     },
     "weight": {
       "regular":  { "$type": "fontWeight", "$value": 400 },

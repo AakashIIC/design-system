@@ -48,6 +48,11 @@ const invalid = [
     errors: [{ messageId: 'size', suggestions: [{ messageId: 'suggest', output: '<p className="text-2xs" />' }] }],
   },
   {
+    name: 'display sizes suggest the display tokens',
+    code: '<p className="text-[48px]" />',
+    errors: [{ messageId: 'size', suggestions: [{ messageId: 'suggest', output: '<p className="text-5xl" />' }] }],
+  },
+  {
     name: 'off-scale sizes are reported with no fix',
     code: '<p className="text-[13px] p-[13px] rounded-[10px]" />',
     errors: [{ messageId: 'size', suggestions: [] }, { messageId: 'size' }, { messageId: 'size' }],

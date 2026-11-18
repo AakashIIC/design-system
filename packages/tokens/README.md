@@ -194,7 +194,7 @@ Status colours are for icons, borders and tints; don't put white text on them (i
 
 | Group | Tailwind | Values | CSS / SCSS |
 |---|---|---|---|
-| Font size | `text-2xs` `text-xs` `text-sm` `text-base` `text-lg` `text-xl` `text-2xl` `text-3xl` | 11 12 14 16 18 20 24 30px (`2xs` only for dense data UI: chart labels, badges, table meta) | `--ds-font-size-*` |
+| Font size | `text-2xs` `text-xs` `text-sm` `text-base` `text-lg` `text-xl` `text-2xl` `text-3xl`, display `text-4xl` `text-5xl` `text-6xl` | 11 12 14 16 18 20 24 30px; display 36 48 60px (`2xs` only for dense data UI: chart labels, badges, table meta) | `--ds-font-size-*` |
 | Font weight | `font-regular` `font-medium` `font-semibold` `font-bold` | 400 500 600 700 | `--ds-font-weight-*` |
 | Spacing | `p-1` … `p-12` (also `m-`, `gap-`) | 4px steps: 1 2 3 4 5 6 8 10 12 | `--ds-spacing-*` |
 | Control height | `h-control-sm` `h-control-md` `h-control-lg` | 32 40 48px | `--ds-control-height-*` |
