@@ -30,7 +30,7 @@ Names match Tailwind's default scale where the value matches, so most existing T
 
 ## Colour themes
 
-The same 18 semantic names exist in every theme (the build fails if one is missing). Components use only these names.
+The same 32 semantic names exist in every theme (the build fails if one is missing). Components use only these names.
 
 | Token | Data Vault / VRetail | V-Estate light | V-Estate dark |
 |---|---|---|---|
@@ -49,6 +49,9 @@ The same 18 semantic names exist in every theme (the build fails if one is missi
 | ring | `#4434DD` | `#A88A5A` | `#D2B589` |
 | accent (decorative, not text) | `#8076EE` | `#A88A5A` (= primary) | `#D2B589` (= primary) |
 | success / warning / danger / info | Tailwind defaults (all themes) | | |
+| *-soft (tinted bg, DS-3.0) | Tailwind 100: `#DCFCE7` `#FEF3C7` `#FEE2E2` `#DBEAFE` | same as Data Vault | Tailwind 950: `#052E16` `#451A03` `#450A0A` `#172554` |
+| *-strong (status text, DS-3.0) | Tailwind 700: `#15803D` `#B45309` `#B91C1C` `#1D4ED8` | same as Data Vault | Tailwind 300: `#86EFAC` `#FCD34D` `#FCA5A5` `#93C5FD` |
+| chart-1…6 (DS-3.0) | `#4434DD` `#8076EE` `#C2B3FC` `#2B3674` `#958CF0` `#D8DADB` | provisional gold ramp | provisional gold ramp |
 
 Theme selection: `data-app="datavault|vretail|vestate"` on `<html>` (Data Vault when absent); V-Estate dark mode via the `dark` class it already sets, or `data-theme="dark"`.
 

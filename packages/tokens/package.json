@@ -8,6 +8,10 @@
     "CHANGELOG.md"
   ],
   "exports": {
+    ".": {
+      "types": "./dist/js/index.d.ts",
+      "default": "./dist/js/index.js"
+    },
     "./tokens.css": "./dist/css/tokens.css",
     "./tailwind.css": "./dist/tailwind/theme.css",
     "./scss": "./dist/scss/_tokens.scss",
