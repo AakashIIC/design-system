@@ -175,6 +175,7 @@ Use the semantic names, never raw values, so the same component renders correctl
 | Brand fill (buttons, links) | `bg-primary`, `text-primary` | `--ds-color-primary` |
 | Brand hover | `hover:bg-primary-hover` | `--ds-color-primary-hover` |
 | Selected / tinted background | `bg-primary-soft` | `--ds-color-primary-soft` |
+| Brand gradient end, secondary purple (decorative, not text) | `to-accent`, `bg-accent` | `--ds-color-accent` |
 | Text on brand fill | `text-on-primary` | `--ds-color-on-primary` |
 | Body text | `text-text` | `--ds-color-text` |
 | Secondary text | `text-text-muted` | `--ds-color-text-muted` |
@@ -193,11 +194,11 @@ Status colours are for icons, borders and tints; don't put white text on them (i
 
 | Group | Tailwind | Values | CSS / SCSS |
 |---|---|---|---|
-| Font size | `text-xs` `text-sm` `text-base` `text-lg` `text-xl` `text-2xl` `text-3xl` | 12 14 16 18 20 24 30px | `--ds-font-size-*` |
+| Font size | `text-2xs` `text-xs` `text-sm` `text-base` `text-lg` `text-xl` `text-2xl` `text-3xl` | 11 12 14 16 18 20 24 30px (`2xs` only for dense data UI: chart labels, badges, table meta) | `--ds-font-size-*` |
 | Font weight | `font-regular` `font-medium` `font-semibold` `font-bold` | 400 500 600 700 | `--ds-font-weight-*` |
 | Spacing | `p-1` … `p-12` (also `m-`, `gap-`) | 4px steps: 1 2 3 4 5 6 8 10 12 | `--ds-spacing-*` |
 | Control height | `h-control-sm` `h-control-md` `h-control-lg` | 32 40 48px | `--ds-control-height-*` |
-| Radius | `rounded-md` `rounded-lg` `rounded-xl` `rounded-2xl` `rounded-full` | 6 8 12 16px, pill | `--ds-radius-*` |
+| Radius | `rounded-sm` `rounded-md` `rounded-lg` `rounded-xl` `rounded-2xl` `rounded-full` | 4 6 8 12 16px, pill | `--ds-radius-*` |
 | Shadow | `shadow-sm` `shadow-md` `shadow-lg` | cards, dropdowns, raised panels | `--ds-shadow-*` |
 | Motion | `ease-standard`, `duration-(--ds-motion-duration-fast)` | 150ms / 200ms | `--ds-motion-*` |
 

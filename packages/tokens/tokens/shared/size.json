@@ -18,6 +18,7 @@
     }
   },
   "radius": {
+    "sm":   { "$type": "dimension", "$value": "4px",  "$description": "Tags, small chips (Tailwind's rounded / rounded-sm)" },
     "md":   { "$type": "dimension", "$value": "6px",  "$description": "Small controls, chips" },
     "lg":   { "$type": "dimension", "$value": "8px",  "$description": "Buttons, inputs (most used in Data Vault)" },
     "xl":   { "$type": "dimension", "$value": "12px", "$description": "Cards, panels" },

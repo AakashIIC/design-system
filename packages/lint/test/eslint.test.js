@@ -27,9 +27,9 @@ const invalid = [
   },
   {
     name: 'exact spacing and radius matches are auto-fixed',
-    code: '<div className="p-[16px] md:-mt-[8px] rounded-t-[8px] gap-[1rem]" />',
-    output: '<div className="p-4 md:-mt-2 rounded-t-lg gap-4" />',
-    errors: Array(4).fill({ messageId: 'sizeWithFix' }),
+    code: '<div className="p-[16px] md:-mt-[8px] rounded-t-[8px] gap-[1rem] rounded-[4px]" />',
+    output: '<div className="p-4 md:-mt-2 rounded-t-lg gap-4 rounded-sm" />',
+    errors: Array(5).fill({ messageId: 'sizeWithFix' }),
   },
   {
     name: 'negative values and important markers keep their form',
@@ -43,8 +43,13 @@ const invalid = [
     errors: [{ messageId: 'size', suggestions: [{ messageId: 'suggest', output: '<p className="text-sm" />' }] }],
   },
   {
+    name: 'the dense 11px size suggests text-2xs',
+    code: '<p className="text-[11px]" />',
+    errors: [{ messageId: 'size', suggestions: [{ messageId: 'suggest', output: '<p className="text-2xs" />' }] }],
+  },
+  {
     name: 'off-scale sizes are reported with no fix',
-    code: '<p className="text-[11px] p-[13px] rounded-[10px]" />',
+    code: '<p className="text-[13px] p-[13px] rounded-[10px]" />',
     errors: [{ messageId: 'size', suggestions: [] }, { messageId: 'size' }, { messageId: 'size' }],
   },
   {
