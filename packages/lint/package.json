@@ -1,6 +1,6 @@
 {
   "name": "@aakashiic/design-lint",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "ESLint and Stylelint rules that keep raw colours and arbitrary sizes out of new code",
   "type": "module",
   "files": [

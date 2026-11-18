@@ -1,6 +1,6 @@
 {
   "name": "@aakashiic/tokens",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Shared design tokens for Data Vault, VRetail and V-Estate",
   "type": "module",
   "files": [
