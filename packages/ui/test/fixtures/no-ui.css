@@ -1,0 +1,2 @@
+/* Control: the same app without the package's stylesheet. */
+@import "tailwindcss" source(none);
