@@ -45,6 +45,21 @@ import { Slider } from '../src/components/slider.tsx';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../src/components/select.tsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../src/components/tabs.tsx';
 import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../src/components/table.tsx';
+import { Badge } from '../src/components/badge.tsx';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../src/components/card.tsx';
+import { Progress } from '../src/components/progress.tsx';
+import { Skeleton } from '../src/components/skeleton.tsx';
+import { Separator } from '../src/components/separator.tsx';
+import { ScrollArea } from '../src/components/scroll-area.tsx';
+import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -208,6 +223,114 @@ function NavigationDemo() {
   );
 }
 
+const AGENTS = [
+  { name: 'Asha Verma', calls: 42, status: 'success', label: 'Online' },
+  { name: 'Ravi Kumar', calls: 37, status: 'warning', label: 'On a call' },
+  { name: 'Meera Iyer', calls: 0, status: 'secondary', label: 'On leave' },
+  { name: 'Dev Shah', calls: 18, status: 'danger', label: 'Missed 3' },
+] as const;
+
+function DataDisplayDemo() {
+  return (
+    <div className="flex w-full flex-col gap-6">
+      <div className="flex flex-wrap items-center gap-2">
+        {(['default', 'secondary', 'outline', 'success', 'warning', 'danger', 'info'] as const).map((v) => (
+          <Badge key={v} variant={v}>
+            {v}
+          </Badge>
+        ))}
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Daily snapshot</CardTitle>
+            <CardDescription>Calls and leads since midnight.</CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-3">
+            <p className="text-3xl font-semibold">1,284</p>
+            <div className="flex flex-col gap-1.5">
+              <div className="flex justify-between text-sm">
+                <span id="pv-target">Weekly target</span>
+                <span className="text-text-muted">64%</span>
+              </div>
+              <Progress value={64} aria-labelledby="pv-target" />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <div className="flex justify-between text-sm">
+                <span id="pv-quota">Storage used</span>
+                <span className="text-text-muted">180 of 200 GB</span>
+              </div>
+              <Progress value={180} max={200} aria-labelledby="pv-quota" indicatorClassName="bg-warning" />
+            </div>
+          </CardContent>
+          <CardFooter className="text-xs text-text-muted">Updated 5 minutes ago</CardFooter>
+        </Card>
+
+        <Card aria-busy="true">
+          <CardHeader>
+            <span className="sr-only">Loading leads…</span>
+            <Skeleton className="h-5 w-32" />
+            <Skeleton className="h-4 w-48" />
+          </CardHeader>
+          <CardContent className="flex flex-col gap-3">
+            <Skeleton className="h-9 w-24" />
+            <Skeleton className="h-2 w-full rounded-full" />
+            <Skeleton className="h-2 w-2/3 rounded-full" />
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card className="overflow-hidden">
+        <Table>
+          <TableCaption className="sr-only">Agents today</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead scope="col">Agent</TableHead>
+              <TableHead scope="col">Status</TableHead>
+              <TableHead scope="col" className="text-right">
+                Calls
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {AGENTS.map((a, i) => (
+              <TableRow key={a.name} data-state={i === 1 ? 'selected' : undefined}>
+                <TableCell className="font-medium">{a.name}</TableCell>
+                <TableCell>
+                  <Badge variant={a.status}>{a.label}</Badge>
+                </TableCell>
+                <TableCell className="text-right tabular-nums">{a.calls}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Card>
+
+      <div className="flex flex-wrap items-start gap-6">
+        <ScrollArea className="h-40 w-56 rounded-xl border border-border" aria-label="Recent calls">
+          <div className="p-3">
+            <p className="mb-2 text-sm font-semibold">Recent calls</p>
+            {Array.from({ length: 16 }, (_, i) => (
+              <div key={i}>
+                <p className="py-1.5 text-sm">Call #{1284 - i}</p>
+                {i < 15 && <Separator />}
+              </div>
+            ))}
+          </div>
+        </ScrollArea>
+        <div className="flex h-6 items-center gap-3 text-sm">
+          <span>Calls</span>
+          <Separator orientation="vertical" />
+          <span>Leads</span>
+          <Separator orientation="vertical" />
+          <span>Agents</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Preview() {
   const [theme, setTheme] = useState<ThemeId>('datavault');
 
@@ -362,6 +485,10 @@ function Preview() {
 
         <Section title="Navigation" status="DS-3.3d">
           <NavigationDemo />
+        </Section>
+
+        <Section title="Data display" status="DS-3.3e">
+          <DataDisplayDemo />
         </Section>
 
         <Section title="Dialog" status="DS-3.3a">

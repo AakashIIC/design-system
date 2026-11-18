@@ -33,10 +33,19 @@ const RESTYLED = [
   'components/tabs.tsx',
   'components/dropdown-menu.tsx',
   'components/command.tsx',
+  // DS-3.3e data display
+  'components/table.tsx',
+  'components/badge.tsx',
+  'components/card.tsx',
+  'components/progress.tsx',
+  'components/skeleton.tsx',
+  'components/separator.tsx',
+  'components/scroll-area.tsx',
 ];
 
 const COLOURS = new Set([...Object.keys(colors.datavault), 'transparent', 'current', 'inherit']);
-const RADII = new Set(['sm', 'md', 'lg', 'xl', '2xl', 'full', 'none']);
+// `[inherit]` takes the parent's (token) radius, e.g. a scroll viewport inside a rounded card.
+const RADII = new Set(['sm', 'md', 'lg', 'xl', '2xl', 'full', 'none', '[inherit]']);
 const SHADOWS = new Set(['sm', 'md', 'lg', 'none']);
 const FONT_SIZES = new Set(['2xs', 'xs', 'sm', 'base', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl']);
 

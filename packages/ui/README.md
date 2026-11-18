@@ -12,7 +12,8 @@ Tailwind CSS v4. VRetail is Angular and uses only [`@aakashiic/tokens`](../token
 > | DS-3.3b buttons | button | **Tokens only** |
 > | DS-3.3c form controls | input, textarea, select, checkbox, radio-group, switch, slider, label, form | **Tokens only** |
 > | DS-3.3d navigation | tabs, dropdown-menu, command | **Tokens only** |
-> | DS-3.3e data display | table, badge, card, progress, skeleton, separator, scroll-area | shadcn names |
+> | DS-3.3e data display | table, badge, card, progress, skeleton, separator, scroll-area | **Tokens only** |
+> | Not in a DS-3.3 group | calendar, chart, drawer, sonner (`Toaster`) | shadcn names |
 >
 > Components still on shadcn names need the app to define them: read [section 3](#3-colours-until-ds-33).
 
@@ -90,19 +91,20 @@ JavaScript with `'use client'` already on the components that need it.
 else. That includes V-Estate: import the tokens with `data-app="vestate"` before upgrading to a release with
 restyled components, or those components lose their colours.
 
-The **other components** still use **shadcn's colour names**, which the tokens don't define:
+The **other four** (calendar, chart, drawer, sonner) still use **shadcn's colour names**, which the tokens don't
+define:
 
 `background`, `foreground`, `card`, `card-foreground`, `popover`, `popover-foreground`, `primary-foreground`,
 `secondary`, `secondary-foreground`, `muted`, `muted-foreground`, `accent`, `accent-foreground`, `destructive`,
 `destructive-foreground`.
 
 - **V-Estate** already defines all of these in its `@theme`, so the components look the same as its own copies.
-- **Data Vault and the central portal** don't, so those classes produce no colour. Wait for the DS-3.3 group
-  you need before adopting it (Data Vault's DS-2.5 is planned that way).
+- **Data Vault and the central portal** don't, so those classes produce no colour. Don't adopt these four
+  there until they're restyled; none of them is in a DS-3.3 group yet.
 
 Careful with `accent`: in shadcn it's a hover background; in the tokens it's the brand purple. An app that
-imports the tokens' `tailwind.css` after its own `@theme` gets the purple on hovers. DS-3.3 removes this
-clash.
+imports the tokens' `tailwind.css` after its own `@theme` gets the purple on hovers. The restyled components
+don't use `accent` that way; the calendar still does.
 
 ---
 
@@ -212,6 +214,37 @@ To make an alert dialog's action destructive, pass the variant's classes:
 - Radix menu checkbox items and radio groups are controlled: pass `checked` / `onCheckedChange` and
   `value` / `onValueChange` (there is no `defaultChecked`).
 
+### Data display
+
+```tsx
+<Card>
+  <CardHeader>
+    <CardTitle>Daily snapshot</CardTitle>
+    <CardDescription>Since midnight</CardDescription>
+  </CardHeader>
+  <CardContent>…</CardContent>
+</Card>
+
+<Badge variant="success">Active</Badge>
+<Progress value={uploaded} max={total} aria-label="Upload" indicatorClassName="bg-success" />
+<div aria-busy="true"><span className="sr-only">Loading calls…</span><Skeleton className="h-4 w-40" /></div>
+```
+
+- **`Card`** is Data Vault's: `rounded-2xl`, `border-border`, `bg-surface`, no shadow. `className` overrides
+  apply (no `!` modifiers).
+- **`Table`** has a `surface-muted` header with small uppercase labels, hairline `border-border` rows and a
+  soft hover. `data-state="selected"` on a row tints it `primary-soft`. Add `scope="col"` to `TableHead`
+  and a `TableCaption` (it can be `sr-only`) so screen readers get the table's name.
+- **`Badge`** is a pill: `default` (primary), `secondary`, `outline`, and the statuses `success`, `warning`,
+  `danger` (`destructive` is the same) and `info` as soft background + strong text.
+- **`Progress`** needs a name (`aria-label` or `aria-labelledby`), or axe reports `aria-progressbar-name`. It
+  fills as a share of `max`. `indicatorClassName` takes a status colour. Show the value as text too: the
+  bar's colour alone can be below 3:1 against the track.
+- **`Skeleton`** is hidden from screen readers and stops pulsing under reduced motion. Put
+  `aria-busy="true"` and a text status on the loading region.
+- **`ScrollArea`**'s thumb is `text-subtle` (3:1 against the surface), and the viewport shows a focus ring
+  when a keyboard user scrolls it.
+
 ### Differences from V-Estate's own copies
 
 Moving V-Estate from `@/components/ui/*` to this package (Phase 4) is a find-and-replace on the import path,
@@ -257,6 +290,16 @@ except for:
     `DropdownMenuRadioItem`.
   - **Command:** the separator is hidden from screen readers (cmdk's `role="separator"` isn't allowed inside
     the listbox), and `CommandDialog` now has a hidden title.
+- **Data display** keeps its props. To check:
+  - **`Card`** no longer forces `rounded-2xl! border! shadow-none!`, so `className` overrides now apply. Cards
+    passing `shadow-md`, `shadow-sm`, `rounded-xl` or `rounded-lg` (about 10 on `staging`) will show them for
+    the first time: drop the class where the flat card was intended. `CardTitle` is `text-lg` (was `text-2xl`).
+  - **`Table`:** header labels are small uppercase `text-text-muted` on `surface-muted` (Data Vault's style),
+    and the header no longer reads V-Estate's `--custom-bg`. Cells are `px-4 py-3` (was `p-4`).
+  - **`Badge`** is a `<span>` (was a `<div>`), with no hover colour. `default`, `secondary` and `outline` keep
+    their names; use `success` / `warning` / `danger` / `info` instead of colour classes for statuses.
+  - **`Progress`** is 8px tall and `bg-primary` (was a 16px gold gradient). Most V-Estate uses pass `h-2`
+    already. It now respects `max`.
 
 ---
 

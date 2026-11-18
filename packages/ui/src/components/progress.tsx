@@ -6,17 +6,26 @@ import * as ProgressPrimitive from '@radix-ui/react-progress';
 import { cn } from '../lib/utils.ts';
 
 const Progress = React.forwardRef<
-  React.ElementRef<typeof ProgressPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>
->(({ className, value, ...props }, ref) => (
+  React.ComponentRef<typeof ProgressPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root> & {
+    /** Classes for the filled bar, e.g. `bg-success` for a status colour. */
+    indicatorClassName?: string;
+  }
+>(({ className, indicatorClassName, value, max = 100, ...props }, ref) => (
   <ProgressPrimitive.Root
     ref={ref}
-    className={cn('relative h-4 w-full overflow-hidden rounded-full bg-secondary', className)}
+    value={value}
+    max={max}
+    className={cn('relative h-2 w-full overflow-hidden rounded-full bg-surface-muted', className)}
     {...props}
   >
     <ProgressPrimitive.Indicator
-      className="h-full w-full flex-1 bg-gradient-to-l from-[#D4B98F] to-[#D4B98F]/50 transition-all rounded-full"
-      style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+      className={cn(
+        'h-full w-full flex-1 rounded-full bg-primary transition-transform duration-(--ds-motion-duration-base) ease-standard motion-reduce:transition-none',
+        indicatorClassName
+      )}
+      // Fill as a share of `max` (V-Estate's copy assumed max = 100), clamped to 0–100%.
+      style={{ transform: `translateX(-${100 - Math.min(100, Math.max(0, ((value ?? 0) / max) * 100))}%)` }}
     />
   </ProgressPrimitive.Root>
 ));

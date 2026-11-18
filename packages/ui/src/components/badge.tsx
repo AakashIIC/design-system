@@ -3,17 +3,22 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '../lib/utils.ts';
 
+// Data Vault's status pill. Status variants are soft background + strong text (no white on status colours).
+// A <span>, so it can sit inside a paragraph or a table cell.
 const badgeVariants = cva(
-  'inline-flex items-center rounded-full border px-2.5 py-0.5 text-sm font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2',
+  'inline-flex w-fit shrink-0 items-center gap-1 whitespace-nowrap rounded-full border border-transparent px-2 py-0.5 text-xs font-semibold [&>svg]:pointer-events-none [&>svg]:size-3',
   {
     variants: {
       variant: {
-        default: 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
-        secondary:
-          'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        destructive:
-          'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
-        outline: 'text-foreground',
+        default: 'bg-primary text-on-primary',
+        secondary: 'bg-surface-muted text-text',
+        outline: 'border-border text-text',
+        success: 'bg-success-soft text-success-strong',
+        warning: 'bg-warning-soft text-warning-strong',
+        danger: 'bg-danger-soft text-danger-strong',
+        info: 'bg-info-soft text-info-strong',
+        /** Same as `danger`; kept for V-Estate's shadcn name. */
+        destructive: 'bg-danger-soft text-danger-strong',
       },
     },
     defaultVariants: {
@@ -22,11 +27,10 @@ const badgeVariants = cva(
   }
 );
 
-export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {}
+export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof badgeVariants> {}
 
 function Badge({ className, variant, ...props }: BadgeProps) {
-  return <div className={cn(badgeVariants({ variant }), className)} {...props} />;
+  return <span data-variant={variant ?? 'default'} className={cn(badgeVariants({ variant }), className)} {...props} />;
 }
 
 export { Badge, badgeVariants };
