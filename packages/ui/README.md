@@ -16,8 +16,8 @@ Tailwind CSS v4. VRetail is Angular and uses only [`@aakashiic/tokens`](../token
 > | DS-3.3e data display | table, badge, card, progress, skeleton, separator, scroll-area |
 > | DS-3.3f the rest | calendar, chart, drawer, sonner (`Toaster`) |
 >
-> The shared app shell is in progress: the sidebar (DS-3.4), header (DS-3.5) and project switcher (DS-3.6)
-> are done; the app switcher (DS-3.7) is next.
+> The shared app shell is done too: sidebar (DS-3.4), header (DS-3.5), project switcher (DS-3.6) and app
+> switcher (DS-3.7). Next is adopting the package in the apps (Phase 4 for V-Estate, DS-2.5 for Data Vault).
 
 - [1. Install](#1-install)
 - [2. Set up your app](#2-set-up-your-app)
@@ -110,7 +110,7 @@ Most components come from the package root:
 import { Button, Dialog, DialogContent, DialogTrigger, Toaster, cn } from '@aakashiic/ui';
 ```
 
-alert-dialog, app-header, badge, button, card, checkbox, dialog, dropdown-menu, input, label, popover, progress,
+alert-dialog, app-header, app-switcher, badge, button, card, checkbox, dialog, dropdown-menu, input, label, popover, progress,
 radio-group, scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner (`Toaster`), switch,
 table, tabs, textarea, tooltip, and `cn`.
 
@@ -394,6 +394,50 @@ A searchable project picker in a popover, built on `Command`, so it needs `cmdk`
   highlighted row is announced as you arrow through, and the current project is `aria-checked`. Rows aren't
   Tab stops: arrows move, Enter picks, and Escape closes and returns focus to the trigger.
 - With no projects it renders nothing, like Data Vault's.
+
+### App switcher (central portal)
+
+```tsx
+import Link from 'next/link';
+import { AppLauncher, AppSwitcher, type AppItem } from '@aakashiic/ui';
+
+const apps: AppItem[] = PORTALS.map((p) => ({
+  id: p.id,
+  name: p.title,
+  category: p.category,
+  description: p.description,
+  icon: <RenderSVG name={p.svgName} />,
+  href: p.isInternal ? '/' : `/select-portal/${p.id}`,
+}));
+
+// In the header, on every page:
+<AppHeaderEnd>
+  <AppSwitcher apps={apps} currentAppId="data-vault" allAppsHref="/select-portal" linkAs={Link}
+    onSelect={(app) => posthog.capture('portal_selected', { portal_id: app.id })} />
+</AppHeaderEnd>
+
+// The "Select your workspace" page, under its <h1>:
+<AppLauncher apps={apps} currentAppId="data-vault" linkAs={Link} />
+```
+
+Built from Data Vault's central-portal pages (`select-portal` and the portal rail).
+
+- **`AppSwitcher`** is a grid button for the header ("Switch app"). It opens the apps as tiles in a popover,
+  with the current app marked `aria-current="page"`. `allAppsHref` adds an "All workspaces" link to the
+  launcher page.
+- **`AppLauncher`** is the workspace page: one card per app with its icon, category, name (a heading,
+  `headingLevel`, default 2), description and a call to action (`actionLabel`). The current app's card is
+  outlined and its action reads "Continue in …".
+- **Every app is a link,** with `linkAs` for the router. Data Vault's cards are a `<div role="button">`
+  around a second, unfocusable `<button>`, which is nested interactive content; middle-click and "open in new
+  tab" don't work on them either. Each launcher card is named by its heading and described by its
+  description, not by every line of text in it.
+- **`external: true`** apps open in a new tab (`target="_blank"`, `rel="noopener noreferrer"`), always with a
+  plain `<a>`, and are announced as "(opens in a new tab)". Data Vault opens other portals in an iframe page
+  instead; point `href` at that page (`/select-portal/agent-assist`) to keep doing so.
+- **`onSelect`** runs when an app is chosen, before navigation: Data Vault's PostHog `portal_selected` event.
+- Roles, feature flags and the `NEXT_PUBLIC_ENV === 'live'` check stay in the app: pass only the apps the user
+  may open.
 
 ### Differences from V-Estate's own copies
 

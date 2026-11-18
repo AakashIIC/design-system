@@ -1,6 +1,6 @@
 import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BarChart3, Bell, Calendar, Database, Download, Home, LogOut, MessageSquare, Settings, Sparkles, Users } from 'lucide-react';
+import { BarChart3, Bell, Calendar, Database, Download, Headphones, Home, LogOut, MessageSquare, Phone, Presentation, Settings, Sparkles, Users } from 'lucide-react';
 
 import './preview.css';
 import {
@@ -19,6 +19,7 @@ import {
 import { Badge } from '../src/components/badge.tsx';
 import { Button } from '../src/components/button.tsx';
 import { ProjectSwitcher, formatProjectName, type Project } from '../src/components/project-switcher.tsx';
+import { AppLauncher, AppSwitcher, type AppItem } from '../src/components/app-switcher.tsx';
 import {
   AppHeader,
   AppHeaderActions,
@@ -50,6 +51,13 @@ const PROJECTS: Project[] = [
   { id: 'p2', name: 'l&t towers', meta: 71 },
   { id: 'p3', name: 'harbour view residences', meta: 64 },
   { id: 'p4', name: 'green valley', meta: 58 },
+];
+
+const APPS: AppItem[] = [
+  { id: 'data-vault', name: 'Data Vault', href: '#', icon: <Database />, category: 'Speech intelligence', description: 'Call QA, insights and lead analytics.' },
+  { id: 'agent-assist', name: 'Agent Assist', href: '#agent-assist', icon: <Headphones />, category: 'Real-time copilot', description: 'Live guidance during calls.' },
+  { id: 'cloud-calling', name: 'Cloud Calling', href: '#cloud-calling', icon: <Phone />, category: 'Telephony', description: 'Outbound dialer and cloud telephony.' },
+  { id: 'showcase', name: 'Showcase', href: 'https://example.com', icon: <Presentation />, category: 'Product demo', description: 'Try the AI on sample calls.', external: true },
 ];
 
 const MAIN = [
@@ -159,6 +167,7 @@ function Shell() {
             </Button>
           </AppHeaderActions>
           <AppHeaderEnd>
+            <AppSwitcher apps={APPS} currentAppId="data-vault" allAppsHref="#workspaces" />
             <Button variant="ghost" size="icon" aria-label="Notifications, 3 unread">
               <Bell aria-hidden="true" />
             </Button>
@@ -170,6 +179,15 @@ function Shell() {
               <CardContent className="p-6 text-sm text-text-muted">Report section {i}: scroll to see the header pick up its border.</CardContent>
             </Card>
           ))}
+          <Card id="workspaces" className="scroll-mt-24">
+            <CardHeader>
+              <CardTitle>Select your workspace (DS-3.7)</CardTitle>
+              <CardDescription>The central portal's launcher: each card is one link. The grid button in the header switches apps from anywhere.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <AppLauncher apps={APPS} currentAppId="data-vault" headingLevel={3} onSelect={(app) => console.info('app selected', app.id)} />
+            </CardContent>
+          </Card>
           <Card>
             <CardHeader>
               <CardTitle>App shell sidebar (DS-3.4)</CardTitle>

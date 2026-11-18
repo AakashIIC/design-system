@@ -50,6 +50,7 @@ const RESTYLED = [
   'components/sidebar.tsx',
   'components/app-header.tsx',
   'components/project-switcher.tsx',
+  'components/app-switcher.tsx',
 ];
 
 const COLOURS = new Set([...Object.keys(colors.datavault), 'transparent', 'current', 'inherit']);
