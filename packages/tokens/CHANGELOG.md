@@ -1,5 +1,11 @@
 # @aakashiic/tokens
 
+## 0.5.0
+
+### Minor Changes
+
+- 77ab2d8: Add the `overlay` colour (`bg-overlay`, `--ds-color-overlay`): the backdrop behind modals and sheets. Black at 30% in the light themes (Data Vault's modal backdrop) and 60% in V-Estate dark. It's already translucent, so use it as is, with `backdrop-blur-sm`.
+
 ## 0.4.0
 
 ### Minor Changes

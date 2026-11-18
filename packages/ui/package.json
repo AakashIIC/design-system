@@ -1,6 +1,6 @@
 {
   "name": "@aakashiic/ui",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Shared React components (shadcn/Radix) for Data Vault, V-Estate and the central portal",
   "type": "module",
   "sideEffects": false,
@@ -93,7 +93,7 @@
     }
   },
   "devDependencies": {
-    "@aakashiic/tokens": "^0.4.0",
+    "@aakashiic/tokens": "^0.5.0",
     "@tailwindcss/cli": "^4.1.18",
     "@tailwindcss/vite": "^4.3.5",
     "@testing-library/dom": "^10.4.2",
