@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { Loader2 } from 'lucide-react';
 
 import { cn } from '../lib/utils.ts';
+import { Spinner } from './spinner.tsx';
 
 // DS-3.3b: Data Vault's button (solid primary, navy secondary, rounded-lg, 40px) with token colours only.
 // The soft status variants are tinted backgrounds with strong text: white text on status colours fails AA.
@@ -34,6 +34,8 @@ const buttonVariants = cva(
       size: {
         /** 40px: the default control height. */
         default: 'h-control-md px-4',
+        /** 24px: extra small button. */
+        xs: 'h-6 px-2 text-xs rounded-md',
         /** 32px. */
         sm: 'h-control-sm px-3 text-xs',
         /** 48px. */
@@ -79,7 +81,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         aria-busy={loading || undefined}
         {...props}
       >
-        {loading && <Loader2 className="animate-spin" aria-hidden="true" />}
+        {loading && <Spinner size="sm" label="" className="shrink-0 text-current" />}
         {children}
       </button>
     );

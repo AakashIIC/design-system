@@ -57,6 +57,7 @@ import { Badge } from '../src/components/badge.tsx';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../src/components/card.tsx';
 import { Progress } from '../src/components/progress.tsx';
 import { Skeleton } from '../src/components/skeleton.tsx';
+import { Spinner } from '../src/components/spinner.tsx';
 import { Separator } from '../src/components/separator.tsx';
 import { ScrollArea } from '../src/components/scroll-area.tsx';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
@@ -478,7 +479,7 @@ function Preview() {
 
         <Section title="Button" status="DS-3.3b">
           <div className="flex w-full flex-col gap-4">
-            {(['default', 'sm', 'lg'] as const).map((size) => (
+            {(['default', 'xs', 'sm', 'lg'] as const).map((size) => (
               <div key={size} className="flex flex-wrap items-center gap-3">
                 {BUTTON_VARIANTS.map((variant) => (
                   <Button key={variant} variant={variant} size={size}>
@@ -502,6 +503,31 @@ function Preview() {
               <Button asChild variant="link">
                 <a href="#button">A link styled as a button</a>
               </Button>
+            </div>
+          </div>
+        </Section>
+
+        <Section title="Spinner" status="DS-2.5">
+          <div className="flex flex-wrap items-center gap-6">
+            <div className="flex items-center gap-2">
+              <Spinner size="sm" />
+              <span className="text-xs text-text-muted">sm (16px)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Spinner size="md" />
+              <span className="text-sm text-text-muted">md (24px, default)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Spinner size="lg" />
+              <span className="text-base text-text-muted">lg (32px)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Spinner className="text-text-muted" />
+              <span className="text-sm text-text-muted">muted</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Spinner className="text-success-strong" />
+              <span className="text-sm text-text-muted">success</span>
             </div>
           </div>
         </Section>

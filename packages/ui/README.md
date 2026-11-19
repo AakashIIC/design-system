@@ -3,9 +3,8 @@
 Shared React components for **Data Vault**, **V-Estate** and the central portal: Radix primitives styled with
 Tailwind CSS v4. VRetail is Angular and uses only [`@aakashiic/tokens`](../tokens).
 
-> **Status: Phase 3 in progress.** These are V-Estate's 29 generic shadcn components, restyled to the tokens
-> group by group in DS-3.3 (see the [Phase 3 plan](../../docs/phase-3-plan.md)). All 29 now use **only token
-> names**:
+> **Status: Phase 3 complete · DS-2.5 ready.** All generic shadcn components are restyled to the tokens
+> (DS-3.3a–f), and the shared app shell (DS-3.4–3.7) is delivered. Components use **only token names**:
 >
 > | Group | Components |
 > |---|---|
@@ -17,7 +16,8 @@ Tailwind CSS v4. VRetail is Angular and uses only [`@aakashiic/tokens`](../token
 > | DS-3.3f the rest | calendar, chart, drawer, sonner (`Toaster`) |
 >
 > The shared app shell is done too: sidebar (DS-3.4), header (DS-3.5), project switcher (DS-3.6) and app
-> switcher (DS-3.7). Next is adopting the package in the apps (Phase 4 for V-Estate, DS-2.5 for Data Vault).
+> switcher (DS-3.7). Package support for Data Vault's DS-2.5 adoption adds `Spinner`, `Button` size `xs`,
+> and upcoming `Collapsible`, `Accordion`, and `Avatar`.
 
 - [1. Install](#1-install)
 - [2. Set up your app](#2-set-up-your-app)
@@ -128,7 +128,7 @@ import { Button, Dialog, DialogContent, DialogTrigger, Toaster, cn } from '@aaka
 ```
 
 alert-dialog, app-header, app-switcher, badge, button, card, checkbox, dialog, dropdown-menu, input, label, popover, progress,
-radio-group, scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner (`Toaster`), switch,
+radio-group, scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner (`Toaster`), spinner, switch,
 table, tabs, textarea, tooltip, and `cn`.
 
 The six that need an optional peer dependency are only on their own path, so an app without that library can
@@ -165,8 +165,8 @@ Every component also has its own path (`@aakashiic/ui/button`), and `cn` is at `
 | `link` | An action that should read as a link | Body text with a brand-coloured underline |
 | `destructive`, `success`, `warning` | Delete / approve / block | Tinted background with the strong status colour as text |
 
-Sizes: `default` 40px, `sm` 32px, `lg` 48px, `icon` 40px square, `icon-sm` 32px square (icon buttons need an
-`aria-label`). `loading` shows a spinner, disables the button and sets `aria-busy`.
+Sizes: `default` 40px, `sm` 32px, `lg` 48px, `xs` 24px, `icon` 40px square, `icon-sm` 32px square (icon buttons need an
+`aria-label`). `loading` shows a `Spinner` (`size="sm"`), disables the button and sets `aria-busy`.
 
 Like HTML, a `Button` without `type` inside a `<form>` submits it. Pass `type="button"` for buttons that
 shouldn't. (Data Vault's own button defaults to `type="button"`, so its form buttons already say `submit`.)
@@ -258,6 +258,11 @@ still close it.
   bar's colour alone can be below 3:1 against the track.
 - **`Skeleton`** is hidden from screen readers and stops pulsing under reduced motion. Put
   `aria-busy="true"` and a text status on the loading region.
+- **`Spinner`** renders an accessible loading spinner with `role="status"` and visually hidden text (`label`, default `"Loading..."`).
+  Sizes: `sm` (16px), `md` (24px, default), `lg` (32px). Defaults to `text-primary`; pass a text colour class (e.g. `className="text-text-muted"`)
+  to adapt to any container. Inside an already-labelled button or region, pass `label=""`: the spinner is then decorative
+  (no `role`, `aria-hidden`), so it isn't announced twice. `Button`'s `loading` does this for you.
+  Replaces DaisyUI `loading loading-spinner` and raw `<div className="animate-spin ... border-t-transparent" />` elements.
 - **`ScrollArea`**'s thumb is `text-subtle` (3:1 against the surface), and the viewport shows a focus ring
   when a keyboard user scrolls it.
 
