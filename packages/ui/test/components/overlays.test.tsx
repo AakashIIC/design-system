@@ -331,3 +331,52 @@ describe('Tooltip', () => {
     expect(bubble?.className).toContain('text-surface');
   });
 });
+
+describe('stacking (--ds-z-overlay)', () => {
+  it('dialog backdrop and panel take their z-index from --ds-z-overlay, defaulting to 50', () => {
+    render(
+      <Dialog open>
+        <DialogContent>
+          <DialogTitle>Stacked</DialogTitle>
+          <DialogDescription>Body</DialogDescription>
+        </DialogContent>
+      </Dialog>
+    );
+    const panel = screen.getByRole('dialog');
+    const backdrop = document.querySelector('.bg-overlay');
+    expect(panel.className).toContain('z-(--ds-z-overlay,50)');
+    expect(backdrop?.className).toContain('z-(--ds-z-overlay,50)');
+  });
+
+  it('alert dialog, sheet and popover use the same variable', () => {
+    const alert = render(
+      <AlertDialog open>
+        <AlertDialogContent>
+          <AlertDialogTitle>Alert</AlertDialogTitle>
+          <AlertDialogDescription>Body</AlertDialogDescription>
+        </AlertDialogContent>
+      </AlertDialog>
+    );
+    expect(screen.getByRole('alertdialog').className).toContain('z-(--ds-z-overlay,50)');
+    alert.unmount();
+
+    const sheet = render(
+      <Sheet open>
+        <SheetContent>
+          <SheetTitle>Sheet</SheetTitle>
+          <SheetDescription>Body</SheetDescription>
+        </SheetContent>
+      </Sheet>
+    );
+    expect(screen.getByRole('dialog', { name: 'Sheet' }).className).toContain('z-(--ds-z-overlay,50)');
+    sheet.unmount();
+
+    render(
+      <Popover open>
+        <PopoverTrigger>Open</PopoverTrigger>
+        <PopoverContent>Pop</PopoverContent>
+      </Popover>
+    );
+    expect(screen.getByText('Pop').className).toContain('z-(--ds-z-overlay,100)');
+  });
+});
