@@ -127,7 +127,7 @@ Most components come from the package root:
 import { Button, Dialog, DialogContent, DialogTrigger, Toaster, cn } from '@aakashiic/ui';
 ```
 
-alert-dialog, app-header, app-switcher, badge, button, card, checkbox, dialog, dropdown-menu, input, label, popover, progress,
+alert-dialog, app-header, app-switcher, avatar, badge, button, card, checkbox, dialog, dropdown-menu, input, label, popover, progress,
 radio-group, scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner (`Toaster`), switch,
 table, tabs, textarea, tooltip, and `cn`.
 
@@ -258,6 +258,17 @@ still close it.
   bar's colour alone can be below 3:1 against the track.
 - **`Skeleton`** is hidden from screen readers and stops pulsing under reduced motion. Put
   `aria-busy="true"` and a text status on the loading region.
+- **`Avatar`** displays user and agent avatars with automatic image loading and text initials fallback.
+  Built on `@radix-ui/react-avatar`:
+  ```tsx
+  <Avatar size="sm">
+    <AvatarImage src={user.avatarUrl} alt={user.name} />
+    <AvatarFallback>{user.initials}</AvatarFallback>
+  </Avatar>
+  ```
+  Sizes: `sm` (32px, `size-control-sm`), `default`/`md` (40px, `size-control-md`), `lg` (48px, `size-control-lg`).
+  `AvatarFallback` uses `bg-surface-muted` and `text-text`. Replaces ad-hoc avatar circles in `header.tsx`,
+  `SalesHeader.tsx`, and `AgentAvatar` in `lead-management`.
 - **`ScrollArea`**'s thumb is `text-subtle` (3:1 against the surface), and the viewport shows a focus ring
   when a keyboard user scrolls it.
 

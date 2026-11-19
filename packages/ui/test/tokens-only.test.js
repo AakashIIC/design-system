@@ -35,6 +35,7 @@ const RESTYLED = [
   'components/command.tsx',
   // DS-3.3e data display
   'components/table.tsx',
+  'components/avatar.tsx',
   'components/badge.tsx',
   'components/card.tsx',
   'components/progress.tsx',
