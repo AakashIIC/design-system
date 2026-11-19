@@ -9,6 +9,8 @@ import { colors } from '@aakashiic/tokens';
 
 const RESTYLED = [
   'lib/overlay.ts',
+  'components/accordion.tsx',
+  'components/collapsible.tsx',
   // DS-3.3a overlays
   'components/dialog.tsx',
   'components/alert-dialog.tsx',
@@ -40,6 +42,7 @@ const RESTYLED = [
   'components/card.tsx',
   'components/progress.tsx',
   'components/skeleton.tsx',
+  'components/spinner.tsx',
   'components/separator.tsx',
   'components/scroll-area.tsx',
   // DS-3.3f: the four components outside the DS-3.3 groups

@@ -5,6 +5,8 @@ import { BarChart3, Info, Pencil, Plus, Search, Trash2, Users } from 'lucide-rea
 import './preview.css';
 import { Button } from '../src/components/button.tsx';
 import { Avatar, AvatarFallback, AvatarImage } from '../src/components/avatar.tsx';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../src/components/accordion.tsx';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../src/components/collapsible.tsx';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -58,6 +60,7 @@ import { Badge } from '../src/components/badge.tsx';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../src/components/card.tsx';
 import { Progress } from '../src/components/progress.tsx';
 import { Skeleton } from '../src/components/skeleton.tsx';
+import { Spinner } from '../src/components/spinner.tsx';
 import { Separator } from '../src/components/separator.tsx';
 import { ScrollArea } from '../src/components/scroll-area.tsx';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
@@ -479,7 +482,7 @@ function Preview() {
 
         <Section title="Button" status="DS-3.3b">
           <div className="flex w-full flex-col gap-4">
-            {(['default', 'sm', 'lg'] as const).map((size) => (
+            {(['default', 'xs', 'sm', 'lg'] as const).map((size) => (
               <div key={size} className="flex flex-wrap items-center gap-3">
                 {BUTTON_VARIANTS.map((variant) => (
                   <Button key={variant} variant={variant} size={size}>
@@ -503,6 +506,31 @@ function Preview() {
               <Button asChild variant="link">
                 <a href="#button">A link styled as a button</a>
               </Button>
+            </div>
+          </div>
+        </Section>
+
+        <Section title="Spinner" status="DS-2.5">
+          <div className="flex flex-wrap items-center gap-6">
+            <div className="flex items-center gap-2">
+              <Spinner size="sm" />
+              <span className="text-xs text-text-muted">sm (16px)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Spinner size="md" />
+              <span className="text-sm text-text-muted">md (24px, default)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Spinner size="lg" />
+              <span className="text-base text-text-muted">lg (32px)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Spinner className="text-text-muted" />
+              <span className="text-sm text-text-muted">muted</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Spinner className="text-success-strong" />
+              <span className="text-sm text-text-muted">success</span>
             </div>
           </div>
         </Section>
@@ -720,6 +748,37 @@ function Preview() {
               </Avatar>
               <span className="text-sm text-text-muted">with image</span>
             </div>
+          </div>
+        </Section>
+
+        <Section title="Accordion and Collapsible" status="DS-2.5">
+          <div className="flex w-full flex-col gap-6">
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1">
+                <AccordionTrigger>What is Data Vault conversion score?</AccordionTrigger>
+                <AccordionContent>
+                  The conversion score measures customer sentiment, pitch clarity, and call duration against historical benchmarks.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-2">
+                <AccordionTrigger>How often are reports recalculated?</AccordionTrigger>
+                <AccordionContent>
+                  Call intelligence metrics update immediately after call recording processing completes.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+
+            <Collapsible className="rounded-lg border border-border p-4">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-semibold">Collapsible filter summary</h4>
+                <CollapsibleTrigger asChild>
+                  <Button variant="ghost" size="sm">Toggle</Button>
+                </CollapsibleTrigger>
+              </div>
+              <CollapsibleContent className="pt-2 text-sm text-text-muted">
+                Showing 1,284 calls across 18 active agents. Filter applied: Sentiment Positive.
+              </CollapsibleContent>
+            </Collapsible>
           </div>
         </Section>
       </main>
