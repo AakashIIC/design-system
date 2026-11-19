@@ -12,6 +12,7 @@ import {
   overlayPanel,
   overlayTitle,
 } from '../lib/overlay.ts';
+import { useReturnFocus } from '../lib/return-focus.ts';
 
 const Dialog = DialogPrimitive.Root;
 
@@ -36,22 +37,26 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 const DialogContent = React.forwardRef<
   React.ComponentRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <DialogPortal>
-    <DialogOverlay />
-    <DialogPrimitive.Content
-      ref={ref}
-      className={cn(overlayPanel, className)}
-      {...props}
-    >
-      {children}
-      <DialogPrimitive.Close className={overlayClose}>
-        <X className="h-4 w-4" />
-        <span className="sr-only">Close</span>
-      </DialogPrimitive.Close>
-    </DialogPrimitive.Content>
-  </DialogPortal>
-));
+>(({ className, children, onOpenAutoFocus, onCloseAutoFocus, ...props }, ref) => {
+  const returnFocus = useReturnFocus({ onOpenAutoFocus, onCloseAutoFocus });
+  return (
+    <DialogPortal>
+      <DialogOverlay />
+      <DialogPrimitive.Content
+        ref={ref}
+        className={cn(overlayPanel, className)}
+        {...returnFocus}
+        {...props}
+      >
+        {children}
+        <DialogPrimitive.Close className={overlayClose}>
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </DialogPrimitive.Close>
+      </DialogPrimitive.Content>
+    </DialogPortal>
+  );
+});
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (

@@ -11,6 +11,7 @@ import {
   overlayPanel,
   overlayTitle,
 } from "../lib/overlay.ts"
+import { useReturnFocus } from "../lib/return-focus.ts"
 
 const AlertDialog = AlertDialogPrimitive.Root
 
@@ -33,16 +34,20 @@ AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName
 const AlertDialogContent = React.forwardRef<
   React.ComponentRef<typeof AlertDialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>
->(({ className, ...props }, ref) => (
-  <AlertDialogPortal>
-    <AlertDialogOverlay />
-    <AlertDialogPrimitive.Content
-      ref={ref}
-      className={cn(overlayPanel, className)}
-      {...props}
-    />
-  </AlertDialogPortal>
-))
+>(({ className, onOpenAutoFocus, onCloseAutoFocus, ...props }, ref) => {
+  const returnFocus = useReturnFocus({ onOpenAutoFocus, onCloseAutoFocus })
+  return (
+    <AlertDialogPortal>
+      <AlertDialogOverlay />
+      <AlertDialogPrimitive.Content
+        ref={ref}
+        className={cn(overlayPanel, className)}
+        {...returnFocus}
+        {...props}
+      />
+    </AlertDialogPortal>
+  )
+})
 AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName
 
 const AlertDialogHeader = ({

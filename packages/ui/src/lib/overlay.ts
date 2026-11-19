@@ -3,7 +3,7 @@
 
 /** Data Vault's modal backdrop: translucent scrim plus a light blur. */
 export const overlayBackdrop =
-  'fixed inset-0 z-50 bg-overlay backdrop-blur-sm duration-(--ds-motion-duration-base) ease-standard data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0';
+  'fixed inset-0 z-(--ds-z-overlay,50) bg-overlay backdrop-blur-sm duration-(--ds-motion-duration-base) ease-standard data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0';
 
 /** The X button in the top-right corner of a dialog or sheet. */
 export const overlayClose =
@@ -11,7 +11,7 @@ export const overlayClose =
 
 /** Centred modal panel (dialog, alert-dialog). Fades and zooms in; full width minus a margin on phones. */
 export const overlayPanel =
-  'fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 rounded-2xl border border-border bg-surface p-6 text-text shadow-lg outline-none duration-(--ds-motion-duration-base) ease-standard data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 data-[state=open]:zoom-in-95 data-[state=closed]:zoom-out-95 max-md:max-h-[85dvh] max-md:w-[calc(100vw-1.5rem)] max-md:max-w-[calc(100vw-1.5rem)] max-md:overflow-y-auto max-md:rounded-xl max-md:p-4';
+  'fixed left-[50%] top-[50%] z-(--ds-z-overlay,50) grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 rounded-2xl border border-border bg-surface p-6 text-text shadow-lg outline-none duration-(--ds-motion-duration-base) ease-standard data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 data-[state=open]:zoom-in-95 data-[state=closed]:zoom-out-95 max-md:max-h-[85dvh] max-md:w-[calc(100vw-1.5rem)] max-md:max-w-[calc(100vw-1.5rem)] max-md:overflow-y-auto max-md:rounded-xl max-md:p-4';
 
 /** Title and description text inside the modal overlays. */
 export const overlayTitle = 'text-xl font-semibold text-text';

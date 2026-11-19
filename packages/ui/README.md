@@ -84,6 +84,23 @@ never generated and the components render unstyled. `styles.css` does two things
 No `tailwind.config.js`, PostCSS change or Next.js `transpilePackages` is needed: the package ships plain
 JavaScript with `'use client'` already on the components that need it.
 
+### Stacking (`--ds-z-overlay`)
+
+Everything the package portals to `<body>` (dialog, alert-dialog, sheet, drawer and their backdrops, plus
+popover, tooltip, dropdown-menu and select) takes its `z-index` from `--ds-z-overlay`. By default that's
+`50` (`100` for popovers), shadcn's values. If the app's own fixed chrome (headers, drawers, banners) uses a
+higher `z-index`, it shows above the dialogs and their backdrop. Set the variable above the app's highest
+chrome layer:
+
+```css
+:root {
+  --ds-z-overlay: 10000; /* Data Vault: its headers use z-1000 and some popups z-9999 */
+}
+```
+
+Nested layers still stack correctly with one value: a menu opened from a dialog is portaled after it, so it
+paints on top.
+
 ---
 
 ## 3. Colours
@@ -522,6 +539,7 @@ app that upgrades, so check the screens that use them.
 | Components render unstyled (no padding, borders or layout) | `@import "@aakashiic/ui/styles.css";` is missing from the global CSS. |
 | Layout is right but colours are missing | The tokens aren't imported, or `<html>` has no `data-app`; see [section 3](#3-colours). |
 | Dialogs and menus appear without animation | `styles.css` isn't imported (it brings `tw-animate-css`). |
+| The app's header or banners show above a dialog's backdrop | Set `--ds-z-overlay` above them; see [Stacking](#stacking---ds-z-overlay). |
 | Your own hover backgrounds turn purple | The tokens' `accent` overrides shadcn's; see [section 3](#3-colours). |
 | `Module not found: Can't resolve 'recharts'` (or `cmdk`, `vaul`, …) | Install the optional peer dependency for that component. |
 | `401` / `404` on install | See the [tokens troubleshooting](../tokens/README.md#troubleshooting). |

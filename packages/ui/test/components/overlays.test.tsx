@@ -1,4 +1,5 @@
 // DS-3.3a: accessibility and behaviour of the overlays (dialog, alert-dialog, sheet, popover, tooltip).
+import { useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -329,5 +330,131 @@ describe('Tooltip', () => {
 
     const bubble = document.querySelector('[data-side].bg-text');
     expect(bubble?.className).toContain('text-surface');
+  });
+});
+
+describe('stacking (--ds-z-overlay)', () => {
+  it('dialog backdrop and panel take their z-index from --ds-z-overlay, defaulting to 50', () => {
+    render(
+      <Dialog open>
+        <DialogContent>
+          <DialogTitle>Stacked</DialogTitle>
+          <DialogDescription>Body</DialogDescription>
+        </DialogContent>
+      </Dialog>
+    );
+    const panel = screen.getByRole('dialog');
+    const backdrop = document.querySelector('.bg-overlay');
+    expect(panel.className).toContain('z-(--ds-z-overlay,50)');
+    expect(backdrop?.className).toContain('z-(--ds-z-overlay,50)');
+  });
+
+  it('alert dialog, sheet and popover use the same variable', () => {
+    const alert = render(
+      <AlertDialog open>
+        <AlertDialogContent>
+          <AlertDialogTitle>Alert</AlertDialogTitle>
+          <AlertDialogDescription>Body</AlertDialogDescription>
+        </AlertDialogContent>
+      </AlertDialog>
+    );
+    expect(screen.getByRole('alertdialog').className).toContain('z-(--ds-z-overlay,50)');
+    alert.unmount();
+
+    const sheet = render(
+      <Sheet open>
+        <SheetContent>
+          <SheetTitle>Sheet</SheetTitle>
+          <SheetDescription>Body</SheetDescription>
+        </SheetContent>
+      </Sheet>
+    );
+    expect(screen.getByRole('dialog', { name: 'Sheet' }).className).toContain('z-(--ds-z-overlay,50)');
+    sheet.unmount();
+
+    render(
+      <Popover open>
+        <PopoverTrigger>Open</PopoverTrigger>
+        <PopoverContent>Pop</PopoverContent>
+      </Popover>
+    );
+    expect(screen.getByText('Pop').className).toContain('z-(--ds-z-overlay,100)');
+  });
+});
+
+describe('focus return without a trigger', () => {
+  // Radix returns focus to <DialogTrigger>. Apps that open dialogs from state have none, so focus used to
+  // fall to <body>; the content now returns it to whatever was focused when it opened.
+  function StateDialog({ kind }: { kind: 'dialog' | 'alert' | 'sheet' }) {
+    const [open, setOpen] = useState(false);
+    return (
+      <>
+        <button type="button" onClick={() => setOpen(true)}>
+          Open
+        </button>
+        {kind === 'dialog' && (
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogContent>
+              <DialogTitle>Dialog</DialogTitle>
+              <DialogDescription>Body</DialogDescription>
+            </DialogContent>
+          </Dialog>
+        )}
+        {kind === 'alert' && (
+          <AlertDialog open={open} onOpenChange={setOpen}>
+            <AlertDialogContent>
+              <AlertDialogTitle>Alert</AlertDialogTitle>
+              <AlertDialogDescription>Body</AlertDialogDescription>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+            </AlertDialogContent>
+          </AlertDialog>
+        )}
+        {kind === 'sheet' && (
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetContent>
+              <SheetTitle>Sheet</SheetTitle>
+              <SheetDescription>Body</SheetDescription>
+            </SheetContent>
+          </Sheet>
+        )}
+      </>
+    );
+  }
+
+  it.each(['dialog', 'alert', 'sheet'] as const)('%s returns focus to the opener on Escape', async (kind) => {
+    const user = userEvent.setup();
+    render(<StateDialog kind={kind} />);
+    const opener = screen.getByRole('button', { name: 'Open' });
+    await user.click(opener);
+    expect(document.activeElement).not.toBe(opener);
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(document.activeElement).toBe(opener));
+  });
+
+  it('a caller that handles onCloseAutoFocus itself still wins', async () => {
+    const user = userEvent.setup();
+    const onCloseAutoFocus = vi.fn((event: Event) => event.preventDefault());
+    function Custom() {
+      const [open, setOpen] = useState(false);
+      return (
+        <>
+          <button type="button" onClick={() => setOpen(true)}>
+            Open
+          </button>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogContent onCloseAutoFocus={onCloseAutoFocus}>
+              <DialogTitle>Dialog</DialogTitle>
+              <DialogDescription>Body</DialogDescription>
+            </DialogContent>
+          </Dialog>
+        </>
+      );
+    }
+    render(<Custom />);
+    const opener = screen.getByRole('button', { name: 'Open' });
+    await user.click(opener);
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(onCloseAutoFocus).toHaveBeenCalled());
+    expect(document.activeElement).not.toBe(opener);
   });
 });

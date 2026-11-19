@@ -12,6 +12,7 @@ import {
   overlayDescription,
   overlayTitle,
 } from "../lib/overlay.ts"
+import { useReturnFocus } from "../lib/return-focus.ts"
 
 const Sheet = SheetPrimitive.Root
 
@@ -34,7 +35,7 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
 const sheetVariants = cva(
-  "fixed z-50 gap-4 border-border bg-surface p-6 text-text shadow-lg outline-none duration-(--ds-motion-duration-base) ease-standard data-[state=open]:animate-in data-[state=closed]:animate-out",
+  "fixed z-(--ds-z-overlay,50) gap-4 border-border bg-surface p-6 text-text shadow-lg outline-none duration-(--ds-motion-duration-base) ease-standard data-[state=open]:animate-in data-[state=closed]:animate-out",
   {
     variants: {
       side: {
@@ -59,22 +60,26 @@ interface SheetContentProps
 const SheetContent = React.forwardRef<
   React.ComponentRef<typeof SheetPrimitive.Content>,
   SheetContentProps
->(({ side = "right", className, children, ...props }, ref) => (
-  <SheetPortal>
-    <SheetOverlay />
-    <SheetPrimitive.Content
-      ref={ref}
-      className={cn(sheetVariants({ side }), className)}
-      {...props}
-    >
-      {children}
-      <SheetPrimitive.Close className={overlayClose}>
-        <X className="h-4 w-4" />
-        <span className="sr-only">Close</span>
-      </SheetPrimitive.Close>
-    </SheetPrimitive.Content>
-  </SheetPortal>
-))
+>(({ side = "right", className, children, onOpenAutoFocus, onCloseAutoFocus, ...props }, ref) => {
+  const returnFocus = useReturnFocus({ onOpenAutoFocus, onCloseAutoFocus })
+  return (
+    <SheetPortal>
+      <SheetOverlay />
+      <SheetPrimitive.Content
+        ref={ref}
+        className={cn(sheetVariants({ side }), className)}
+        {...returnFocus}
+        {...props}
+      >
+        {children}
+        <SheetPrimitive.Close className={overlayClose}>
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </SheetPrimitive.Close>
+      </SheetPrimitive.Content>
+    </SheetPortal>
+  )
+})
 SheetContent.displayName = SheetPrimitive.Content.displayName
 
 const SheetHeader = ({
