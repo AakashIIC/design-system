@@ -13,7 +13,7 @@
 | **1. Modal / Dialog** | 45 files (`Modal.tsx`, `ConfirmModal.tsx`, `LogoutModal.tsx`, `callSummaryModal.tsx`, etc., DaisyUI `modal*`, `<dialog>`) | **COVERED** | Already covered by `Dialog` and `AlertDialog` in `@aakashiic/ui`. PR #23 resolved `--ds-z-overlay` stacking and `return-focus`; PR #25 added `showCloseButton`. Data Vault's `Modal.tsx` and `ConfirmModal.tsx` wrap them cleanly. No package changes needed. |
 | **2. Tooltip** | 61 files (DaisyUI `tooltip`, `tooltip-top`, `tooltip-bottom`, `tooltip-left`, `tooltip-right`, and local `Tip.tsx`) | **COVERED** | Covered by `Tooltip`, `TooltipTrigger`, `TooltipContent`, `TooltipProvider` in `@aakashiic/ui` (Radix primitive with full positioning). `Tip.tsx` in Data Vault is a dismissible in-page banner (KEEP IN APP). |
 | **3. Loading / Skeleton** | 33 files (`PageSkeleton.tsx`, `DeepDiveLoadingSkeleton.tsx`, `*Shimmer.tsx` components with `animate-pulse`) | **COVERED** | Covered by `Skeleton` in `@aakashiic/ui` (`animate-pulse rounded-md bg-surface-muted motion-reduce:animate-none`). Complex shimmer layouts are composed of `Skeleton` blocks in the app. Spinners tracked separately below. |
-| **4. Button** | 40 files (DaisyUI `btn`, `btn-primary`, `btn-secondary`, `btn-ghost`, `btn-sm`, `btn-xs`, `btn-circle`, and local `Button.tsx` with `variant="primary"`) | **PROP/VARIANT MISSING** | Add `primary` variant alias for `default` to prevent TypeScript/runtime breaks in Data Vault (`<Button variant="primary">`). Add `size="xs"` (24px) for `btn-xs` compatibility. Update `Button`'s loading state to use the shared `Spinner` component. |
+| **4. Button** | 40 files (DaisyUI `btn`, `btn-primary`, `btn-secondary`, `btn-ghost`, `btn-sm`, `btn-xs`, `btn-circle`, and local `Button.tsx` with `variant="primary"`) | **PROP/VARIANT MISSING** | Map Data Vault's `variant="primary"` to `default` when migrating (no alias in the package). Add `size="xs"` (24px) for `btn-xs` compatibility. Update `Button`'s loading state to use the shared `Spinner` component. |
 | **5. Tabs** | 25 files (`tabs-boxed`, `tab-active`, `tab-selector.tsx`, retargeting tabs) | **COVERED** | Covered by `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent` in `@aakashiic/ui` (segmented control on `surface-muted` track with keyboard arrow navigation). |
 | **6. Dropdown** | 32 files (DaisyUI `dropdown`, `dropdown-content`, `dropdown-end`, `menu`, local `ProjectListDropdown.tsx`, `AgentListDropdown.tsx`) | **COVERED** | Covered by `DropdownMenu` (`DropdownMenuTrigger`, `DropdownMenuContent`, `DropdownMenuItem`, `DropdownMenuCheckboxItem`, etc.) and `ProjectSwitcher` (`@aakashiic/ui/project-switcher`). `AgentListDropdown.tsx` is domain-specific. |
 | **7. Select** | 6 files (`<select className="select select-bordered ...">` in `GeneratedPdfsWrapper`, `CreateTicketForm`, `TicketList`, etc.) | **COVERED** | Covered by `Select`, `SelectTrigger`, `SelectValue`, `SelectContent`, `SelectItem`, `SelectGroup`, `SelectLabel`, `SelectSeparator` in `@aakashiic/ui`. |
@@ -49,7 +49,7 @@ Data Vault's local `src/components/ui/button.tsx` defines:
 ```ts
 variant?: "primary" | "secondary" | "outline";
 ```
-In `@aakashiic/ui`, the primary button variant is named `default`. Passing `variant="primary"` in Data Vault components (such as `create-rerun-campaign.tsx` and `RetargetLead.tsx`) causes TypeScript errors. Adding `primary` as an alias for `default` resolves this cleanly.
+In `@aakashiic/ui`, the primary button variant is named `default`. Data Vault components that pass `variant="primary"` (such as `create-rerun-campaign.tsx` and `RetargetLead.tsx`) should switch to `variant="default"` (or omit it) when they move to the package Button. The package doesn't add a `primary` alias: it would give V-Estate and the portal two names for one variant.
 Additionally, Data Vault uses `btn-xs` (24px) in 3 files (`SentimentConclusionCard.tsx`, `audioPlayerSmall.tsx`, `auplayer.tsx`). Adding `size="xs"` (`h-6 px-2 text-xs rounded-md`) provides drop-in compatibility.
 Finally, `Button`'s loading state should use the new shared `Spinner` component.
 
@@ -100,7 +100,7 @@ Generic user avatars with image loading and initials fallback are used in `heade
 
 1. **PR 1 (`feat/ui-spinner`):**
    - Add `Spinner` component (`size="sm" | "md" | "lg"`, `label`, `role="status"`).
-   - Update `Button`: add `variant="primary"` alias, `size="xs"`, use `Spinner` for loading.
+   - Update `Button`: add `size="xs"`, use `Spinner` for loading.
    - Include this gap audit document (`docs/ds-2.5-gap-audit.md`) and update `docs/phase-3-plan.md`.
 
 2. **PR 2 (`feat/ui-collapsible-accordion`):**

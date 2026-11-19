@@ -2,10 +2,10 @@
 "@aakashiic/ui": minor
 ---
 
-Add `Spinner` component and enhance `Button` for Data Vault DS-2.5 migration:
+Add `Spinner`, and `size="xs"` on `Button`, for Data Vault's DS-2.5 migration:
 
-- **`Spinner`**: Accessible loading spinner with `role="status"`, screen-reader text (`label`, default `"Loading..."`), and `sm` (16px), `md` (24px, default), `lg` (32px) sizes. Styled with token colors (defaults to `text-primary`, inherits text color when `text-current` or another color class is passed). Replaces DaisyUI `loading-spinner` and raw `animate-spin` markup.
-- **`Button` additions**:
-  - `variant="primary"` alias for `default` brand fill, matching Data Vault's prop contract without breaking changes.
-  - `size="xs"` (24px height, `h-6 px-2 text-xs rounded-md`), matching DaisyUI `btn-xs`.
-  - Loading state now uses the shared `Spinner` component with `size="sm"`.
+- **`Spinner`**: a loading spinner in `sm` (16px), `md` (24px, default) and `lg` (32px), token colours only (`text-primary` by default; pass a text colour class to change it). With a `label` (default `"Loading..."`) it is a `role="status"` region with screen-reader text. With `label=""` it is decorative: no role, `aria-hidden`, for use inside an already-labelled control. Replaces DaisyUI `loading-spinner` and raw `animate-spin` markup.
+- **`Button`**:
+  - `size="xs"` (24px: `h-6 px-2 text-xs rounded-md`), matching DaisyUI `btn-xs`.
+  - The `loading` spinner is now a decorative `Spinner`, so the button doesn't contain a nested status region.
+  - There is no `primary` variant: the brand fill is `default` (Data Vault's local `variant="primary"` maps to it).

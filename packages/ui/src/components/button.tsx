@@ -14,8 +14,6 @@ const buttonVariants = cva(
       variant: {
         /** Main action. Indigo in Data Vault and VRetail, gold in V-Estate. */
         default: 'bg-primary text-on-primary hover:bg-primary-hover',
-        /** Alias for `default` matching Data Vault's prop contract. */
-        primary: 'bg-primary text-on-primary hover:bg-primary-hover',
         /** Strong but not the brand colour: navy in Data Vault, charcoal in V-Estate. */
         secondary: 'bg-text text-surface hover:bg-text/90',
         /** Neutral bordered button; also the "unselected" half of a toggle group. */

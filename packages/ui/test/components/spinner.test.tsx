@@ -27,10 +27,12 @@ describe('Spinner', () => {
     await expectNoAxeViolations();
   });
 
-  it('allows suppressing the label when embedded in an already-labelled control', () => {
-    render(<Spinner label="" />);
-    const status = screen.getByRole('status');
-    expect(status.querySelector('.sr-only')).toBeNull();
+  it('is decorative with label="" (inside an already-labelled control): no status role, hidden', () => {
+    const { container } = render(<Spinner label="" />);
+    expect(screen.queryByRole('status')).toBeNull();
+    const root = container.firstElementChild!;
+    expect(root.getAttribute('aria-hidden')).toBe('true');
+    expect(root.querySelector('.sr-only')).toBeNull();
   });
 
   it('renders all size variants correctly', () => {

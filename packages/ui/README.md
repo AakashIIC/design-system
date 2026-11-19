@@ -16,7 +16,7 @@ Tailwind CSS v4. VRetail is Angular and uses only [`@aakashiic/tokens`](../token
 > | DS-3.3f the rest | calendar, chart, drawer, sonner (`Toaster`) |
 >
 > The shared app shell is done too: sidebar (DS-3.4), header (DS-3.5), project switcher (DS-3.6) and app
-> switcher (DS-3.7). Package support for Data Vault's DS-2.5 adoption adds `Spinner`, `Button` primary/xs props,
+> switcher (DS-3.7). Package support for Data Vault's DS-2.5 adoption adds `Spinner`, `Button` size `xs`,
 > and upcoming `Collapsible`, `Accordion`, and `Avatar`.
 
 - [1. Install](#1-install)
@@ -158,7 +158,6 @@ Every component also has its own path (`@aakashiic/ui/button`), and `cn` is at `
 | Variant | Use for | Looks like |
 |---|---|---|
 | `default` | The main action | Brand fill: indigo (Data Vault, VRetail), gold with dark text (V-Estate) |
-| `primary` | Alias for `default` | Identical to `default`, matching Data Vault's prop contract |
 | `secondary` | A strong action that isn't the brand one | Navy in Data Vault, charcoal in V-Estate |
 | `outline` | Secondary actions; the unselected half of a toggle group | Neutral border on the surface |
 | `ghost` | Toolbars, icon buttons | No background until hovered |
@@ -261,7 +260,8 @@ still close it.
   `aria-busy="true"` and a text status on the loading region.
 - **`Spinner`** renders an accessible loading spinner with `role="status"` and visually hidden text (`label`, default `"Loading..."`).
   Sizes: `sm` (16px), `md` (24px, default), `lg` (32px). Defaults to `text-primary`; pass a text colour class (e.g. `className="text-text-muted"`)
-  to adapt to any container. When placed inside an already-labelled button or region, pass `label=""` to avoid duplicate announcements.
+  to adapt to any container. Inside an already-labelled button or region, pass `label=""`: the spinner is then decorative
+  (no `role`, `aria-hidden`), so it isn't announced twice. `Button`'s `loading` does this for you.
   Replaces DaisyUI `loading loading-spinner` and raw `<div className="animate-spin ... border-t-transparent" />` elements.
 - **`ScrollArea`**'s thumb is `text-subtle` (3:1 against the surface), and the viewport shows a focus ring
   when a keyboard user scrolls it.

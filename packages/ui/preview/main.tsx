@@ -122,7 +122,7 @@ const THEMES = [
 ] as const;
 type ThemeId = (typeof THEMES)[number]['id'];
 
-const BUTTON_VARIANTS = ['default', 'primary', 'secondary', 'outline', 'ghost', 'muted', 'link', 'destructive', 'success', 'warning'] as const;
+const BUTTON_VARIANTS = ['default', 'secondary', 'outline', 'ghost', 'muted', 'link', 'destructive', 'success', 'warning'] as const;
 
 function Section({ title, status, children }: { title: string; status: string; children: ReactNode }) {
   return (

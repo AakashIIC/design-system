@@ -20,12 +20,13 @@ const spinnerVariants = cva('animate-spin text-current', {
 export interface SpinnerProps
   extends React.HTMLAttributes<HTMLSpanElement>,
     VariantProps<typeof spinnerVariants> {
-  /** Screen-reader label. Default "Loading...". Pass an empty string to suppress. */
+  /** Screen-reader label. Default "Loading...". Pass "" for a decorative spinner (e.g. inside a labelled button): it then has no role and is hidden from assistive tech. */
   label?: string;
 }
 
 /**
- * Accessible loading spinner with role="status" and screen-reader text.
+ * Loading spinner. With a label it is a role="status" live region with screen-reader text; with label="" it is
+ * decorative (aria-hidden).
  * Defaults to text-primary; inherits parent text colour when text-current or
  * another colour class is passed.
  */
@@ -34,7 +35,8 @@ const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
     return (
       <span
         ref={ref}
-        role="status"
+        role={label ? "status" : undefined}
+        aria-hidden={label ? undefined : true}
         className={cn('inline-flex items-center justify-center text-primary', className)}
         {...props}
       >

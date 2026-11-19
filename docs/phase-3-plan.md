@@ -36,7 +36,7 @@ Each DS-3.3 group ships with accessibility and behaviour tests and a preview pag
 Following the comprehensive DS-2.5 gap audit (`docs/ds-2.5-gap-audit.md`), the package provides direct support for all patterns needed to replace DaisyUI and hand-built controls in Data Vault:
 
 - **`Spinner` (`@aakashiic/ui`)**: Standalone accessible loading indicator with `sm`/`md`/`lg` sizes, `label` for screen readers (default "Loading..."), and `role="status"`. Replaces 32+ instances of raw `animate-spin` divs and DaisyUI `loading-spinner` classes. `Button`'s loading state is wired to use it.
-- **`Button` additions**: Added `variant="primary"` (alias for `default` brand fill) and `size="xs"` (24px, matching `btn-xs`) for seamless compatibility with Data Vault's existing prop contracts.
+- **`Button` additions**: Added `size="xs"` (24px, matching `btn-xs`). No `primary` alias: Data Vault's local `variant="primary"` maps to `default` when it moves to the package Button.
 - **`Collapsible` & `Accordion` (`@aakashiic/ui`)**: Built on Radix `@radix-ui/react-collapsible` and `@radix-ui/react-accordion` with token styling and smooth height animations, replacing DaisyUI `collapse` and ad-hoc expand/collapse toggles.
 - **`Avatar` (`@aakashiic/ui`)**: Standardized Radix avatar (`Avatar`, `AvatarImage`, `AvatarFallback`) with token surfaces and text colours, unifying user/agent avatar rendering in headers, navigation, and lists.
 - **Overlays stacking & focus**: PR #23 `--ds-z-overlay` variable support and focus restoration, plus PR #25 `showCloseButton={false}` option for modals with their own action controls.

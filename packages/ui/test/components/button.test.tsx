@@ -16,7 +16,7 @@ import {
 } from '../../src/components/alert-dialog.tsx';
 import { expectNoAxeViolations } from './axe.ts';
 
-const VARIANTS = ['default', 'primary', 'secondary', 'outline', 'ghost', 'muted', 'link', 'destructive', 'success', 'warning'] as const;
+const VARIANTS = ['default', 'secondary', 'outline', 'ghost', 'muted', 'link', 'destructive', 'success', 'warning'] as const;
 const SIZES = ['default', 'xs', 'sm', 'lg'] as const;
 
 describe('Button', () => {
@@ -74,17 +74,8 @@ describe('Button', () => {
     expect(screen.getByRole('button', { name: 'Block' }).className).toMatch(/bg-warning-soft.*text-warning-strong/);
   });
 
-  it('supports primary as an alias for default and xs as a compact size', () => {
-    render(
-      <>
-        <Button variant="primary">Primary</Button>
-        <Button size="xs">Compact</Button>
-      </>
-    );
-    const primary = screen.getByRole('button', { name: 'Primary' });
-    expect(primary.className).toContain('bg-primary');
-    expect(primary.className).toContain('text-on-primary');
-
+  it('supports xs as a compact size', () => {
+    render(<Button size="xs">Compact</Button>);
     const compact = screen.getByRole('button', { name: 'Compact' });
     expect(compact.className).toContain('h-6');
     expect(compact.className).toContain('px-2');
@@ -136,6 +127,8 @@ describe('Button', () => {
     expect(button.getAttribute('aria-busy')).toBe('true');
     expect((button as HTMLButtonElement).disabled).toBe(true);
     expect(button.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true');
+    // The spinner is decorative inside the button: no nested status live region.
+    expect(button.querySelector('[role="status"]')).toBeNull();
     await user.click(button);
     expect(onClick).not.toHaveBeenCalled();
     await expectNoAxeViolations();
