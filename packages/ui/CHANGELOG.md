@@ -1,5 +1,30 @@
 # @aakashiic/ui
 
+## 0.3.0
+
+### Minor Changes
+
+- b424700: Add `Avatar`, `AvatarImage`, and `AvatarFallback` components for Data Vault DS-2.5 migration:
+
+  - **`Avatar`**: Accessible user and agent avatar primitive built on `@radix-ui/react-avatar`.
+  - Supports size variants `sm` (32px), `default` (40px), and `lg` (48px) mapped to token control dimensions.
+  - `AvatarFallback` uses token surface and text colours (`bg-surface-muted`, `text-text`).
+  - Standardizes avatar rendering across headers, navigation, and list views, replacing ad-hoc avatar divs in Data Vault.
+
+- 89f5f8b: Add `Accordion` and `Collapsible` components for Data Vault DS-2.5 migration:
+
+  - **`Accordion`**: Multi-panel disclosure built on `@radix-ui/react-accordion` with `type="single"` (with `collapsible` option) or `type="multiple"`. Features animated Chevron indicator, smooth height transitions, and keyboard arrow navigation. Replaces DaisyUI `collapse` groups.
+  - **`Collapsible`**: Single-section disclosure built on `@radix-ui/react-collapsible` for toggleable panels, filter sections, and detail drawers.
+  - The height animations (`animate-accordion-*`, `animate-collapsible-*`) come from `tw-animate-css`, which `styles.css` already imports; no app CSS change is needed.
+
+- 677064a: Add `Spinner`, and `size="xs"` on `Button`, for Data Vault's DS-2.5 migration:
+
+  - **`Spinner`**: a loading spinner in `sm` (16px), `md` (24px, default) and `lg` (32px), token colours only (`text-primary` by default; pass a text colour class to change it). With a `label` (default `"Loading..."`) it is a `role="status"` region with screen-reader text. With `label=""` it is decorative: no role, `aria-hidden`, for use inside an already-labelled control. Replaces DaisyUI `loading-spinner` and raw `animate-spin` markup.
+  - **`Button`**:
+    - `size="xs"` (24px: `h-6 px-2 text-xs rounded-md`), matching DaisyUI `btn-xs`.
+    - The `loading` spinner is now a decorative `Spinner`, so the button doesn't contain a nested status region.
+    - There is no `primary` variant: the brand fill is `default` (Data Vault's local `variant="primary"` maps to it).
+
 ## 0.2.0
 
 ### Minor Changes
