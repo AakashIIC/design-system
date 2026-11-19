@@ -9,6 +9,8 @@ import { colors } from '@aakashiic/tokens';
 
 const RESTYLED = [
   'lib/overlay.ts',
+  'components/accordion.tsx',
+  'components/collapsible.tsx',
   // DS-3.3a overlays
   'components/dialog.tsx',
   'components/alert-dialog.tsx',

@@ -4,6 +4,8 @@ import { BarChart3, Info, Pencil, Plus, Search, Trash2, Users } from 'lucide-rea
 
 import './preview.css';
 import { Button } from '../src/components/button.tsx';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../src/components/accordion.tsx';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../src/components/collapsible.tsx';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -690,6 +692,37 @@ function Preview() {
             </TooltipTrigger>
             <TooltipContent>Calls longer than 30 seconds</TooltipContent>
           </Tooltip>
+        </Section>
+
+        <Section title="Accordion and Collapsible" status="DS-2.5">
+          <div className="flex w-full flex-col gap-6">
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1">
+                <AccordionTrigger>What is Data Vault conversion score?</AccordionTrigger>
+                <AccordionContent>
+                  The conversion score measures customer sentiment, pitch clarity, and call duration against historical benchmarks.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-2">
+                <AccordionTrigger>How often are reports recalculated?</AccordionTrigger>
+                <AccordionContent>
+                  Call intelligence metrics update immediately after call recording processing completes.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+
+            <Collapsible className="rounded-lg border border-border p-4">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-semibold">Collapsible filter summary</h4>
+                <CollapsibleTrigger asChild>
+                  <Button variant="ghost" size="sm">Toggle</Button>
+                </CollapsibleTrigger>
+              </div>
+              <CollapsibleContent className="pt-2 text-sm text-text-muted">
+                Showing 1,284 calls across 18 active agents. Filter applied: Sentiment Positive.
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
         </Section>
       </main>
       {/* Same setup as V-Estate's layout. */}

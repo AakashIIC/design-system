@@ -127,7 +127,7 @@ Most components come from the package root:
 import { Button, Dialog, DialogContent, DialogTrigger, Toaster, cn } from '@aakashiic/ui';
 ```
 
-alert-dialog, app-header, app-switcher, badge, button, card, checkbox, dialog, dropdown-menu, input, label, popover, progress,
+accordion, alert-dialog, app-header, app-switcher, badge, button, card, checkbox, collapsible, dialog, dropdown-menu, input, label, popover, progress,
 radio-group, scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner (`Toaster`), switch,
 table, tabs, textarea, tooltip, and `cn`.
 
@@ -260,6 +260,30 @@ still close it.
   `aria-busy="true"` and a text status on the loading region.
 - **`ScrollArea`**'s thumb is `text-subtle` (3:1 against the surface), and the viewport shows a focus ring
   when a keyboard user scrolls it.
+
+### Accordion and Collapsible
+
+```tsx
+<Accordion type="single" collapsible>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Call summary</AccordionTrigger>
+    <AccordionContent>Caller enquired about 3-bedroom unit pricing...</AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+<Collapsible defaultOpen>
+  <CollapsibleTrigger asChild><Button variant="ghost">Toggle filters</Button></CollapsibleTrigger>
+  <CollapsibleContent>Filters panel content...</CollapsibleContent>
+</Collapsible>
+```
+
+- **`Accordion`** groups collapsible disclosure panels. Built on `@radix-ui/react-accordion` with `type="single"`
+  or `type="multiple"`. Supports `collapsible` so an open panel can be collapsed by clicking again. Triggers
+  rotate their Chevron icon on open and support Arrow Up/Down keyboard navigation.
+- **`Collapsible`** is a single disclosure control built on `@radix-ui/react-collapsible`. Use `open` + `onOpenChange`
+  for controlled state or `defaultOpen`.
+- **Migration from DaisyUI:** Replaces DaisyUI `collapse`, `collapse-arrow`, `collapse-title`, and `collapse-content`.
+  Does not require `<input type="checkbox" />` hacks inside the container.
 
 ### Calendar, chart, drawer and toasts
 
