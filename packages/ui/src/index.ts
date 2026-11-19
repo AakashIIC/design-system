@@ -27,6 +27,7 @@ export * from './components/sidebar.tsx';
 export * from './components/skeleton.tsx';
 export * from './components/slider.tsx';
 export * from './components/sonner.tsx';
+export * from './components/spinner.tsx';
 export * from './components/switch.tsx';
 export * from './components/table.tsx';
 export * from './components/tabs.tsx';

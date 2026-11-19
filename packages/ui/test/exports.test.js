@@ -9,14 +9,14 @@ const builtComponents = readdirSync(componentsDir)
   .filter((file) => file.endsWith('.js'))
   .map((file) => file.slice(0, -3));
 
-test('ships the 29 DS-3.1 components plus the app shell (sidebar, header, project and app switchers) and collapse controls', () => {
-  assert.equal(builtComponents.length, 35, builtComponents.join(', '));
-  for (const name of ['sidebar', 'app-header', 'project-switcher', 'app-switcher', 'accordion', 'collapsible']) assert.ok(builtComponents.includes(name), name);
+test('ships the core components, the app shell, and the DS-2.5 additions (spinner, accordion, collapsible)', () => {
+  assert.equal(builtComponents.length, 36, builtComponents.join(', '));
+  for (const name of ['sidebar', 'app-header', 'project-switcher', 'app-switcher', 'spinner', 'accordion', 'collapsible']) assert.ok(builtComponents.includes(name), name);
 });
 
 test('the root entry exports the core components and cn', async () => {
   const ui = await import('@aakashiic/ui');
-  for (const name of ['Button', 'buttonVariants', 'Dialog', 'Select', 'Tabs', 'Tooltip', 'Toaster', 'Table', 'SidebarProvider', 'SidebarNavItem', 'useSidebar', 'AppHeader', 'SkipToContent', 'AppSwitcher', 'AppLauncher', 'Accordion', 'AccordionItem', 'AccordionTrigger', 'AccordionContent', 'Collapsible', 'CollapsibleTrigger', 'CollapsibleContent', 'cn']) {
+  for (const name of ['Button', 'buttonVariants', 'Dialog', 'Select', 'Tabs', 'Tooltip', 'Toaster', 'Table', 'SidebarProvider', 'SidebarNavItem', 'useSidebar', 'AppHeader', 'SkipToContent', 'AppSwitcher', 'AppLauncher', 'Accordion', 'AccordionItem', 'AccordionTrigger', 'AccordionContent', 'Collapsible', 'CollapsibleTrigger', 'CollapsibleContent', 'Spinner', 'spinnerVariants', 'cn']) {
     assert.ok(ui[name], `missing export ${name}`);
   }
 });
