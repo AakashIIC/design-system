@@ -1,5 +1,11 @@
 # @aakashiic/ui
 
+## 0.2.0
+
+### Minor Changes
+
+- b87ead0: Add `showCloseButton` to `DialogContent` and `SheetContent` (default `true`, as shadcn has it). Pass `false` when the dialog already has its own Close or Cancel button, so there's one control per action. Escape and the backdrop still close it.
+
 ## 0.1.2
 
 ### Patch Changes
