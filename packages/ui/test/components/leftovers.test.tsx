@@ -6,6 +6,13 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { toast } from 'sonner';
 
+// jsdom has no layout, so ResponsiveContainer measures 0×0. recharts 3 then renders nothing (recharts 2
+// rendered its children anyway); pass the children straight through so the chart tests run on both.
+vi.mock('recharts', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('recharts')>()),
+  ResponsiveContainer: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}));
+
 import { Calendar } from '../../src/components/calendar.tsx';
 import {
   ChartContainer,
