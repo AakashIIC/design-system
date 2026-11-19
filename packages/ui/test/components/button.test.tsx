@@ -16,8 +16,8 @@ import {
 } from '../../src/components/alert-dialog.tsx';
 import { expectNoAxeViolations } from './axe.ts';
 
-const VARIANTS = ['default', 'secondary', 'outline', 'ghost', 'muted', 'link', 'destructive', 'success', 'warning'] as const;
-const SIZES = ['default', 'sm', 'lg'] as const;
+const VARIANTS = ['default', 'primary', 'secondary', 'outline', 'ghost', 'muted', 'link', 'destructive', 'success', 'warning'] as const;
+const SIZES = ['default', 'xs', 'sm', 'lg'] as const;
 
 describe('Button', () => {
   it('renders every variant and size accessibly', async () => {
@@ -72,6 +72,24 @@ describe('Button', () => {
     expect(screen.getByRole('button', { name: 'Delete' }).className).toMatch(/bg-danger-soft.*text-danger-strong/);
     expect(screen.getByRole('button', { name: 'Approve' }).className).toMatch(/bg-success-soft.*text-success-strong/);
     expect(screen.getByRole('button', { name: 'Block' }).className).toMatch(/bg-warning-soft.*text-warning-strong/);
+  });
+
+  it('supports primary as an alias for default and xs as a compact size', () => {
+    render(
+      <>
+        <Button variant="primary">Primary</Button>
+        <Button size="xs">Compact</Button>
+      </>
+    );
+    const primary = screen.getByRole('button', { name: 'Primary' });
+    expect(primary.className).toContain('bg-primary');
+    expect(primary.className).toContain('text-on-primary');
+
+    const compact = screen.getByRole('button', { name: 'Compact' });
+    expect(compact.className).toContain('h-6');
+    expect(compact.className).toContain('px-2');
+    expect(compact.className).toContain('text-xs');
+    expect(compact.className).toContain('rounded-md');
   });
 
   it('activates with click, Enter and Space', async () => {
