@@ -458,3 +458,54 @@ describe('focus return without a trigger', () => {
     expect(document.activeElement).not.toBe(opener);
   });
 });
+
+describe('showCloseButton', () => {
+  it('dialog and sheet draw the X by default and drop it with showCloseButton={false}', () => {
+    const shown = render(
+      <Dialog open>
+        <DialogContent>
+          <DialogTitle>With X</DialogTitle>
+          <DialogDescription>Body</DialogDescription>
+        </DialogContent>
+      </Dialog>
+    );
+    expect(screen.getByRole('button', { name: 'Close' })).toBeTruthy();
+    shown.unmount();
+
+    const dialog = render(
+      <Dialog open>
+        <DialogContent showCloseButton={false}>
+          <DialogTitle>Without X</DialogTitle>
+          <DialogDescription>Body</DialogDescription>
+        </DialogContent>
+      </Dialog>
+    );
+    expect(screen.queryByRole('button', { name: 'Close' })).toBeNull();
+    dialog.unmount();
+
+    render(
+      <Sheet open>
+        <SheetContent showCloseButton={false}>
+          <SheetTitle>Sheet</SheetTitle>
+          <SheetDescription>Body</SheetDescription>
+        </SheetContent>
+      </Sheet>
+    );
+    expect(screen.queryByRole('button', { name: 'Close' })).toBeNull();
+  });
+
+  it('without the X, Escape still closes the dialog', async () => {
+    const user = userEvent.setup();
+    const onOpenChange = vi.fn();
+    render(
+      <Dialog open onOpenChange={onOpenChange}>
+        <DialogContent showCloseButton={false}>
+          <DialogTitle>Without X</DialogTitle>
+          <DialogDescription>Body</DialogDescription>
+        </DialogContent>
+      </Dialog>
+    );
+    await user.keyboard('{Escape}');
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
+});

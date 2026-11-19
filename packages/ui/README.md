@@ -174,6 +174,10 @@ shouldn't. (Data Vault's own button defaults to `type="button"`, so its form but
 To make an alert dialog's action destructive, pass the variant's classes:
 `<AlertDialogAction className={buttonVariants({ variant: 'destructive' })}>`.
 
+`DialogContent` and `SheetContent` draw an X in the top-right corner. If the dialog already has its own Close
+or Cancel button, pass `showCloseButton={false}` so there's one control per action. Escape and the backdrop
+still close it.
+
 ### Form controls
 
 ```tsx
