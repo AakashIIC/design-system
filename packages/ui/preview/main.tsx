@@ -4,6 +4,7 @@ import { BarChart3, Info, Pencil, Plus, Search, Trash2, Users } from 'lucide-rea
 
 import './preview.css';
 import { Button } from '../src/components/button.tsx';
+import { Avatar, AvatarFallback, AvatarImage } from '../src/components/avatar.tsx';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../src/components/accordion.tsx';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../src/components/collapsible.tsx';
 import {
@@ -718,6 +719,36 @@ function Preview() {
             </TooltipTrigger>
             <TooltipContent>Calls longer than 30 seconds</TooltipContent>
           </Tooltip>
+        </Section>
+
+        <Section title="Avatar" status="DS-2.5">
+          <div className="flex flex-wrap items-center gap-6">
+            <div className="flex items-center gap-2">
+              <Avatar size="sm">
+                <AvatarFallback>AV</AvatarFallback>
+              </Avatar>
+              <span className="text-xs text-text-muted">sm (32px)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Avatar size="default">
+                <AvatarFallback>RK</AvatarFallback>
+              </Avatar>
+              <span className="text-sm text-text-muted">default (40px)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Avatar size="lg">
+                <AvatarFallback>DV</AvatarFallback>
+              </Avatar>
+              <span className="text-base text-text-muted">lg (48px)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Avatar>
+                <AvatarImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" alt="Sarah Chen" />
+                <AvatarFallback>SC</AvatarFallback>
+              </Avatar>
+              <span className="text-sm text-text-muted">with image</span>
+            </div>
+          </div>
         </Section>
 
         <Section title="Accordion and Collapsible" status="DS-2.5">

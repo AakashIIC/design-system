@@ -7,6 +7,7 @@ export * from './components/accordion.tsx';
 export * from './components/alert-dialog.tsx';
 export * from './components/app-header.tsx';
 export * from './components/app-switcher.tsx';
+export * from './components/avatar.tsx';
 export * from './components/badge.tsx';
 export * from './components/button.tsx';
 export * from './components/card.tsx';
