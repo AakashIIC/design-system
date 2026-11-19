@@ -94,17 +94,50 @@ ${colorConfig
 
 const ChartTooltip = RechartsPrimitive.Tooltip;
 
-const ChartTooltipContent = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
-    React.ComponentProps<'div'> & {
-      hideLabel?: boolean;
-      hideIndicator?: boolean;
-      indicator?: 'line' | 'dot' | 'dashed';
-      nameKey?: string;
-      labelKey?: string;
-    }
->(
+// The fields Recharts passes to custom tooltip and legend content. Declared here rather than taken from
+// Recharts' Tooltip/Legend props, whose shapes differ between recharts 2 and 3 (both are supported peers).
+type ChartValue = number | string | ReadonlyArray<number | string>;
+
+/** One series in the tooltip, as Recharts passes it to `content`. */
+export type ChartTooltipItem = {
+  dataKey?: unknown;
+  name?: number | string;
+  value?: ChartValue;
+  color?: string;
+  type?: string;
+  payload?: Record<string, unknown> & { fill?: string };
+};
+
+/** One entry in the legend, as Recharts passes it to `content`. */
+export type ChartLegendItem = {
+  value?: string;
+  dataKey?: unknown;
+  color?: string;
+  type?: string;
+};
+
+type ChartTooltipContentProps = Omit<React.ComponentProps<'div'>, 'color'> & {
+  active?: boolean;
+  payload?: ReadonlyArray<ChartTooltipItem>;
+  label?: React.ReactNode;
+  labelFormatter?: (label: React.ReactNode, payload: ReadonlyArray<ChartTooltipItem>) => React.ReactNode;
+  labelClassName?: string;
+  formatter?: (
+    value: ChartValue,
+    name: number | string,
+    item: ChartTooltipItem,
+    index: number,
+    payload: ChartTooltipItem['payload']
+  ) => React.ReactNode;
+  color?: string;
+  hideLabel?: boolean;
+  hideIndicator?: boolean;
+  indicator?: 'line' | 'dot' | 'dashed';
+  nameKey?: string;
+  labelKey?: string;
+};
+
+const ChartTooltipContent = React.forwardRef<HTMLDivElement, ChartTooltipContentProps>(
   (
     {
       active,
@@ -172,7 +205,7 @@ const ChartTooltipContent = React.forwardRef<
             .map((item, index) => {
               const key = `${nameKey || item.name || item.dataKey || 'value'}`;
               const itemConfig = getPayloadConfigFromPayload(config, item, key);
-              const indicatorColor = color || item.payload.fill || item.color;
+              const indicatorColor = color || item.payload?.fill || item.color;
 
               return (
                 <div
@@ -244,11 +277,12 @@ const ChartLegend = RechartsPrimitive.Legend;
 
 const ChartLegendContent = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<'div'> &
-    Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
-      hideIcon?: boolean;
-      nameKey?: string;
-    }
+  React.ComponentProps<'div'> & {
+    payload?: ReadonlyArray<ChartLegendItem>;
+    verticalAlign?: 'top' | 'middle' | 'bottom';
+    hideIcon?: boolean;
+    nameKey?: string;
+  }
 >(({ className, hideIcon = false, payload, verticalAlign = 'bottom', nameKey }, ref) => {
   const { config } = useChart();
 
