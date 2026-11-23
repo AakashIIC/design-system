@@ -1,7 +1,8 @@
 {
   "font": {
     "family": {
-      "sans": { "$type": "fontFamily", "$value": ["Geist", "system-ui", "sans-serif"], "$description": "Phase 0: Geist for all apps" }
+      "sans": { "$type": "fontFamily", "$value": ["Geist", "system-ui", "sans-serif"], "$description": "Phase 0: Geist for all apps. A theme may override it (iiclab keeps its brand font)" },
+      "display": { "$type": "fontFamily", "$value": ["Geist", "system-ui", "sans-serif"], "$description": "Headlines. Equals sans unless a theme overrides it" }
     },
     "size": {
       "2xs":  { "$type": "dimension", "$value": "11px", "$description": "Dense data UI only (chart labels, badges, table meta). Smallest allowed size" },

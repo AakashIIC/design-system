@@ -146,6 +146,7 @@ Set **one** attribute on `<html>`. Only colours change between themes; type, spa
 | VRetail | `data-app="vretail"` | Indigo |
 | V-Estate | `data-app="vestate"` | Gold, with a dark theme |
 | Data Vault pages inside V-Estate | `data-app="datavault"` on a wrapper element | Indigo inside, gold outside |
+| iiclab (Ink In Caps site) | `data-app="iiclab"` | Lime on off-white, with a dark theme for dark sections. Also overrides the fonts: Anek Devanagari body, Deutschlander display |
 
 Where to put it:
 
@@ -154,6 +155,10 @@ Where to put it:
 
 **V-Estate dark mode** turns on when `<html>` also has the `dark` class (what `next-themes` with `attribute="class"`
 already sets) or `data-theme="dark"`. No other change is needed.
+
+**iiclab dark sections** use the same rule on the section itself: `<section data-app="iiclab" data-theme="dark">`.
+Inside it, `--ds-color-background` is the dark ink and `--ds-color-text` is white. The lime `primary` is a fill
+colour on the light theme (1.04:1 on the background), so use it as text or a border only inside dark sections.
 
 **Themes can be nested.** `data-app` works on any element, so a section can use another app's colours:
 
