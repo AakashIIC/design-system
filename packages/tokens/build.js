@@ -32,19 +32,28 @@ const themeSelector = ({ app, dark }) => {
   return app === DEFAULT_THEME ? `:root, [data-app="${app}"]` : `[data-app="${app}"]`;
 };
 
-// Every theme must define exactly the same token names, or a component would render with a missing colour in one app.
+// Every theme must define exactly the same colour names, or a component would render with a missing colour in one app.
+// A theme may also override shared font families (font.family.*), and nothing else: type sizes, spacing, radius,
+// shadows and motion stay the same in every app. Style Dictionary merges a font array with the shared one index by
+// index, so an override must list at least as many fonts as the shared stack (3), or shared entries leak in.
 const flatNames = (obj, prefix = []) =>
   Object.entries(obj).flatMap(([k, v]) =>
     v && typeof v === 'object' && '$value' in v ? [[...prefix, k].join('.')] : flatNames(v, [...prefix, k]),
   );
 const namesOf = (file) => flatNames(JSON.parse(readFileSync(`tokens/themes/${file}.json`, 'utf8'))).sort();
-const referenceNames = namesOf(DEFAULT_THEME);
+const sharedFontFamilies = flatNames(JSON.parse(readFileSync('tokens/shared/font.json', 'utf8'))).filter((n) => n.startsWith('font.family.'));
+const referenceNames = namesOf(DEFAULT_THEME).filter((n) => n.startsWith('color.'));
 for (const { file } of THEMES) {
-  const names = namesOf(file);
+  const all = namesOf(file);
+  const names = all.filter((n) => n.startsWith('color.'));
   const missing = referenceNames.filter((n) => !names.includes(n));
   const extra = names.filter((n) => !referenceNames.includes(n));
   if (missing.length || extra.length) {
     throw new Error(`Theme "${file}" does not match "${DEFAULT_THEME}". Missing: [${missing}] Extra: [${extra}]`);
+  }
+  const notAllowed = all.filter((n) => !n.startsWith('color.') && !sharedFontFamilies.includes(n));
+  if (notAllowed.length) {
+    throw new Error(`Theme "${file}" may only define colours and override shared font families. Not allowed: [${notAllowed}]`);
   }
 }
 

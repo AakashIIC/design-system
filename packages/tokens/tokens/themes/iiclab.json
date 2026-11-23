@@ -1,0 +1,43 @@
+{
+  "font": {
+    "family": {
+      "sans":    { "$type": "fontFamily", "$value": ["Anek Devanagari", "system-ui", "sans-serif"], "$description": "iiclab body font (Ink In Caps brand); overrides the shared Geist" },
+      "display": { "$type": "fontFamily", "$value": ["Deutschlander", "sans-serif", "arial"], "$description": "iiclab headline font, self-hosted at /Deutschlander.woff" }
+    }
+  },
+  "color": {
+    "primary":         { "$type": "color", "$value": "#E5FF53", "$description": "Ink In Caps lime. A fill colour: 1.04:1 on the light background, so never use it for text or borders there" },
+    "primary-hover":   { "$type": "color", "$value": "#D6F03F", "$description": "Lime darkened about 6% for hover on light surfaces" },
+    "primary-soft":    { "$type": "color", "$value": "#F7FECB", "$description": "Pale lime, already used by iiclab for form-field rings" },
+    "accent":          { "$type": "color", "$value": "#E5FF53", "$description": "No second brand colour; equals primary" },
+    "on-primary":      { "$type": "color", "$value": "#1A1A1A", "$description": "Ink on lime: 15.6:1" },
+    "text":            { "$type": "color", "$value": "#1A1A1A", "$description": "iiclab ink (238 uses)" },
+    "text-muted":      { "$type": "color", "$value": "#575859", "$description": "iiclab grey; 6.6:1 on the background" },
+    "text-subtle":     { "$type": "color", "$value": "#757575", "$description": "Placeholders; 4.3:1 on the background" },
+    "background":      { "$type": "color", "$value": "#F6F7F0", "$description": "iiclab page background (body)" },
+    "surface":         { "$type": "color", "$value": "#FFFFFF" },
+    "surface-muted":   { "$type": "color", "$value": "#F2F2F2", "$description": "iiclab light grey fill" },
+    "border":          { "$type": "color", "$value": "#E2E2E2", "$description": "iiclab divider grey" },
+    "input":           { "$type": "color", "$value": "#8A8A8A", "$description": "Input borders; 3.45:1 on white (WCAG 1.4.11)" },
+    "ring":            { "$type": "color", "$value": "#1A1A1A", "$description": "Ink, because a lime ring is invisible on the light background" },
+    "overlay":         { "$type": "color", "$value": "#0000004D", "$description": "Backdrop behind modals: black 30%" },
+    "success":         { "$type": "color", "$value": "#22C55E" },
+    "warning":         { "$type": "color", "$value": "#F59E0B" },
+    "danger":          { "$type": "color", "$value": "#EF4444" },
+    "info":            { "$type": "color", "$value": "#3B82F6" },
+    "success-soft":    { "$type": "color", "$value": "#DCFCE7" },
+    "success-strong":  { "$type": "color", "$value": "#15803D" },
+    "warning-soft":    { "$type": "color", "$value": "#FEF3C7" },
+    "warning-strong":  { "$type": "color", "$value": "#B45309" },
+    "danger-soft":     { "$type": "color", "$value": "#FEE2E2" },
+    "danger-strong":   { "$type": "color", "$value": "#B91C1C" },
+    "info-soft":       { "$type": "color", "$value": "#DBEAFE" },
+    "info-strong":     { "$type": "color", "$value": "#1D4ED8" },
+    "chart-1":         { "$type": "color", "$value": "#1A1A1A", "$description": "Ink (provisional: iiclab has no charts)" },
+    "chart-2":         { "$type": "color", "$value": "#575859", "$description": "Grey (provisional)" },
+    "chart-3":         { "$type": "color", "$value": "#8A8A8A", "$description": "Light grey (provisional)" },
+    "chart-4":         { "$type": "color", "$value": "#C8C8C5", "$description": "Pale grey (provisional)" },
+    "chart-5":         { "$type": "color", "$value": "#E5FF53", "$description": "Lime, decoration only (provisional)" },
+    "chart-6":         { "$type": "color", "$value": "#E2E2E2", "$description": "No data / remainder (provisional)" }
+  }
+}
