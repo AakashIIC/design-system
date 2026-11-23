@@ -96,7 +96,7 @@
     }
   },
   "devDependencies": {
-    "@aakashiic/tokens": "^0.5.0",
+    "@aakashiic/tokens": "^0.6.0",
     "@tailwindcss/cli": "^4.1.18",
     "@tailwindcss/vite": "^4.3.5",
     "@testing-library/dom": "^10.4.2",
